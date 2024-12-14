@@ -1,0 +1,18 @@
+.button{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background-color: transparent;
+	border: none;
+	border-radius: 20px;
+	color: rgba(242, 242, 243, 1);
+	cursor: pointer;
+	opacity: .6;
+}
+.button:hover{
+	opacity: 1;
+}
+
+.active{
+	opacity: 1;
+}
