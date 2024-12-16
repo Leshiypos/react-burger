@@ -8,22 +8,31 @@ import {
 import ButtonMenu from "./button-menu";
 import styles from "./app-header.module.css";
 
-export default function AppHeader() {
+export default function AppHeader({ active, onChange }) {
   return (
     <header className={styles.header + " pt-4 pb-4"}>
       <div className={styles.conteiner}>
         <div className="flex">
-          <ButtonMenu isAcive={true}>
+          <ButtonMenu
+            isActive={active === "consctructor"}
+            onClick={() => onChange("consctructor")}
+          >
             <BurgerIcon type="primary" />
             Конструктор
           </ButtonMenu>
-          <ButtonMenu>
+          <ButtonMenu
+            isActive={active === "order"}
+            onClick={() => onChange("order")}
+          >
             <ListIcon type="primary" />
             Лента заказов
           </ButtonMenu>
         </div>
         <Logo className={styles.logo} />
-        <ButtonMenu>
+        <ButtonMenu
+          isActive={active === "account"}
+          onClick={() => onChange("account")}
+        >
           <ProfileIcon type="primary" />
           Личный кaбинет
         </ButtonMenu>
