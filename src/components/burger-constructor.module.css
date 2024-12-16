@@ -1,0 +1,33 @@
+
+.burger_constructor{
+	composes: pt-25 from global;
+}
+.work_area{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	overflow: auto;
+	height: 48vh;
+}
+.work_area::-webkit-scrollbar{
+	width: 2px;
+}
+.top, .bottom{
+	margin-left: 26px;
+}
+.order{
+	composes: mt-10 mr-10 from global;
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	justify-content: end;
+}
+.currency{
+	composes: mr-10 text text_type_main-large from global;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+.currency svg{
+	transform: scale(1.5)
+}

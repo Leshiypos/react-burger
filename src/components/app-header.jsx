@@ -22,10 +22,10 @@ export default function AppHeader() {
             Лента заказов
           </ButtonMenu>
         </div>
-        <Logo />
+        <Logo className={styles.logo} />
         <ButtonMenu>
           <ProfileIcon type="primary" />
-          Личный кобинет
+          Личный кaбинет
         </ButtonMenu>
       </div>
     </header>

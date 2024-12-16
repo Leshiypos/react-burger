@@ -5,9 +5,7 @@ export default function ButtonMenu({ children, isAcive }) {
     <button
       type="button"
       className={
-        isAcive
-          ? `${styles.button} ${styles.active} pl-5 pr-5 pt-4 pb-4 text text_type_main-default`
-          : `${styles.button} pl-5 pr-5 pt-4 pb-4 text text_type_main-default`
+        isAcive ? `${styles.button} ${styles.active}` : `${styles.button}`
       }
     >
       {children}
