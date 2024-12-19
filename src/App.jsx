@@ -2,11 +2,31 @@ import "./App.css";
 import AppHeader from "./components/app-header";
 import BurgerIngredients from "./components/burger-ingredients";
 import BurgerConstructor from "./components/burger-constructor";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [button, setButton] = useState("consctructor");
-  console.log(button);
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      const dataIp = "https://norma.nomoreparties.space/api/ingredients";
+      try {
+        setIsLoading(true);
+        const response = await fetch(dataIp);
+        const ingridient = await response.json();
+        setData(Object.values(ingridient.data));
+        setIsLoading(false);
+      } catch {
+        setHasError(true);
+        setIsLoading(false);
+      }
+    };
+    getData();
+  }, []);
+
   return (
     <>
       <AppHeader active={button} onChange={(current) => setButton(current)} />
@@ -15,11 +35,11 @@ function App() {
           <h1 className="text text_type_main-large mt-10 mb-5">
             Соберите бургер
           </h1>
-          <BurgerIngredients />
+          <BurgerIngredients data={data} />
         </section>
 
         <section>
-          <BurgerConstructor />
+          <BurgerConstructor data={data} />
         </section>
       </main>
     </>

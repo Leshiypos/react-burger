@@ -5,10 +5,10 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import data from "../util/data.js";
 
-export default function BurgerConstructor() {
+export default function BurgerConstructor({ data }) {
   const img = "https://code.s3.yandex.net/react/code/bun-02-large.png";
+
   return (
     <div className={styles.burger_constructor}>
       <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
