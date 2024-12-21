@@ -1,5 +1,7 @@
 //@ts-nocheck
 import styles from "./button-menu.module.css";
+import PropTypes from "prop-types";
+
 export default function ButtonMenu({ children, isActive, ...props }) {
   return (
     <button
@@ -13,3 +15,10 @@ export default function ButtonMenu({ children, isActive, ...props }) {
     </button>
   );
 }
+
+ButtonMenu.propTypes = {
+  isActive: PropTypes.bool.isRequired,
+  props: PropTypes.shape({
+    onClick: PropTypes.func,
+  }),
+};

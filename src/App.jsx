@@ -35,11 +35,13 @@ function App() {
           <h1 className="text text_type_main-large mt-10 mb-5">
             Соберите бургер
           </h1>
-          <BurgerIngredients data={data} />
+          {!hasError && !isLoading && <BurgerIngredients data={data} />}
+          {hasError && <p>Произошла ошибка загрузки данных...</p>}
         </section>
 
         <section>
-          <BurgerConstructor data={data} />
+          {!hasError && !isLoading && <BurgerConstructor data={data} />}
+          {hasError && <p>Произошла ошибка загрузки данных...</p>}
         </section>
       </main>
     </>

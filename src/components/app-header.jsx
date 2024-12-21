@@ -7,6 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ButtonMenu from "./button-menu";
 import styles from "./app-header.module.css";
+import PropTypes from "prop-types";
 
 export default function AppHeader({ active, onChange }) {
   return (
@@ -40,3 +41,8 @@ export default function AppHeader({ active, onChange }) {
     </header>
   );
 }
+
+AppHeader.propTypes = {
+  active: PropTypes.oneOf(["consctructor", "order", "account"]),
+  onChange: PropTypes.func.isRequired,
+};

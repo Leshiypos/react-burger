@@ -1,15 +1,6 @@
 import styles from "./tabs.module.css";
-
-function Tab({ children, isActive, ...props }) {
-  return (
-    <li
-      {...props}
-      className={isActive ? styles.tab : `${styles.tab} ${styles.inActive}`}
-    >
-      {children}
-    </li>
-  );
-}
+import PropTypes from "prop-types";
+import Tab from "./tab";
 
 export default function Tabs({ active, onChange }) {
   return (
@@ -26,3 +17,8 @@ export default function Tabs({ active, onChange }) {
     </ul>
   );
 }
+
+Tabs.propTypes = {
+  active: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
