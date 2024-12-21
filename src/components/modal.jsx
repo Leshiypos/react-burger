@@ -5,23 +5,23 @@ import { useEffect } from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "./modal-overlay";
 
-export default function Modal({ isOpen, onClick, children }) {
+export default function Modal({ isOpen, onClick, children, title = "" }) {
   useEffect(() => {
     const closeModal = (event) => {
       if (event.key === "Escape") onClick(false);
-      console.log("render");
+      document.removeEventListener("keydown", closeModal);
     };
-    isOpen
-      ? document.addEventListener("keydown", closeModal)
-      : document.removeEventListener("keydown", closeModal);
-  }, [isOpen]);
+    document.addEventListener("keydown", closeModal);
+
+    return () => document.removeEventListener("keydown", closeModal);
+  }, []);
   return createPortal(
     <>
       {isOpen && (
         <>
           <div className={styles.modal}>
             <div className={styles.header}>
-              <h3 className={styles.title}>Детали ингридиента</h3>
+              <h3 className={styles.title}>{title}</h3>
               <CloseIcon
                 type="primary"
                 className={styles.close}

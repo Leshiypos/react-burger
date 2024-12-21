@@ -1,0 +1,26 @@
+.order_details{
+	composes: mb-15 from global;
+	text-align: center;
+}
+.img{
+	composes: mt-15 from global;
+	width: 120px;
+	height: 120px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.score{
+	composes: mt-9 text text_type_digits-large from global;
+	margin-left: auto;
+	margin-right: auto;
+	width: fit-content;
+}
+.description{
+	composes:mt-8 text text_type_main-default from global;
+}
+.message{
+	composes: mt-15 text text_type_main-small from global;
+}
+.message_bottom{
+	composes: mt-2 text_type_main-small text_color_inactive from global;
+}

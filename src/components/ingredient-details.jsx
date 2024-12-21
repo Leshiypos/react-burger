@@ -4,25 +4,25 @@ export default function IngredientDetails({ data }) {
   return (
     <>
       <div className={styles.content}>
-        <img src={data[0].image_large} alt="" />
+        <img src={data.image_large} alt="" />
 
-        <div className={styles.name}>{data[0].name}</div>
+        <div className={styles.name}>{data.name}</div>
         <div className={styles.description}>
           <div>
             <p>Каллории, ккал</p>
-            <p className={styles.digital}>{data[0].calories}</p>
+            <p className={styles.digital}>{data.calories}</p>
           </div>
           <div>
             <p>Белки, г</p>
-            <p className={styles.digital}>{data[0].proteins}</p>
+            <p className={styles.digital}>{data.proteins}</p>
           </div>
           <div>
             <p>Жиры, г</p>
-            <p className={styles.digital}>{data[0].fat}</p>
+            <p className={styles.digital}>{data.fat}</p>
           </div>
           <div>
             <p>Углеводы, г</p>
-            <p className={styles.digital}>{data[0].carbohydrates}</p>
+            <p className={styles.digital}>{data.carbohydrates}</p>
           </div>
         </div>
       </div>

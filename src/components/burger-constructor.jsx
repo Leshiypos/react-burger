@@ -5,8 +5,12 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "./modal";
+import OrderDetails from "./order-details";
+import { useState } from "react";
 
 export default function BurgerConstructor({ data }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const img = "https://code.s3.yandex.net/react/code/bun-02-large.png";
 
   return (
@@ -47,10 +51,24 @@ export default function BurgerConstructor({ data }) {
         <div className={styles.currency}>
           610 <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={() => setIsModalOpen(true)}
+        >
           Оформить заказ
         </Button>
       </div>
+      {isModalOpen && (
+        <Modal
+          title=""
+          isOpen={isModalOpen}
+          onClick={(current) => setIsModalOpen(current)}
+        >
+          <OrderDetails />
+        </Modal>
+      )}
     </div>
   );
 }
