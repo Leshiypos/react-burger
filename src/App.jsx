@@ -16,12 +16,20 @@ function App() {
       try {
         setIsLoading(true);
         const response = await fetch(dataIp);
+        if (!response.ok) {
+          setHasError(true);
+          setIsLoading(false);
+          return Promise.reject(`Ошибка ${response.status}`);
+        }
         const ingridient = await response.json();
         setData(Object.values(ingridient.data));
         setIsLoading(false);
-      } catch {
+      } catch (e) {
         setHasError(true);
         setIsLoading(false);
+        throw new Error(
+          "Ошибка " + e.name + " : " + e.message + "\n" + e.stack
+        );
       }
     };
     getData();
