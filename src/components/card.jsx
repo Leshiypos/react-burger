@@ -8,11 +8,7 @@ import PropTypes from "prop-types";
 export default function Card({ data, onClick }) {
   return (
     <>
-      <li
-        className={styles.card}
-        style={{ position: "relative" }}
-        onClick={() => onClick(data, true)}
-      >
+      <li className={styles.card} onClick={() => onClick(data, true)}>
         <Counter count={1} size="default" extraClass="m-1" />
         <img src={data.image} alt="" />
         <div className={styles.diamond}>

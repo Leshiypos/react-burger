@@ -16,7 +16,7 @@ export default function BurgerConstructor({ data }) {
 
   return (
     <div className={styles.burger_constructor}>
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <div className={styles.wrap}>
         <div className={styles.top}>
           <ConstructorElement
             type="top"

@@ -2,6 +2,11 @@
 .burger_constructor{
 	composes: pt-25 from global;
 }
+.wrap{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
 .work_area{
 	display: flex;
 	flex-direction: column;
