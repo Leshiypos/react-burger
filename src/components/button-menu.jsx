@@ -1,16 +1,24 @@
 //@ts-nocheck
 import styles from "./button-menu.module.css";
-export default function ButtonMenu({ children, isAcive }) {
+import PropTypes from "prop-types";
+
+export default function ButtonMenu({ children, isActive, ...props }) {
   return (
     <button
+      {...props}
       type="button"
       className={
-        isAcive
-          ? `${styles.button} ${styles.active} pl-5 pr-5 pt-4 pb-4 text text_type_main-default`
-          : `${styles.button} pl-5 pr-5 pt-4 pb-4 text text_type_main-default`
+        isActive ? `${styles.button} ${styles.active}` : `${styles.button}`
       }
     >
       {children}
     </button>
   );
 }
+
+ButtonMenu.propTypes = {
+  isActive: PropTypes.bool.isRequired,
+  props: PropTypes.shape({
+    onClick: PropTypes.func,
+  }),
+};

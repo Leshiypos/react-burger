@@ -1,0 +1,11 @@
+.tab{
+	composes: pt-4 pb-4 from global;
+	display: block;
+	cursor: pointer;
+	text-align: center;
+	width: 100%;
+}
+
+.inActive{
+	composes: text_color_inactive from global;
+}
