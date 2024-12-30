@@ -3,54 +3,58 @@ import AppHeader from "./components/app-header";
 import BurgerIngredients from "./components/burger-ingredients";
 import BurgerConstructor from "./components/burger-constructor";
 import { useState, useEffect } from "react";
+import { getIngredients } from "./util/api";
 
 function App() {
   const [button, setButton] = useState("consctructor");
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState([]);
-  const [hasError, setHasError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [ingredients, setIngredients] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    const getData = async () => {
-      const dataIp = "https://norma.nomoreparties.space/api/ingredients";
+    (async () => {
       try {
-        setIsLoading(true);
-        const response = await fetch(dataIp);
-        if (!response.ok) {
-          setHasError(true);
-          setIsLoading(false);
-          return Promise.reject(`Ошибка ${response.status}`);
-        }
-        const ingridient = await response.json();
-        setData(Object.values(ingridient.data));
-        setIsLoading(false);
+        setLoading(true);
+        const response = await getIngredients();
+        setIngredients(response.data);
       } catch (e) {
-        setHasError(true);
-        setIsLoading(false);
-        throw new Error(
-          "Ошибка " + e.name + " : " + e.message + "\n" + e.stack
-        );
+        setError(e);
       }
-    };
-    getData();
+      setLoading(false);
+    })();
   }, []);
 
   return (
     <>
       <AppHeader active={button} onChange={(current) => setButton(current)} />
       <main className="al_cen">
-        <section>
-          <h1 className="text text_type_main-large mt-10 mb-5">
-            Соберите бургер
-          </h1>
-          {!hasError && !isLoading && <BurgerIngredients data={data} />}
-          {hasError && <p>Произошла ошибка загрузки данных...</p>}
-        </section>
+        {}
+        {loading ? (
+          <p>Загрузка данных</p>
+        ) : error ? (
+          <p>Произошла ошибка загрузки данных</p>
+        ) : ingredients.length > 0 ? (
+          <section>
+            <h1 className="text text_type_main-large mt-10 mb-5">
+              Соберите бургер
+            </h1>
+            <BurgerIngredients data={ingredients} />
+          </section>
+        ) : (
+          <p>Нет данных</p>
+        )}
 
-        <section>
-          {!hasError && !isLoading && <BurgerConstructor data={data} />}
-          {hasError && <p>Произошла ошибка загрузки данных...</p>}
-        </section>
+        {loading ? (
+          <p>Загрузка данных</p>
+        ) : error ? (
+          <p>Произошла ошибка загрузки данных</p>
+        ) : ingredients.length > 0 ? (
+          <section>
+            <BurgerConstructor data={ingredients} />
+          </section>
+        ) : (
+          <p>Нет данных</p>
+        )}
       </main>
     </>
   );
