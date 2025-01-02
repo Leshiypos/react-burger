@@ -9,7 +9,7 @@ import ModalOverlay from "./modal-overlay";
 export default function Modal({ onClick, children, title = "" }) {
   useEffect(() => {
     const closeModal = (event) => {
-      if (event.key === "Escape") onClick(false);
+      if (event.key === "Escape") onClick(null);
       document.removeEventListener("keydown", closeModal);
     };
     document.addEventListener("keydown", closeModal);
@@ -24,12 +24,12 @@ export default function Modal({ onClick, children, title = "" }) {
           <CloseIcon
             type="primary"
             className={styles.close}
-            onClick={() => onClick(false)}
+            onClick={() => onClick(null)}
           />
         </div>
         {children}
       </div>
-      <ModalOverlay onClick={() => onClick(false)} />
+      <ModalOverlay onClick={() => onClick(null)} />
     </>,
     document.getElementById("modal")
   );

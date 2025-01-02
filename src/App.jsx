@@ -38,7 +38,7 @@ function App() {
             <h1 className="text text_type_main-large mt-10 mb-5">
               Соберите бургер
             </h1>
-            <BurgerIngredients data={ingredients} />
+            <BurgerIngredients ingredients={ingredients} />
           </section>
         ) : (
           <p>Нет данных</p>
@@ -50,7 +50,7 @@ function App() {
           <p>Произошла ошибка загрузки данных</p>
         ) : ingredients.length > 0 ? (
           <section>
-            <BurgerConstructor data={ingredients} />
+            <BurgerConstructor ingredients={ingredients} />
           </section>
         ) : (
           <p>Нет данных</p>

@@ -11,7 +11,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import dataPropTypes from "../util/type.js";
 
-export default function BurgerConstructor({ data }) {
+export default function BurgerConstructor({ ingredients }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const img = "https://code.s3.yandex.net/react/code/bun-02-large.png";
 
@@ -28,7 +28,7 @@ export default function BurgerConstructor({ data }) {
           />
         </div>
         <div className={styles.work_area}>
-          {data.map((elem) => (
+          {ingredients.map((elem) => (
             <div key={elem._id}>
               <DragIcon type="primary" />
               <ConstructorElement
@@ -76,5 +76,5 @@ export default function BurgerConstructor({ data }) {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes).isRequired,
+  ingredients: PropTypes.arrayOf(dataPropTypes).isRequired,
 };

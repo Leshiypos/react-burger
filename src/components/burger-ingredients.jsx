@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Card from "./card";
+import { useState, useMemo } from "react";
+import IndredientsCategory from "./ingredients-category";
 import styles from "./burger-ingredients.module.css";
 import Tabs from "./tabs";
 import Modal from "./modal";
@@ -7,56 +7,55 @@ import IngredientDetails from "./ingredient-details";
 import PropTypes from "prop-types";
 import dataPropTypes from "../util/type.js";
 
-export default function BurgerIngredients({ data }) {
+export default function BurgerIngredients({ ingredients }) {
   const [tab, setTab] = useState("buns");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [dataModal, setDataModal] = useState({});
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
 
-  const hendleModalOpen = (dataModal, isOpen) => {
-    setDataModal(dataModal);
-    setIsModalOpen(isOpen);
-  };
-
-  const bun = data.filter((ingr) => ingr.type == "bun");
-  const main = data.filter((ingr) => ingr.type == "main");
-  const sauce = data.filter((ingr) => ingr.type == "sauce");
+  const buns = useMemo(
+    () => ingredients.filter((ingr) => ingr.type == "bun"),
+    [ingredients]
+  );
+  const mains = useMemo(
+    () => ingredients.filter((ingr) => ingr.type == "main"),
+    [ingredients]
+  );
+  const sauces = useMemo(
+    () => ingredients.filter((ingr) => ingr.type == "sauce"),
+    [ingredients]
+  );
 
   return (
     <div className={styles.burger_ingredients}>
       <Tabs active={tab} onChange={(current) => setTab(current)} />
-      <div className={styles.work_area}>
-        <div>
-          <h2 className={styles.title}>Булки</h2>
-          <ul className={styles.cards}>
-            {bun.map((elem) => (
-              <Card key={elem._id} data={elem} onClick={hendleModalOpen} />
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2>Соусы</h2>
-          <ul className={styles.cards}>
-            {sauce.map((elem) => (
-              <Card key={elem._id} data={elem} onClick={hendleModalOpen} />
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2>Начинка</h2>
-          <ul className={styles.cards}>
-            {main.map((elem) => (
-              <Card key={elem._id} data={elem} onClick={hendleModalOpen} />
-            ))}
-          </ul>
-        </div>
-      </div>
-      {isModalOpen && (
+      <ul className={styles.work_area}>
+        <li>
+          <IndredientsCategory
+            title="Булки"
+            ingredients={buns}
+            onSelect={setSelectedIngredient}
+          />
+        </li>
+        <li>
+          <IndredientsCategory
+            title="Соусы"
+            ingredients={sauces}
+            onSelect={setSelectedIngredient}
+          />
+        </li>
+        <li>
+          <IndredientsCategory
+            title="Начинка"
+            ingredients={mains}
+            onSelect={setSelectedIngredient}
+          />
+        </li>
+      </ul>
+      {selectedIngredient && (
         <Modal
           title="Детали ингридиента"
-          isOpen={isModalOpen}
-          onClick={(current) => setIsModalOpen(current)}
+          onClick={(current) => setSelectedIngredient(current)}
         >
-          <IngredientDetails data={dataModal} />
+          <IngredientDetails ingredient={selectedIngredient} />
         </Modal>
       )}
     </div>
@@ -64,5 +63,5 @@ export default function BurgerIngredients({ data }) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes).isRequired,
+  ingredients: PropTypes.arrayOf(dataPropTypes).isRequired,
 };

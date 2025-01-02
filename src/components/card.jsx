@@ -6,23 +6,23 @@ import styles from "./card.module.css";
 import PropTypes from "prop-types";
 import dataPropTypes from "../util/type.js";
 
-export default function Card({ data, onClick }) {
+export default function Card({ ingredient, onSelect }) {
   return (
     <>
-      <li className={styles.card} onClick={() => onClick(data, true)}>
+      <li className={styles.card} onClick={() => onSelect(ingredient)}>
         <Counter count={1} size="default" extraClass="m-1" />
-        <img src={data.image} alt="" />
+        <img src={ingredient.image} alt="" />
         <div className={styles.diamond}>
-          <span>{data.price}</span>
+          <span>{ingredient.price}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <p className={data.title}>{data.name}</p>
+        <p className={ingredient.title}>{ingredient.name}</p>
       </li>
     </>
   );
 }
 
 Card.propTypes = {
-  data: dataPropTypes.isRequired,
-  onClick: PropTypes.func,
+  ingredient: dataPropTypes.isRequired,
+  onSelect: PropTypes.func,
 };
