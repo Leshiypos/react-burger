@@ -5,11 +5,20 @@ import {
 import styles from "./card.module.css";
 import PropTypes from "prop-types";
 import dataPropTypes from "../util/type.js";
+import { useDispatch } from "react-redux";
+import { SHOW_DETAILS } from "../services/details/actions";
 
-export default function Card({ ingredient, onSelect }) {
+export default function Card({ ingredient }) {
+  const dispatch = useDispatch();
+  const handleShowModal = () => {
+    dispatch({
+      type: SHOW_DETAILS,
+      details: ingredient,
+    });
+  };
   return (
     <>
-      <li className={styles.card} onClick={() => onSelect(ingredient)}>
+      <li className={styles.card} onClick={handleShowModal}>
         <Counter count={1} size="default" extraClass="m-1" />
         <img src={ingredient.image} alt="" />
         <div className={styles.diamond}>
@@ -24,5 +33,4 @@ export default function Card({ ingredient, onSelect }) {
 
 Card.propTypes = {
   ingredient: dataPropTypes.isRequired,
-  onSelect: PropTypes.func,
 };

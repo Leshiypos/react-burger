@@ -3,13 +3,13 @@ import Card from "./card";
 import PropTypes from "prop-types";
 import dataPropTypes from "../util/type.js";
 
-export default function IndredientsCategory({ title, ingredients, onSelect }) {
+export default function IndredientsCategory({ title, ingredients }) {
   return (
     <>
       <h2>{title}</h2>
       <ul className={styles.cards}>
         {ingredients.map((elem) => (
-          <Card key={elem._id} ingredient={elem} onSelect={onSelect} />
+          <Card key={elem._id} ingredient={elem} />
         ))}
       </ul>
     </>
@@ -19,5 +19,4 @@ export default function IndredientsCategory({ title, ingredients, onSelect }) {
 IndredientsCategory.propTypes = {
   ingredients: PropTypes.arrayOf(dataPropTypes).isRequired,
   title: PropTypes.string.isRequired,
-  onSelect: PropTypes.func.isRequired,
 };
