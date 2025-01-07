@@ -5,8 +5,6 @@ import styles from "./burger-ingredients.module.css";
 import Tabs from "./tabs";
 import Modal from "./modal";
 import IngredientDetails from "./ingredient-details";
-import PropTypes from "prop-types";
-import dataPropTypes from "../util/type.js";
 import { getDetails } from "../services/details/selectors";
 import { getIngredientsByBategories } from "../services/ingredients/selectors";
 

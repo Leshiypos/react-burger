@@ -10,44 +10,86 @@ import OrderDetails from "./order-details";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import dataPropTypes from "../util/type.js";
+import { useDrop } from "react-dnd";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  DELETE_INGREDIENT,
+  addIngredient,
+  addBuns,
+  deleteIngredient,
+} from "../services/constructor/actions";
 
-export default function BurgerConstructor({ ingredients }) {
+export default function BurgerConstructor({}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const img = "https://code.s3.yandex.net/react/code/bun-02-large.png";
+  const dispatch = useDispatch();
+  const ingredients = useSelector((store) => store.constructor.ingredients);
+  const bun = useSelector((store) => store.constructor.bun);
+  const [, bunsRef] = useDrop({
+    accept: "bun",
+    drop(item) {
+      dispatch(addBuns(item));
+    },
+  });
+  const [, constIngrRef] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      dispatch(addIngredient(item));
+    },
+  });
+  const handleClose = (key) => {
+    dispatch(deleteIngredient(key));
+  };
 
   return (
     <div className={styles.burger_constructor}>
       <div className={styles.wrap}>
-        <div className={styles.top}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={img}
-          />
+        {bun ? (
+          <div className={styles.top} ref={bunsRef}>
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={bun.name}
+              price={bun.price}
+              thumbnail={bun.image_large}
+            />
+          </div>
+        ) : (
+          <div className={styles.no_bun_top} ref={bunsRef}>
+            Выберите булку
+          </div>
+        )}
+
+        <div className={styles.work_area} ref={constIngrRef}>
+          {ingredients?.length > 0 ? (
+            ingredients.map((elem) => (
+              <div key={elem.key}>
+                <DragIcon type="primary" />
+                <ConstructorElement
+                  text={elem.name}
+                  price={elem.price}
+                  thumbnail={elem.image_large}
+                  handleClose={() => handleClose(elem.key)}
+                />
+              </div>
+            ))
+          ) : (
+            <div className={styles.no_ingredients}>Выберите ингредиент</div>
+          )}
         </div>
-        <div className={styles.work_area}>
-          {ingredients.map((elem) => (
-            <div key={elem._id}>
-              <DragIcon type="primary" />
-              <ConstructorElement
-                text={elem.name}
-                price={elem.price}
-                thumbnail={elem.image_large}
-              />
-            </div>
-          ))}
-        </div>
-        <div className={styles.bottom}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={200}
-            thumbnail={img}
-          />
-        </div>
+
+        {bun ? (
+          <div className={styles.bottom}>
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={bun.name}
+              price={bun.price}
+              thumbnail={bun.image_large}
+            />
+          </div>
+        ) : (
+          <div className={styles.no_bun_bottom}>Выберите булку</div>
+        )}
       </div>
       <div className={styles.order}>
         <div className={styles.currency}>
