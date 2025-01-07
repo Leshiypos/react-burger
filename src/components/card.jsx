@@ -5,23 +5,29 @@ import {
 import styles from "./card.module.css";
 import PropTypes from "prop-types";
 import dataPropTypes from "../util/type.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SHOW_DETAILS } from "../services/details/actions";
 import { useDrag } from "react-dnd";
+import { getIngredientsState } from "../services/ingredients/selectors";
 
 export default function Card({ ingredient }) {
   const dispatch = useDispatch();
+  const selectIngredients = useSelector((store) => store.selectIngredients);
   const [, ingredientRef] = useDrag({
     type: ingredient.type === "bun" ? "bun" : "ingredient",
     item: ingredient,
   });
-
+  const counter =
+    ingredient.type === "bun"
+      ? selectIngredients.counterBun
+      : selectIngredients.counter;
   const handleShowModal = () => {
     dispatch({
       type: SHOW_DETAILS,
       details: ingredient,
     });
   };
+
   return (
     <>
       <li
@@ -30,7 +36,13 @@ export default function Card({ ingredient }) {
         ref={ingredientRef}
         draggable
       >
-        <Counter count={1} size="default" extraClass="m-1" />
+        {!!counter[ingredient._id] && (
+          <Counter
+            count={counter[ingredient._id]}
+            size="default"
+            extraClass="m-1"
+          />
+        )}
         <img src={ingredient.image} alt="" />
         <div className={styles.diamond}>
           <span>{ingredient.price}</span>

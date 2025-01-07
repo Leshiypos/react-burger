@@ -22,8 +22,10 @@ import {
 export default function BurgerConstructor({}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const ingredients = useSelector((store) => store.constructor.ingredients);
-  const bun = useSelector((store) => store.constructor.bun);
+  const ingredients = useSelector(
+    (store) => store.selectIngredients.ingredients
+  );
+  const bun = useSelector((store) => store.selectIngredients.bun);
   const [, bunsRef] = useDrop({
     accept: "bun",
     drop(item) {
@@ -36,8 +38,8 @@ export default function BurgerConstructor({}) {
       dispatch(addIngredient(item));
     },
   });
-  const handleClose = (key) => {
-    dispatch(deleteIngredient(key));
+  const handleClose = (elem) => {
+    dispatch(deleteIngredient(elem));
   };
 
   return (
@@ -68,7 +70,7 @@ export default function BurgerConstructor({}) {
                   text={elem.name}
                   price={elem.price}
                   thumbnail={elem.image_large}
-                  handleClose={() => handleClose(elem.key)}
+                  handleClose={() => handleClose(elem)}
                 />
               </div>
             ))

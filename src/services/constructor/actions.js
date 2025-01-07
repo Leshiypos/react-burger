@@ -13,10 +13,11 @@ export const addIngredient = (ingredient)=>(dispatch)=>{
 	});
 }
 
-export const deleteIngredient = (key) => (dispatch) => {
+export const deleteIngredient = (elem) => (dispatch) => {
+	console.log(elem.key)
 	dispatch({
 		type: DELETE_INGREDIENT,
-		key: key,
+		element: elem,
 	})
 }
 

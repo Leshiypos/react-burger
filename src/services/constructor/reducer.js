@@ -1,7 +1,9 @@
 import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUNS } from "./actions";
 
 const initialState = {
-		bun: null,	
+		bun: null,
+		counter: {},
+		counterBun: {},	
 		ingredients: []
 }
 
@@ -10,19 +12,23 @@ export const reducer = (state = initialState, action) =>{
 		case ADD_INGREDIENT : 
 			return {
 				...state,
-				ingredients: state.ingredients ? [...state.ingredients, action.ingredient] : [action.ingredient]
+				ingredients: [...state.ingredients, action.ingredient],
+				counter : {...state.counter, [action.ingredient._id] : state.counter[action.ingredient._id] ? ++state.counter[action.ingredient._id] : 1}
 			
 		} 
 		case DELETE_INGREDIENT : 
 			return {
 				...state,
-				ingredients: [...state.ingredients].filter(ingredient => ingredient.key !== action.key)
+				ingredients: state.ingredients.filter(ingredient => ingredient.key !== action.element.key),
+				counter: {...state.counter, [action.element._id]:--state.counter[action.element._id]}
 			
 		}
 		case ADD_BUNS:
 			return {
 				...state,
 				bun: action.bun,
+
+				counterBun:  {[action.bun._id] : 2}
 			
 		}
 		default: {

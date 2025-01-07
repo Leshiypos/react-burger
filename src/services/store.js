@@ -7,7 +7,7 @@ import { thunk } from "redux-thunk";
 
 const rootReducer = combineReducers({
 	ingredients : ingredientsReducer,
-	constructor: constructorReducer,
+	selectIngredients: constructorReducer,
 	details: detailsReducer,
 });
 
