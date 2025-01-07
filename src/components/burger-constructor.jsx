@@ -17,15 +17,16 @@ import {
   addIngredient,
   addBuns,
   deleteIngredient,
-} from "../services/constructor/actions";
+} from "../services/burger-constructor/actions";
+import { getBurgerConsctructorIngredients } from "../services/burger-constructor/selectors";
 
 export default function BurgerConstructor({}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const ingredients = useSelector(
-    (store) => store.selectIngredients.ingredients
+  const { ingredients, bun, total } = useSelector(
+    getBurgerConsctructorIngredients
   );
-  const bun = useSelector((store) => store.selectIngredients.bun);
+
   const [, bunsRef] = useDrop({
     accept: "bun",
     drop(item) {
@@ -95,7 +96,7 @@ export default function BurgerConstructor({}) {
       </div>
       <div className={styles.order}>
         <div className={styles.currency}>
-          610 <CurrencyIcon type="primary" />
+          {total} <CurrencyIcon type="primary" />
         </div>
         <Button
           htmlType="button"
