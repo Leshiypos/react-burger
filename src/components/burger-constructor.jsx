@@ -7,26 +7,26 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "./modal";
 import OrderDetails from "./order-details";
-import { useState } from "react";
 import PropTypes from "prop-types";
 import dataPropTypes from "../util/type.js";
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  DELETE_INGREDIENT,
   addIngredient,
   addBuns,
   deleteIngredient,
+  RESET_INGREDIENTS,
 } from "../services/burger-constructor/actions";
 import { getBurgerConsctructorIngredients } from "../services/burger-constructor/selectors";
+import { sendOrderAction } from "../services/order/actions";
+import { getResponseOrder } from "../services/order/selector";
 
 export default function BurgerConstructor({}) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const { ingredients, bun, total } = useSelector(
+  const { ingredients, bun, total, request } = useSelector(
     getBurgerConsctructorIngredients
   );
-
+  const { responseOrder } = useSelector(getResponseOrder);
   const [, bunsRef] = useDrop({
     accept: "bun",
     drop(item) {
@@ -39,8 +39,14 @@ export default function BurgerConstructor({}) {
       dispatch(addIngredient(item));
     },
   });
-  const handleClose = (elem) => {
+  const handleDeleteIngredient = (elem) => {
     dispatch(deleteIngredient(elem));
+  };
+  const handlePlaceAnOrder = () => {
+    dispatch(sendOrderAction(request));
+    dispatch({
+      type: RESET_INGREDIENTS,
+    });
   };
 
   return (
@@ -71,7 +77,7 @@ export default function BurgerConstructor({}) {
                   text={elem.name}
                   price={elem.price}
                   thumbnail={elem.image_large}
-                  handleClose={() => handleClose(elem)}
+                  handleClose={() => handleDeleteIngredient(elem)}
                 />
               </div>
             ))
@@ -102,17 +108,14 @@ export default function BurgerConstructor({}) {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => setIsModalOpen(true)}
+          onClick={handlePlaceAnOrder}
+          disabled={!bun}
         >
           Оформить заказ
         </Button>
       </div>
-      {isModalOpen && (
-        <Modal
-          title=""
-          isOpen={isModalOpen}
-          onClick={(current) => setIsModalOpen(current)}
-        >
+      {responseOrder && (
+        <Modal title="">
           <OrderDetails />
         </Modal>
       )}

@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "./modal-overlay";
 import { HIDE_DETAILS } from "../services/details/actions";
+import { HIDE_ORDER } from "../services/order/actions";
 
 export default function Modal({ children, title = "" }) {
   const dispatch = useDispatch();
@@ -23,6 +24,9 @@ export default function Modal({ children, title = "" }) {
   const handlHideModal = () => {
     dispatch({
       type: HIDE_DETAILS,
+    });
+    dispatch({
+      type: HIDE_ORDER,
     });
   };
 

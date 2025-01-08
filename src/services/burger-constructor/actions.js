@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 export const ADD_INGREDIENT = 'constructor/addIngredient';
 export const DELETE_INGREDIENT = 'constructor/deleteIngredient';
 export const ADD_BUNS = 'constructor/addBuns';
+export const RESET_INGREDIENTS = 'constructor/resetIngredients';
 
 
 export const addIngredient = (ingredient)=>(dispatch)=>{

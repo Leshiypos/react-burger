@@ -4,11 +4,13 @@ import { reducer as ingredientsReducer } from "./ingredients/reducer";
 import { reducer as constructorReducer } from "./burger-constructor/reducer";
 import { reducer as detailsReducer } from "./details/reducer";
 import { thunk } from "redux-thunk";
+import { reducer as orderReducer } from "./order/reducer";
 
 const rootReducer = combineReducers({
 	ingredients : ingredientsReducer,
 	selectIngredients: constructorReducer,
 	details: detailsReducer,
+	order: orderReducer,
 });
 
 

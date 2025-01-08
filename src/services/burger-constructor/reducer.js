@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUNS } from "./actions";
+import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUNS, RESET_INGREDIENTS } from "./actions";
 
 const initialState = {
 		bun: null,
@@ -31,8 +31,9 @@ export const reducer = (state = initialState, action) =>{
 				counterBun:  {[action.bun._id] : 2}
 			
 		}
-		default: {
-			return state
-		}
+		case RESET_INGREDIENTS:
+			return initialState;
+		default: 
+			return state;
 	}
 }
