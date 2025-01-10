@@ -20,6 +20,7 @@ import {
 import { getBurgerConsctructorIngredients } from "../services/burger-constructor/selectors";
 import { sendOrderAction } from "../services/order/actions";
 import { getResponseOrder } from "../services/order/selector";
+import DragItemElement from "./drag-item-element";
 
 export default function BurgerConstructor({}) {
   const dispatch = useDispatch();
@@ -70,8 +71,8 @@ export default function BurgerConstructor({}) {
 
         <div className={styles.work_area} ref={constIngrRef}>
           {ingredients?.length > 0 ? (
-            ingredients.map((elem) => (
-              <div key={elem.key}>
+            ingredients.map((elem, index) => (
+              <DragItemElement index={index} key={elem.key} id={elem.key}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                   text={elem.name}
@@ -79,7 +80,7 @@ export default function BurgerConstructor({}) {
                   thumbnail={elem.image_large}
                   handleClose={() => handleDeleteIngredient(elem)}
                 />
-              </div>
+              </DragItemElement>
             ))
           ) : (
             <div className={styles.no_ingredients}>Выберите ингредиент</div>

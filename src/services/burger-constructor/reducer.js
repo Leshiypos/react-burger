@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUNS, RESET_INGREDIENTS } from "./actions";
+import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUNS, RESET_INGREDIENTS, SORT_INGREDIENTS } from "./actions";
 
 const initialState = {
 		bun: null,
@@ -27,9 +27,14 @@ export const reducer = (state = initialState, action) =>{
 			return {
 				...state,
 				bun: action.bun,
-
 				counterBun:  {[action.bun._id] : 2}
-			
+		}
+		case SORT_INGREDIENTS :
+			const ingredients = [...state.ingredients];
+			ingredients.splice(action.hoverIndex, 0, ingredients.splice(action.dragIndex, 1)[0]);
+		return {
+			...state,
+			ingredients : ingredients,
 		}
 		case RESET_INGREDIENTS:
 			return initialState;

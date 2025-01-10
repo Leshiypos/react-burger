@@ -3,6 +3,8 @@ export const ADD_INGREDIENT = 'constructor/addIngredient';
 export const DELETE_INGREDIENT = 'constructor/deleteIngredient';
 export const ADD_BUNS = 'constructor/addBuns';
 export const RESET_INGREDIENTS = 'constructor/resetIngredients';
+export const SORT_INGREDIENTS = 'constructor/sortIngredients';
+
 
 
 export const addIngredient = (ingredient)=>(dispatch)=>{
