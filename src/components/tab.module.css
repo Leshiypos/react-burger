@@ -4,8 +4,12 @@
 	cursor: pointer;
 	text-align: center;
 	width: 100%;
+	border-bottom: 2px solid rgb(76, 76, 255) ;
+	transition: all 0.5s;
+	
 }
 
 .inActive{
 	composes: text_color_inactive from global;
+	border-bottom: 2px solid rgb(44, 44, 53) ;
 }
