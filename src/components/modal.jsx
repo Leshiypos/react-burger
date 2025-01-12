@@ -14,10 +14,7 @@ export default function Modal({ children, title = "" }) {
   useEffect(() => {
     const closeModal = (event) => {
       if (event.key === "Escape") {
-        dispatch({ type: HIDE_DETAILS });
-        dispatch({
-          type: HIDE_ORDER,
-        });
+        handlHideModal();
       }
       document.removeEventListener("keydown", closeModal);
     };
@@ -26,14 +23,14 @@ export default function Modal({ children, title = "" }) {
     return () => document.removeEventListener("keydown", closeModal);
   }, []);
 
-  const handlHideModal = () => {
+  function handlHideModal() {
     dispatch({
       type: HIDE_DETAILS,
     });
     dispatch({
       type: HIDE_ORDER,
     });
-  };
+  }
 
   return createPortal(
     <>
