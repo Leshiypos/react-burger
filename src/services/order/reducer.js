@@ -4,6 +4,7 @@ const initialState = {
 	loading: false,
 	error: false,
 	response: null,
+	showOrder: false,
 }
 
 export const reducer = (state=initialState, action)=>{
@@ -11,6 +12,7 @@ export const reducer = (state=initialState, action)=>{
 		case SEND_ORDER:
 			return {
 				...state,
+				showOrder:true,
 				loading:true,
 				error: false,
 			}
@@ -28,8 +30,7 @@ export const reducer = (state=initialState, action)=>{
 		}
 		case HIDE_ORDER:
 			return {
-				...state,
-				response: null,
+				initialState
 			}
 		default:
 			return state;

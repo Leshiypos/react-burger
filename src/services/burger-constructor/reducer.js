@@ -7,6 +7,14 @@ const initialState = {
 		ingredients: []
 }
 
+const sortIngredients = (mass, toIndex, fromIndex ) =>{
+	const ingredients = [...mass];
+	ingredients.splice(toIndex, 0, ingredients.splice(fromIndex, 1)[0]);
+	return ingredients;
+}
+
+
+
 export const reducer = (state = initialState, action) =>{
 	switch (action.type){
 		case ADD_INGREDIENT : 
@@ -30,11 +38,9 @@ export const reducer = (state = initialState, action) =>{
 				counterBun:  {[action.bun._id] : 2}
 		}
 		case SORT_INGREDIENTS :
-			const ingredients = [...state.ingredients];
-			ingredients.splice(action.hoverIndex, 0, ingredients.splice(action.dragIndex, 1)[0]);
 		return {
 			...state,
-			ingredients : ingredients,
+			ingredients : sortIngredients(state.ingredients, action.hoverIndex, action.dragIndex),
 		}
 		case RESET_INGREDIENTS:
 			return initialState;

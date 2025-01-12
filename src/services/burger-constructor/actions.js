@@ -9,7 +9,6 @@ export const SORT_INGREDIENTS = 'constructor/sortIngredients';
 
 export const addIngredient = (ingredient)=>(dispatch)=>{
 	const key = uuidv4();
-	console.log("Перетащил", key);
 	dispatch({
 	  type: ADD_INGREDIENT,
 	  ingredient: { ...ingredient, key },
@@ -26,9 +25,16 @@ export const deleteIngredient = (elem) => (dispatch) => {
 
 
 export const addBuns = (ingredient)=>(dispatch)=>{
-	console.log("Перетащил булку", ingredient);
 	dispatch({
 	  type: ADD_BUNS,
 	  bun: ingredient,
 	});
+}
+
+export const sortIngredients = (dragIndex,hoverIndex)=>(dispatch)=>{
+	dispatch({
+		type: SORT_INGREDIENTS,
+        dragIndex: dragIndex,
+        hoverIndex: hoverIndex,
+	})
 }

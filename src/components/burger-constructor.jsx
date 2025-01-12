@@ -27,7 +27,7 @@ export default function BurgerConstructor({}) {
   const { ingredients, bun, total, request } = useSelector(
     getBurgerConsctructorIngredients
   );
-  const { responseOrder } = useSelector(getResponseOrder);
+  const { showOrder } = useSelector(getResponseOrder);
   const [, bunsRef] = useDrop({
     accept: "bun",
     drop(item) {
@@ -115,7 +115,7 @@ export default function BurgerConstructor({}) {
           Оформить заказ
         </Button>
       </div>
-      {responseOrder && (
+      {showOrder && (
         <Modal title="">
           <OrderDetails />
         </Modal>
