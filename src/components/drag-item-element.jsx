@@ -1,10 +1,7 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
-import {
-  SORT_INGREDIENTS,
-  sortIngredients,
-} from "../services/burger-constructor/actions";
+import { sortIngredients } from "../services/burger-constructor/actions";
 
 const ItemTypes = {
   CARD: "card",

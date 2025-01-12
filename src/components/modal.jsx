@@ -13,7 +13,12 @@ export default function Modal({ children, title = "" }) {
   const dispatch = useDispatch();
   useEffect(() => {
     const closeModal = (event) => {
-      if (event.key === "Escape") dispatch({ type: HIDE_DETAILS });
+      if (event.key === "Escape") {
+        dispatch({ type: HIDE_DETAILS });
+        dispatch({
+          type: HIDE_ORDER,
+        });
+      }
       document.removeEventListener("keydown", closeModal);
     };
     document.addEventListener("keydown", closeModal);
@@ -50,5 +55,5 @@ export default function Modal({ children, title = "" }) {
 }
 
 Modal.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };

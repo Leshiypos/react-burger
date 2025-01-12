@@ -8,7 +8,6 @@ import dataPropTypes from "../util/type.js";
 import { useDispatch, useSelector } from "react-redux";
 import { SHOW_DETAILS } from "../services/details/actions";
 import { useDrag } from "react-dnd";
-import { getIngredientsState } from "../services/ingredients/selectors";
 
 export default function Card({ ingredient }) {
   const dispatch = useDispatch();

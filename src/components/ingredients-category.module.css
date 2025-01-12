@@ -2,6 +2,5 @@
 	composes: pl-6 pr-4 pb-10 pr-2 from global;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	/* background-color: rgb(65, 65, 65); */
 	list-style: none;
 }

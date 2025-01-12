@@ -7,8 +7,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "./modal";
 import OrderDetails from "./order-details";
-import PropTypes from "prop-types";
-import dataPropTypes from "../util/type.js";
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,7 +20,7 @@ import { sendOrderAction } from "../services/order/actions";
 import { getResponseOrder } from "../services/order/selector";
 import DragItemElement from "./drag-item-element";
 
-export default function BurgerConstructor({}) {
+export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const { ingredients, bun, total, request } = useSelector(
     getBurgerConsctructorIngredients
@@ -123,7 +121,3 @@ export default function BurgerConstructor({}) {
     </div>
   );
 }
-
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(dataPropTypes).isRequired,
-};
