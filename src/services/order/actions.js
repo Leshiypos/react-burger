@@ -1,4 +1,4 @@
-import { sendOrder } from "../../util/api";
+import { request } from "../../util/api";
 
 export const SEND_ORDER = 'order/sendOrder';
 export const SEND_ORDER_FAILED = 'order/failed';
@@ -7,9 +7,15 @@ export const HIDE_ORDER = 'order/hideOrder';
 
 
 
-export const sendOrderAction = (request) => (dispatch) => {
+export const sendOrderAction = (req) => (dispatch) => {
 	dispatch({type : SEND_ORDER});
-	sendOrder(request)
+	request('/orders', {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(req)
+	})
 		.then(response=>{
 			dispatch({
 				type:SEND_ORDER_SACCESS,
