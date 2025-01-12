@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SHOW_DETAILS } from "../services/details/actions";
 import { useDrag } from "react-dnd";
 
-export default function Card({ ingredient }) {
+export default function Card({ ingredient, onClose }) {
   const dispatch = useDispatch();
   const selectIngredients = useSelector((store) => store.selectIngredients);
   const [, ingredientRef] = useDrag({
@@ -21,6 +21,7 @@ export default function Card({ ingredient }) {
       ? selectIngredients.counterBun
       : selectIngredients.counter;
   const handleShowModal = () => {
+    onClose(true);
     dispatch({
       type: SHOW_DETAILS,
       details: ingredient,
@@ -55,4 +56,5 @@ export default function Card({ ingredient }) {
 
 Card.propTypes = {
   ingredient: dataPropTypes.isRequired,
+  onClose: PropTypes.func,
 };

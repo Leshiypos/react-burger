@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { sortIngredients } from "../services/burger-constructor/actions";
+import PropTypes from "prop-types";
 
 const ItemTypes = {
   CARD: "card",
@@ -54,3 +55,8 @@ export default function DragItemElement({ children, index, id }) {
     </div>
   );
 }
+
+DragItemElement.propTypes = {
+  index: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+};

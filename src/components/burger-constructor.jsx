@@ -13,19 +13,17 @@ import {
   addIngredient,
   addBuns,
   deleteIngredient,
-  RESET_INGREDIENTS,
 } from "../services/burger-constructor/actions";
 import { getBurgerConsctructorIngredients } from "../services/burger-constructor/selectors";
-import { sendOrderAction } from "../services/order/actions";
-import { getResponseOrder } from "../services/order/selector";
 import DragItemElement from "./drag-item-element";
+import { useState } from "react";
 
 export default function BurgerConstructor() {
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
-  const { ingredients, bun, total, request } = useSelector(
+  const { ingredients, bun, total } = useSelector(
     getBurgerConsctructorIngredients
   );
-  const { showOrder } = useSelector(getResponseOrder);
   const [, bunsRef] = useDrop({
     accept: "bun",
     drop(item) {
@@ -40,12 +38,6 @@ export default function BurgerConstructor() {
   });
   const handleDeleteIngredient = (elem) => {
     dispatch(deleteIngredient(elem));
-  };
-  const handlePlaceAnOrder = () => {
-    dispatch(sendOrderAction(request));
-    dispatch({
-      type: RESET_INGREDIENTS,
-    });
   };
 
   return (
@@ -107,14 +99,14 @@ export default function BurgerConstructor() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={handlePlaceAnOrder}
+          onClick={() => setIsOpen(true)}
           disabled={!bun}
         >
           Оформить заказ
         </Button>
       </div>
-      {showOrder && (
-        <Modal title="">
+      {isOpen && (
+        <Modal title="" onClose={setIsOpen}>
           <OrderDetails />
         </Modal>
       )}

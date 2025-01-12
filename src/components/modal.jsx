@@ -1,20 +1,16 @@
 import styles from "./modal.module.css";
 import { createPortal } from "react-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "./modal-overlay";
-import { HIDE_DETAILS } from "../services/details/actions";
-import { HIDE_ORDER } from "../services/order/actions";
 
-export default function Modal({ children, title = "" }) {
-  const dispatch = useDispatch();
+export default function Modal({ onClose = (f) => f, children, title = "" }) {
   useEffect(() => {
     const closeModal = (event) => {
       if (event.key === "Escape") {
-        handlHideModal();
+        onClose(false);
       }
       document.removeEventListener("keydown", closeModal);
     };
@@ -22,15 +18,6 @@ export default function Modal({ children, title = "" }) {
 
     return () => document.removeEventListener("keydown", closeModal);
   }, []);
-
-  function handlHideModal() {
-    dispatch({
-      type: HIDE_DETAILS,
-    });
-    dispatch({
-      type: HIDE_ORDER,
-    });
-  }
 
   return createPortal(
     <>
@@ -40,12 +27,12 @@ export default function Modal({ children, title = "" }) {
           <CloseIcon
             type="primary"
             className={styles.close}
-            onClick={handlHideModal}
+            onClick={() => onClose(false)}
           />
         </div>
         {children}
       </div>
-      <ModalOverlay onClick={handlHideModal} />
+      <ModalOverlay onClick={() => onClose(false)} />
     </>,
     document.getElementById("modal")
   );
@@ -53,4 +40,5 @@ export default function Modal({ children, title = "" }) {
 
 Modal.propTypes = {
   title: PropTypes.string,
+  onClose: PropTypes.func,
 };

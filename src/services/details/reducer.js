@@ -12,10 +12,7 @@ export const reducer = (state=initialState, action) => {
 				details: action.details,
 			};
 		case HIDE_DETAILS : 
-			return {
-				...state,
-				details: null,
-			}
+			return initialState;
 		default:
 			return state;
 	}

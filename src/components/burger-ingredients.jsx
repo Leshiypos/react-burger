@@ -8,6 +8,7 @@ import IngredientDetails from "./ingredient-details";
 import { getDetails } from "../services/details/selectors";
 
 export default function BurgerIngredients() {
+  const [isOpen, setIsOpen] = useState(false);
   const [tab, setTab] = useState("buns");
   const tabRef = useRef();
   const bunsRef = useRef();
@@ -35,17 +36,25 @@ export default function BurgerIngredients() {
       <Tabs active={tab} onChange={(current) => setTab(current)} ref={tabRef} />
       <ul className={styles.work_area} onScroll={handleScrollСhangeTab}>
         <li ref={bunsRef}>
-          <IndredientsCategory title="Булки" type="buns" />
+          <IndredientsCategory title="Булки" type="buns" onClose={setIsOpen} />
         </li>
         <li ref={saucesRef}>
-          <IndredientsCategory title="Соусы" type="sauces" />
+          <IndredientsCategory
+            title="Соусы"
+            type="sauces"
+            onClose={setIsOpen}
+          />
         </li>
         <li>
-          <IndredientsCategory title="Начинка" type="mains" />
+          <IndredientsCategory
+            title="Начинка"
+            type="mains"
+            onClose={setIsOpen}
+          />
         </li>
       </ul>
-      {details && (
-        <Modal title="Детали ингридиента">
+      {isOpen && (
+        <Modal title="Детали ингридиента" onClose={setIsOpen}>
           <IngredientDetails />
         </Modal>
       )}

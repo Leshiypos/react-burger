@@ -4,7 +4,11 @@ import PropTypes from "prop-types";
 import { getIngredientsByBategories } from "../services/ingredients/selectors";
 import { useSelector } from "react-redux";
 
-export default function IndredientsCategory({ title, type }) {
+export default function IndredientsCategory({
+  title,
+  type,
+  onClose = (f) => f,
+}) {
   const { ingredientsSortByCategory } = useSelector(getIngredientsByBategories);
 
   return (
@@ -12,7 +16,7 @@ export default function IndredientsCategory({ title, type }) {
       <h2>{title}</h2>
       <ul className={styles.cards}>
         {ingredientsSortByCategory[type].map((elem) => (
-          <Card key={elem._id} ingredient={elem} />
+          <Card key={elem._id} ingredient={elem} onClose={onClose} />
         ))}
       </ul>
     </>
@@ -22,4 +26,5 @@ export default function IndredientsCategory({ title, type }) {
 IndredientsCategory.propTypes = {
   type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  onClose: PropTypes.func,
 };
