@@ -15,8 +15,10 @@ export const getIngredientsByBategories = createSelector([
 	(state) => state.ingredients,
 ],
 (state) => ({
-	buns : state.ingredients.filter((ingr) => ingr.type == "bun"),
-	mains : state.ingredients.filter((ingr) => ingr.type == "main"),
-	sauces : state.ingredients.filter((ingr) => ingr.type == "sauce"),
+	ingredientsSortByCategory: {
+		buns : state.ingredients.filter((ingr) => ingr.type == "bun"),
+		mains : state.ingredients.filter((ingr) => ingr.type == "main"),
+		sauces : state.ingredients.filter((ingr) => ingr.type == "sauce"),
+	},
 })
 )

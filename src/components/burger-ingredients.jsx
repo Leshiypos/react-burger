@@ -6,7 +6,6 @@ import Tabs from "./tabs";
 import Modal from "./modal";
 import IngredientDetails from "./ingredient-details";
 import { getDetails } from "../services/details/selectors";
-import { getIngredientsByBategories } from "../services/ingredients/selectors";
 
 export default function BurgerIngredients() {
   const [tab, setTab] = useState("buns");
@@ -15,7 +14,6 @@ export default function BurgerIngredients() {
   const saucesRef = useRef();
 
   const { details } = useSelector(getDetails);
-  const { buns, mains, sauces } = useSelector(getIngredientsByBategories);
 
   const handleScrollСhangeTab = () => {
     const bunsDef =
@@ -37,13 +35,13 @@ export default function BurgerIngredients() {
       <Tabs active={tab} onChange={(current) => setTab(current)} ref={tabRef} />
       <ul className={styles.work_area} onScroll={handleScrollСhangeTab}>
         <li ref={bunsRef}>
-          <IndredientsCategory title="Булки" ingredients={buns} />
+          <IndredientsCategory title="Булки" type="buns" />
         </li>
         <li ref={saucesRef}>
-          <IndredientsCategory title="Соусы" ingredients={sauces} />
+          <IndredientsCategory title="Соусы" type="sauces" />
         </li>
         <li>
-          <IndredientsCategory title="Начинка" ingredients={mains} />
+          <IndredientsCategory title="Начинка" type="mains" />
         </li>
       </ul>
       {details && (

@@ -44,7 +44,7 @@ function App() {
             <p>Произошла ошибка загрузки данных</p>
           ) : ingredients.length > 0 ? (
             <section>
-              <BurgerConstructor ingredients={ingredients} />
+              <BurgerConstructor />
             </section>
           ) : (
             <p>Нет данных</p>
