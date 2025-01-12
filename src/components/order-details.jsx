@@ -19,7 +19,7 @@ export default function OrderDetails() {
         <>
           <div className={styles.score}>{responseOrder.order.number}</div>
           <div className={styles.description}>{responseOrder.name}</div>
-          <img src={img} alt="" className={styles.img} />
+          <img src={img} alt="done" className={styles.img} />
           <div className={styles.message}>Ваш заказ начали готовить</div>
           <div className={styles.message_bottom}>
             Дождитесь готовности на орбитальной станции

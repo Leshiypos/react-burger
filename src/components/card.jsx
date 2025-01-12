@@ -42,7 +42,7 @@ export default function Card({ ingredient }) {
             extraClass="m-1"
           />
         )}
-        <img src={ingredient.image} alt="" />
+        <img src={ingredient.image} alt={ingredient.name} />
         <div className={styles.diamond}>
           <span>{ingredient.price}</span>
           <CurrencyIcon type="primary" />

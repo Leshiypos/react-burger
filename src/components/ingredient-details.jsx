@@ -7,7 +7,7 @@ export default function IngredientDetails() {
   return (
     <>
       <div className={styles.content}>
-        <img src={details.image_large} alt="" />
+        <img src={details.image_large} alt={details.name} />
 
         <div className={styles.name}>{details.name}</div>
         <div className={styles.description}>
