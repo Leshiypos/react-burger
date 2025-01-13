@@ -1,19 +1,10 @@
 import styles from "./ingredient-details.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getDetails } from "../services/details/selectors";
-import { useEffect } from "react";
-import { HIDE_DETAILS } from "../services/details/actions";
 
 export default function IngredientDetails() {
-  const dispatch = useDispatch();
   const { details } = useSelector(getDetails);
-  useEffect(() => {
-    return () => {
-      dispatch({
-        type: HIDE_DETAILS,
-      });
-    };
-  }, []);
+
   return (
     <>
       <div className={styles.content}>

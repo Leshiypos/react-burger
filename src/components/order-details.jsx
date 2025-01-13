@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getResponseOrder } from "../services/order/selector";
 import Preloader from "./preload";
 import { useEffect } from "react";
-import { HIDE_ORDER, sendOrderAction } from "../services/order/actions";
-import { RESET_INGREDIENTS } from "../services/burger-constructor/actions";
+import { sendOrderAction } from "../services/order/actions";
 import { getBurgerConsctructorIngredients } from "../services/burger-constructor/selectors";
 
 export default function OrderDetails() {
@@ -13,14 +12,6 @@ export default function OrderDetails() {
   const { request } = useSelector(getBurgerConsctructorIngredients);
   useEffect(() => {
     dispatch(sendOrderAction(request));
-    dispatch({
-      type: RESET_INGREDIENTS,
-    });
-    return () => {
-      dispatch({
-        type: HIDE_ORDER,
-      });
-    };
   }, []);
   const { error, loading, responseOrder } = useSelector(getResponseOrder);
   return (

@@ -10,7 +10,7 @@ export default function Modal({ onClose = (f) => f, children, title = "" }) {
   useEffect(() => {
     const closeModal = (event) => {
       if (event.key === "Escape") {
-        onClose(false);
+        onClose();
       }
       document.removeEventListener("keydown", closeModal);
     };
@@ -27,12 +27,12 @@ export default function Modal({ onClose = (f) => f, children, title = "" }) {
           <CloseIcon
             type="primary"
             className={styles.close}
-            onClick={() => onClose(false)}
+            onClick={() => onClose()}
           />
         </div>
         {children}
       </div>
-      <ModalOverlay onClick={() => onClose(false)} />
+      <ModalOverlay onClick={() => onClose()} />
     </>,
     document.getElementById("modal")
   );

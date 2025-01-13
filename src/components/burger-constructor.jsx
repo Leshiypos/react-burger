@@ -13,10 +13,12 @@ import {
   addIngredient,
   addBuns,
   deleteIngredient,
+  RESET_INGREDIENTS,
 } from "../services/burger-constructor/actions";
 import { getBurgerConsctructorIngredients } from "../services/burger-constructor/selectors";
 import DragItemElement from "./drag-item-element";
 import { useState } from "react";
+import { HIDE_ORDER } from "../services/order/actions";
 
 export default function BurgerConstructor() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,6 +40,16 @@ export default function BurgerConstructor() {
   });
   const handleDeleteIngredient = (elem) => {
     dispatch(deleteIngredient(elem));
+  };
+
+  const handleModalClose = () => {
+    setIsOpen(false);
+    dispatch({
+      type: RESET_INGREDIENTS,
+    });
+    dispatch({
+      type: HIDE_ORDER,
+    });
   };
 
   return (
@@ -106,7 +118,7 @@ export default function BurgerConstructor() {
         </Button>
       </div>
       {isOpen && (
-        <Modal title="" onClose={setIsOpen}>
+        <Modal title="" onClose={handleModalClose}>
           <OrderDetails />
         </Modal>
       )}
