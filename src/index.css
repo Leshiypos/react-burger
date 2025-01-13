@@ -7,18 +7,3 @@
 	max-height: 100%;
 	overflow: hidden;
 }
-
-.flex{
-	display: flex;
-}
-.al_cen{
-	margin-left: auto;
-	margin-right: auto;
-}
-
-main{
-	display: grid;
-	max-width: 1240px;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 40px;
-}

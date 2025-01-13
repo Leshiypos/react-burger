@@ -10,9 +10,9 @@ import PropTypes from "prop-types";
 
 export default function AppHeader({ active, onChange }) {
   return (
-    <header className={styles.header + " pt-4 pb-4"}>
+    <header className={styles.header}>
       <div className={styles.conteiner}>
-        <div className="flex">
+        <div className={styles.flex}>
           <ButtonMenu
             isActive={active === "consctructor"}
             onClick={() => onChange("consctructor")}

@@ -1,4 +1,4 @@
-import "./App.css";
+import styles from "./App.module.css";
 import AppHeader from "./components/app-header";
 import BurgerIngredients from "./components/burger-ingredients";
 import BurgerConstructor from "./components/burger-constructor";
@@ -22,7 +22,7 @@ function App() {
     <>
       <AppHeader active={button} onChange={(current) => setButton(current)} />
       <DndProvider backend={HTML5Backend}>
-        <main className="al_cen">
+        <main className={styles.main}>
           {loading ? (
             <p>Загрузка данных</p>
           ) : error ? (
