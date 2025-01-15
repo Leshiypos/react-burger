@@ -1,15 +1,8 @@
 .work_area{
 	overflow: auto;
 	height: 63vh;
-}
-.cards{
-	composes: pl-6 pr-4 pb-10 pr-2 from global;
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	/* background-color: rgb(65, 65, 65); */
 	list-style: none;
 }
-
 .title{
 	composes: mb-6 text text_type_main-medium from global;
 }

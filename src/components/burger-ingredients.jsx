@@ -1,68 +1,61 @@
-import { useState } from "react";
-import Card from "./card";
+import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import IndredientsCategory from "./ingredients-category";
 import styles from "./burger-ingredients.module.css";
 import Tabs from "./tabs";
 import Modal from "./modal";
 import IngredientDetails from "./ingredient-details";
-import PropTypes from "prop-types";
-import dataPropTypes from "../util/type.js";
+import { getDetails } from "../services/details/selectors";
+import { HIDE_DETAILS } from "../services/details/actions";
 
-export default function BurgerIngredients({ data }) {
+export default function BurgerIngredients() {
   const [tab, setTab] = useState("buns");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [dataModal, setDataModal] = useState({});
+  const tabRef = useRef();
+  const bunsRef = useRef();
+  const saucesRef = useRef();
+  const { details } = useSelector(getDetails);
+  const dispatch = useDispatch();
 
-  const hendleModalOpen = (dataModal, isOpen) => {
-    setDataModal(dataModal);
-    setIsModalOpen(isOpen);
+  const handleScrollСhangeTab = () => {
+    const bunsDef =
+      bunsRef.current.getBoundingClientRect().bottom -
+      tabRef.current.getBoundingClientRect().bottom;
+    const saucesDef =
+      saucesRef.current.getBoundingClientRect().bottom -
+      tabRef.current.getBoundingClientRect().bottom;
+
+    bunsDef > 0
+      ? setTab("buns")
+      : saucesDef > 0
+      ? setTab("sauces")
+      : setTab("mains");
   };
 
-  const bun = data.filter((ingr) => ingr.type == "bun");
-  const main = data.filter((ingr) => ingr.type == "main");
-  const sauce = data.filter((ingr) => ingr.type == "sauce");
+  const handleCloseModal = () => {
+    dispatch({
+      type: HIDE_DETAILS,
+    });
+  };
 
   return (
     <div className={styles.burger_ingredients}>
-      <Tabs active={tab} onChange={(current) => setTab(current)} />
-      <div className={styles.work_area}>
-        <div>
-          <h2 className={styles.title}>Булки</h2>
-          <ul className={styles.cards}>
-            {bun.map((elem) => (
-              <Card key={elem._id} data={elem} onClick={hendleModalOpen} />
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2>Соусы</h2>
-          <ul className={styles.cards}>
-            {sauce.map((elem) => (
-              <Card key={elem._id} data={elem} onClick={hendleModalOpen} />
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2>Начинка</h2>
-          <ul className={styles.cards}>
-            {main.map((elem) => (
-              <Card key={elem._id} data={elem} onClick={hendleModalOpen} />
-            ))}
-          </ul>
-        </div>
-      </div>
-      {isModalOpen && (
-        <Modal
-          title="Детали ингридиента"
-          isOpen={isModalOpen}
-          onClick={(current) => setIsModalOpen(current)}
-        >
-          <IngredientDetails data={dataModal} />
+      <Tabs active={tab} onChange={(current) => setTab(current)} ref={tabRef} />
+      <ul className={styles.work_area} onScroll={handleScrollСhangeTab}>
+        <li ref={bunsRef}>
+          <IndredientsCategory title="Булки" type="buns" />
+        </li>
+        <li ref={saucesRef}>
+          <IndredientsCategory title="Соусы" type="sauces" />
+        </li>
+        <li>
+          <IndredientsCategory title="Начинка" type="mains" />
+        </li>
+      </ul>
+      {details && (
+        <Modal title="Детали ингридиента" onClose={handleCloseModal}>
+          <IngredientDetails />
         </Modal>
       )}
     </div>
   );
 }
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes).isRequired,
-};

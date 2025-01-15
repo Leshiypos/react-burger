@@ -1,5 +1,5 @@
 .tabs {
-	composes: mb-10 text text_type_main-default from global;
+	composes:  text text_type_main-default from global;
 	list-style: none;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);

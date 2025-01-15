@@ -12,7 +12,7 @@
 	flex-direction: column;
 	gap: 10px;
 	overflow: auto;
-	height: 48vh;
+	max-height: 48vh;
 }
 .work_area::-webkit-scrollbar{
 	width: 2px;
@@ -35,4 +35,38 @@
 }
 .currency svg{
 	transform: scale(1.5)
+}
+
+.no_ingredients{
+	composes: pt-4 pb-4 pl-6 pr-6 ml-8 text text_type_main-default from global;
+    border-radius: 40px;
+    background: rgb(47, 47, 55);
+    width: 80%;
+	height: 48px;
+    font-family: 'Jet Brains Mono';
+    line-height: 24px;
+    color: #F2F2F3;
+	text-align: center;
+}
+.no_bun_top{
+	composes: pt-4 pb-4 pl-6 pr-6 ml-8 text text_type_main-default from global;
+    border-radius: 88px 88px 40px 40px;
+    background: rgb(47, 47, 55);
+    width: 80%;
+	height: 48px;
+    font-family: 'Jet Brains Mono';
+    line-height: 24px;
+    color: #F2F2F3;
+	text-align: center;
+}
+.no_bun_bottom{
+	composes: pt-4 pb-4 pl-6 pr-6 ml-8 text text_type_main-default from global;
+    border-radius:  40px 40px 88px 88px;
+    background: rgb(47, 47, 55);
+    width: 80%;
+	height: 48px;
+    font-family: 'Jet Brains Mono';
+    line-height: 24px;
+    color: #F2F2F3;
+	text-align: center;
 }

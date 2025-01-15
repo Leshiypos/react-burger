@@ -1,0 +1,6 @@
+.preloader{
+	composes: mt-10 from global;
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
