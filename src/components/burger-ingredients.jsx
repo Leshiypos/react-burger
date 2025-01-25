@@ -6,7 +6,7 @@ import Tabs from "./tabs";
 import Modal from "./modal";
 import IngredientDetails from "./ingredient-details";
 import { getDetails } from "../services/details/selectors";
-import { HIDE_DETAILS } from "../services/details/actions";
+import { HIDE_DETAILS, hideDetails } from "../services/details/actions";
 
 export default function BurgerIngredients() {
   const [tab, setTab] = useState("buns");
@@ -32,9 +32,7 @@ export default function BurgerIngredients() {
   };
 
   const handleCloseModal = () => {
-    dispatch({
-      type: HIDE_DETAILS,
-    });
+    dispatch(hideDetails());
   };
 
   return (

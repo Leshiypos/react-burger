@@ -6,7 +6,7 @@ import styles from "./card.module.css";
 import PropTypes from "prop-types";
 import dataPropTypes from "../util/type.js";
 import { useDispatch, useSelector } from "react-redux";
-import { SHOW_DETAILS } from "../services/details/actions";
+import { showDetails } from "../services/details/actions";
 import { useDrag } from "react-dnd";
 
 export default function Card({ ingredient }) {
@@ -21,10 +21,7 @@ export default function Card({ ingredient }) {
       ? selectIngredients.counterBun
       : selectIngredients.counter;
   const handleShowModal = () => {
-    dispatch({
-      type: SHOW_DETAILS,
-      details: ingredient,
-    });
+    dispatch(showDetails(ingredient));
   };
 
   return (

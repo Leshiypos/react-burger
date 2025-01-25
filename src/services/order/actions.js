@@ -6,7 +6,11 @@ export const SEND_ORDER_SACCESS = 'order/saccess';
 export const HIDE_ORDER = 'order/hideOrder';
 
 
-
+export const hideOrder = ()=> (dispatch) =>{
+	dispatch({
+		type: HIDE_ORDER,
+	})
+}
 export const sendOrderAction = (req) => (dispatch) => {
 	dispatch({type : SEND_ORDER});
 	request('/orders', {

@@ -38,3 +38,8 @@ export const sortIngredients = (dragIndex,hoverIndex)=>(dispatch)=>{
         hoverIndex: hoverIndex,
 	})
 }
+export const resetIngredients  = () => (dispatch)=>{
+	dispatch({
+		type: RESET_INGREDIENTS,
+	});
+}
