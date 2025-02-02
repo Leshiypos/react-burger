@@ -4,7 +4,6 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import ButtonMenu from "./button-menu";
 import styles from "./app-header.module.css";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
@@ -54,5 +53,4 @@ export default function AppHeader() {
 
 AppHeader.propTypes = {
   active: PropTypes.oneOf(["consctructor", "order", "account"]),
-  onChange: PropTypes.func.isRequired,
 };
