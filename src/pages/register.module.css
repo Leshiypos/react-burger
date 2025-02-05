@@ -31,3 +31,14 @@
 .link:hover{
 	text-decoration: underline;
 }
+.form{
+	display: flex;
+	justify-content: center;
+	flex-flow: column;
+	gap: 24px;
+}
+.error{
+	composes: mb-4 text text_type_main-default from global;
+	text-align: center;
+	color: rgb(231, 34, 24);
+}
