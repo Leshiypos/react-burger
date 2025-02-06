@@ -12,6 +12,8 @@ import Profile from "./pages/profile";
 import ResetPassword from "./pages/reset-password";
 import { OnlyAuth, OnlyUnAuth } from "./components/protected-route";
 import { checkUserAuth } from "./services/user/action";
+import OrderHistory from "./pages/order-history";
+import ProfileForm from "./pages/profile-form";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,7 +39,10 @@ function App() {
           element={<OnlyUnAuth component={<ForgotPassword />} />}
         />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/profile" element={<OnlyAuth component={<Profile />} />} />
+        <Route path="/profile" element={<OnlyAuth component={<Profile />} />}>
+          <Route path="" element={<ProfileForm />} />
+          <Route path="orders" element={<OrderHistory />} />
+        </Route>
       </Routes>
     </>
   );
