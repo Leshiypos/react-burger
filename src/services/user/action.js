@@ -1,4 +1,4 @@
-import { request } from "../../util/api";
+import { fetchWithRefresh, request } from "../../util/api";
 
 export const SET_AUTH_CHECKED = 'user/setAuthChecked';
 export const SET_USER = 'user/setUser';
@@ -20,7 +20,7 @@ export const errorAuth = (error) => ({
 })
 
 const getUser = async ()=>{
-	const result = await request('/auth/user', {
+	const result = await fetchWithRefresh('/auth/user', {
 		method: "GET",
 		headers: {
 			'Content-Type': 'application/json;charset=utf-8',
@@ -135,3 +135,5 @@ export const resetPassword = (pass, token, cb) => (dispatch) => {
 	})
 	.catch(error => console.log(error))
 }
+
+
