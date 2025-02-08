@@ -8,7 +8,6 @@ const Protected = ({ onlyUnAuth = false, component }) => {
   // что сам факт проверки имел место.
   const { isAuthChecked, user } = useSelector(getUser);
   const location = useLocation();
-  console.log(user);
   if (!isAuthChecked) {
     // Запрос еще выполняется
     // Выводим прелоадер в ПР

@@ -7,9 +7,10 @@ import { Link } from "react-router";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { forgotPassword } from "../services/user/action";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 export default function ForgotPassword() {
+  const location = useLocation();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [respSuccess, setRespSuccess] = useState(false);
@@ -22,7 +23,12 @@ export default function ForgotPassword() {
   };
   return (
     <>
-      {respSuccess && <Navigate to="/reset-password" />}
+      {respSuccess && (
+        <Navigate
+          to="/reset-password"
+          state={{ sendRequest: respSuccess, from: location.pathname }}
+        />
+      )}
       <div className={styles.main}>
         <h1 className={styles.title}>Восстановление пароля</h1>
         <form className={styles.form}>

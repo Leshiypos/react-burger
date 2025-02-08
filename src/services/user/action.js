@@ -2,7 +2,6 @@ import { fetchWithRefresh, request } from "../../util/api";
 
 export const SET_AUTH_CHECKED = 'user/setAuthChecked';
 export const SET_USER = 'user/setUser';
-export const ERROR_AUTH = 'user/errorAuth';
 
 
 export const setAuthChecked = (value) => ({
@@ -13,10 +12,6 @@ export const setAuthChecked = (value) => ({
 export const setUser = (user) => ({
 	type: SET_USER,
 	payload: user,
-})
-export const errorAuth = (error) => ({
-	type: ERROR_AUTH,
-	payload: error,
 })
 
 const getUser = async ()=>{
@@ -38,7 +33,7 @@ const getUser = async ()=>{
 }
 
 
-export const register = (value) => (dispatch) => {
+export const register = (value, cb = f=>f) => (dispatch) => {
 	request('/auth/register',{
 		method: "POST",
 		headers: {
@@ -52,11 +47,11 @@ export const register = (value) => (dispatch) => {
 		localStorage.setItem('refreshToken',response.refreshToken );
 
 	}).catch(error=>{
-		dispatch(errorAuth(error));
+		cb(error.message);
 	})
 }
 
-export const login = (mail, pass) => (dispatch) => {
+export const login = (mail, pass, cb = f=>f) => (dispatch) => {
 	  	request('/auth/login',{
 			method: "POST",
 			headers: {
@@ -72,7 +67,7 @@ export const login = (mail, pass) => (dispatch) => {
 		dispatch(setUser(response.user));
 		dispatch(setAuthChecked(true));
 		}).catch(error=>{
-			dispatch(errorAuth(error));
+			cb(error.message);
 		})
 	};
 
@@ -87,6 +82,8 @@ export const login = (mail, pass) => (dispatch) => {
 			})
 		  }).then(() => {
 			dispatch(setUser(null));
+			localStorage.removeItem('accessToken');
+			localStorage.removeItem('refreshToken');
 		  });
 		};
 

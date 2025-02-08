@@ -6,21 +6,20 @@ import {
 import styles from "./login.module.css";
 import { Link } from "react-router";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../services/user/action";
-import { getUser } from "../services/user/selector";
 
 export default function Login() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { error } = useSelector(getUser);
+  const [errorMessage, setErrorMessage] = useState(null);
   const onChange = (e) => {
     if (e.target.name === "email") setEmail(e.target.value);
     if (e.target.name === "password") setPassword(e.target.value);
   };
   const onClick = () => {
-    dispatch(login(email, password));
+    dispatch(login(email, password, setErrorMessage));
   };
 
   return (
@@ -45,7 +44,7 @@ export default function Login() {
         </Button>
       </form>
       <div>
-        {error && <p className={styles.error}>{error.message}</p>}
+        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
         <p className={styles.help}>
           Вы - новый пользователь?{" "}
           <Link to={"/register"} className={styles.link}>

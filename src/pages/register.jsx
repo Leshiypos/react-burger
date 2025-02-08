@@ -7,18 +7,15 @@ import {
 import styles from "./register.module.css";
 import { Link } from "react-router";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { register } from "../services/user/action";
-import { useNavigate, Navigate } from "react-router-dom";
-import { getUser } from "../services/user/selector";
 
 export default function Register() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const [password, setPassword] = useState("");
-  const { error } = useSelector(getUser);
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus();
@@ -29,9 +26,8 @@ export default function Register() {
     if (e.target.name === "password") setPassword(e.target.value);
   };
   const onClick = () => {
-    dispatch(register({ email, password, name }));
+    dispatch(register({ email, password, name }, setErrorMessage));
   };
-  console.log(error);
   return (
     <div className={styles.main}>
       <h1 className={styles.title}>Регистрация</h1>
@@ -60,7 +56,7 @@ export default function Register() {
         </Button>
       </form>
       <div>
-        {error && <p className={styles.error}>{error.message}</p>}
+        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
         <p className={styles.help}>
           Уже зарегистрированы?{" "}
           <Link to={"/login"} className={styles.link}>

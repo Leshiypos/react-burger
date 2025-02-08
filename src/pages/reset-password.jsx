@@ -5,12 +5,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
 import { Link } from "react-router";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { resetPassword } from "../services/user/action";
 
 export default function ResetPassword() {
+  const location = useLocation();
   const dispatch = useDispatch();
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +24,13 @@ export default function ResetPassword() {
   const onClick = () => {
     dispatch(resetPassword(password, code, setRespSuccess));
   };
+  if (
+    location.state === null ||
+    location.state?.from !== "/forgot-password" ||
+    location.state?.sendRequest === false
+  ) {
+    return <Navigate to="/forgot-password" />;
+  }
 
   return (
     <>
