@@ -10,3 +10,11 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+.button_cancel {
+	composes: ml-4 mb-20 from global;
+	width:fit-content;
+	margin-right: auto;
+}
+.wrap_button {
+	text-align: right;
+}

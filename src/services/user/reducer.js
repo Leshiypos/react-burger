@@ -11,13 +11,11 @@ export const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				isAuthChecked: action.payload,
-				error: null,
 			}
 		case SET_USER : 
 		return {
 			...state,
 			user: action.payload,
-			error: null,
 		}
 		default : 
 		return state;

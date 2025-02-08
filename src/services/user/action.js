@@ -14,14 +14,8 @@ export const setUser = (user) => ({
 	payload: user,
 })
 
-const getUser = async ()=>{
-	const result = await fetchWithRefresh('/auth/user', {
-		method: "GET",
-		headers: {
-			'Content-Type': 'application/json;charset=utf-8',
-			authorization: localStorage.getItem('accessToken')
-		  },
-	});
+const getUser = async (url, options)=>{
+	const result = await fetchWithRefresh(url, options);
 
 	try {
 		return await result;
@@ -89,7 +83,13 @@ export const login = (mail, pass, cb = f=>f) => (dispatch) => {
 
 export const checkUserAuth = () => (dispatch) => {
         if (localStorage.getItem("accessToken")) {
-            getUser()
+            getUser('/auth/user', {
+				method: "GET",
+				headers: {
+					'Content-Type': 'application/json;charset=utf-8',
+					authorization: localStorage.getItem('accessToken')
+				  },
+			})
               .then(response =>{ 
 				dispatch(setUser(response.user))})
               .finally(() => dispatch(setAuthChecked(true)));
@@ -98,7 +98,26 @@ export const checkUserAuth = () => (dispatch) => {
         }
 };
 
-export const forgotPassword = (mail, cb) => (dispatch) =>{
+
+export const refreshUserData = (refreshData) => (dispatch) => {
+        if (localStorage.getItem("accessToken")) {
+            getUser('/auth/user', {
+				method: "PATCH",
+				headers: {
+					'Content-Type': 'application/json;charset=utf-8',
+					authorization: localStorage.getItem('accessToken')
+				  },
+				  body: JSON.stringify(refreshData),
+			})
+              .then(response =>{ 
+				dispatch(setUser(response.user))})
+              .finally(() => dispatch(setAuthChecked(true)));
+        } else {
+            dispatch(setAuthChecked(true));
+        }
+};
+
+export const forgotPassword = (mail, cb= f=>f) => (dispatch) =>{
 	request('/password-reset',{
 		method : "POST",
 		headers : {
