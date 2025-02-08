@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getIngredientsAction } from "./services/ingredients/actions";
 import Home from "./pages/home";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import ForgotPassword from "./pages/forgot-password";
@@ -14,8 +14,13 @@ import { OnlyAuth, OnlyUnAuth } from "./components/protected-route";
 import { checkUserAuth } from "./services/user/action";
 import OrderHistory from "./pages/order-history";
 import ProfileForm from "./pages/profile-form";
+import IngredientDetails from "./components/ingredient-details";
+import Modal from "./components/modal";
 
 function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state && location.state.background;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIngredientsAction());
@@ -24,11 +29,19 @@ function App() {
   useEffect(() => {
     dispatch(checkUserAuth());
   }, []);
+
+  const handleModalClose = () => {
+    navigate(-1);
+  };
   return (
     <>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route path="/" element={<Home />} />
+        <Route
+          path="/ingredients/:ingredientId"
+          element={<IngredientDetails />}
+        />
         <Route path="/login" element={<OnlyUnAuth component={<Login />} />} />
         <Route
           path="/register"
@@ -44,6 +57,18 @@ function App() {
           <Route path="orders" element={<OrderHistory />} />
         </Route>
       </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path="/ingredients/:ingredientId"
+            element={
+              <Modal title="Детали ингридиента" onClose={handleModalClose}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </>
   );
 }
