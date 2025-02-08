@@ -2,11 +2,15 @@ import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
 import { getIngredientsState } from "../services/ingredients/selectors";
 import { useParams } from "react-router-dom";
+import { useMemo } from "react";
 
 export default function IngredientDetails() {
   const { ingredientId } = useParams();
   const { ingredients } = useSelector(getIngredientsState);
-  const details = ingredients.find((elem) => elem._id === ingredientId);
+  const details = useMemo(
+    () => ingredients.find((elem) => elem._id === ingredientId),
+    [ingredients]
+  );
 
   return (
     <>
