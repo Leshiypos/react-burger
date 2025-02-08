@@ -5,7 +5,6 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
-import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
 export default function AppHeader() {
@@ -25,7 +24,7 @@ export default function AppHeader() {
             Конструктор
           </NavLink>
           <NavLink
-            to="/login"
+            to="/order-tape"
             className={({ isActive }) =>
               isActive
                 ? `${styles.button} ${styles.active}`
@@ -50,7 +49,3 @@ export default function AppHeader() {
     </header>
   );
 }
-
-AppHeader.propTypes = {
-  active: PropTypes.oneOf(["consctructor", "order", "account"]),
-};

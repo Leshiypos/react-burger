@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { getUser } from "../services/user/selector";
+import PropTypes from "prop-types";
+import Preloader from "./preload";
 
 const Protected = ({ onlyUnAuth = false, component }) => {
   // isAuthChecked это флаг, показывающий что проверка токена произведена
@@ -12,7 +14,7 @@ const Protected = ({ onlyUnAuth = false, component }) => {
     // Запрос еще выполняется
     // Выводим прелоадер в ПР
     // Здесь возвращается просто null для экономии времени
-    return <p>Запрос выполняется</p>;
+    return <Preloader />;
   }
 
   if (onlyUnAuth && user) {
@@ -35,3 +37,7 @@ export const OnlyAuth = Protected;
 export const OnlyUnAuth = ({ component }) => (
   <Protected onlyUnAuth={true} component={component} />
 );
+
+Protected.propTypes = {
+  onlyUnAuth: PropTypes.bool,
+};

@@ -12,10 +12,11 @@ import Profile from "./pages/profile";
 import ResetPassword from "./pages/reset-password";
 import { OnlyAuth, OnlyUnAuth } from "./components/protected-route";
 import { checkUserAuth } from "./services/user/action";
-import OrderHistory from "./pages/order-history";
+import OrderHistory from "./pages/order-tape";
 import ProfileForm from "./pages/profile-form";
 import IngredientDetails from "./components/ingredient-details";
 import Modal from "./components/modal";
+import OrderTape from "./pages/order-tape";
 
 function App() {
   const location = useLocation();
@@ -42,6 +43,7 @@ function App() {
           path="/ingredients/:ingredientId"
           element={<IngredientDetails />}
         />
+        <Route path="/order-tape" element={<OrderTape />} />
         <Route path="/login" element={<OnlyUnAuth component={<Login />} />} />
         <Route
           path="/register"

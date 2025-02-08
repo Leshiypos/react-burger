@@ -18,7 +18,6 @@ export default function ButtonMenu({ children, ...props }) {
 }
 
 ButtonMenu.propTypes = {
-  isActive: PropTypes.bool.isRequired,
   props: PropTypes.shape({
     onClick: PropTypes.func,
   }),
