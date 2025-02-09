@@ -6,7 +6,7 @@ import { logout } from "../services/user/action";
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const onLogout = () => {
+  const handleLogout = () => {
     dispatch(logout());
   };
   return (
@@ -43,7 +43,7 @@ export default function Profile() {
               type="secondary"
               size="large"
               extraClass={styles.logout_but}
-              onClick={onLogout}
+              onClick={handleLogout}
             >
               Выход
             </Button>

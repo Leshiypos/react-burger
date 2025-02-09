@@ -21,7 +21,8 @@ export default function ResetPassword() {
     if (e.target.name === "code") setCode(e.target.value);
   };
 
-  const onClick = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     dispatch(resetPassword(password, code, setRespSuccess));
   };
   if (
@@ -37,7 +38,7 @@ export default function ResetPassword() {
       {respSuccess && <Navigate to="/login" />}
       <div className={styles.main}>
         <h1 className={styles.title}>Восстановление пароля</h1>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <PasswordInput
             name={"password"}
             value={password}
@@ -56,10 +57,9 @@ export default function ResetPassword() {
           />
           <Button
             extraClass={styles.button}
-            htmlType="button"
+            htmlType="submit"
             type="primary"
             size="large"
-            onClick={onClick}
           >
             Сохранить
           </Button>

@@ -25,13 +25,14 @@ export default function Register() {
     if (e.target.name === "email") setEmail(e.target.value);
     if (e.target.name === "password") setPassword(e.target.value);
   };
-  const onClick = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     dispatch(register({ email, password, name }, setErrorMessage));
   };
   return (
     <div className={styles.main}>
       <h1 className={styles.title}>Регистрация</h1>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -47,10 +48,9 @@ export default function Register() {
         <PasswordInput name={"password"} value={password} onChange={onChange} />
         <Button
           extraClass={styles.button}
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="large"
-          onClick={onClick}
         >
           Зарегистрироваться
         </Button>

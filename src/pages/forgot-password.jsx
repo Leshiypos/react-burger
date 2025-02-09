@@ -18,7 +18,8 @@ export default function ForgotPassword() {
     if (e.target.name === "email") setEmail(e.target.value);
   };
 
-  const onClick = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     dispatch(forgotPassword(email, setRespSuccess));
   };
   return (
@@ -31,14 +32,13 @@ export default function ForgotPassword() {
       )}
       <div className={styles.main}>
         <h1 className={styles.title}>Восстановление пароля</h1>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <EmailInput name={"email"} value={email} onChange={onChange} />
           <Button
             extraClass={styles.button}
-            htmlType="button"
+            htmlType="submit"
             type="primary"
             size="large"
-            onClick={onClick}
           >
             Восстановить
           </Button>

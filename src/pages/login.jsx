@@ -18,14 +18,15 @@ export default function Login() {
     if (e.target.name === "email") setEmail(e.target.value);
     if (e.target.name === "password") setPassword(e.target.value);
   };
-  const onClick = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     dispatch(login(email, password, setErrorMessage));
   };
 
   return (
     <div className={styles.main}>
       <h1 className={styles.title}>Вход</h1>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <EmailInput name={"email"} value={email} onChange={onChange} />
         <PasswordInput
           name={"password"}
@@ -35,10 +36,9 @@ export default function Login() {
         />
         <Button
           extraClass={styles.button}
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="large"
-          onClick={onClick}
         >
           Войти
         </Button>
