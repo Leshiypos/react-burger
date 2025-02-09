@@ -35,7 +35,7 @@ export const register = (value, cb = f=>f) => (dispatch) => {
 		},
 		body: JSON.stringify(value)
 	} ).then((response)=>{
-		dispatch(setUser(response));
+		dispatch(setUser(response.user));
 		dispatch(setAuthChecked(true))
 		localStorage.setItem('accessToken',response.accessToken );
 		localStorage.setItem('refreshToken',response.refreshToken );
