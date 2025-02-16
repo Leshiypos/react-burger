@@ -1,0 +1,20 @@
+.form{
+	display: flex;
+	justify-content: center;
+	flex-flow: column;
+	gap: 24px;
+}
+.button {
+	composes: mb-20 from global;
+	width:fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+.button_cancel {
+	composes: ml-4 mb-20 from global;
+	width:fit-content;
+	margin-right: auto;
+}
+.wrap_button {
+	text-align: right;
+}

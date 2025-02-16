@@ -25,3 +25,26 @@
 .flex{
 	display: flex;
 }
+
+
+.button{
+	composes:  pl-5 pr-5 pt-4 pb-4 text text_type_main-default from global;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background-color: transparent;
+	border: none;
+	border-radius: 20px;
+	color: rgba(242, 242, 243, 1);
+	cursor: pointer;
+	opacity: .6;
+	font-size: 16px;
+	text-decoration: none;
+}
+.button:hover{
+	opacity: 1;
+}
+
+.active{
+	opacity: 1;
+}

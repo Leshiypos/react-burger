@@ -1,56 +1,76 @@
-import styles from "./App.module.css";
 import AppHeader from "./components/app-header";
-import BurgerIngredients from "./components/burger-ingredients";
-import BurgerConstructor from "./components/burger-constructor";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { getIngredientsAction } from "./services/ingredients/actions";
-import { getIngredientsState } from "./services/ingredients/selectors";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import Home from "./pages/home";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import ForgotPassword from "./pages/forgot-password";
+import Profile from "./pages/profile";
+import ResetPassword from "./pages/reset-password";
+import { OnlyAuth, OnlyUnAuth } from "./components/protected-route";
+import { checkUserAuth } from "./services/user/action";
+import OrderHistory from "./pages/order-tape";
+import ProfileForm from "./pages/profile-form";
+import IngredientDetails from "./components/ingredient-details";
+import Modal from "./components/modal";
+import OrderTape from "./pages/order-tape";
 
 function App() {
-  const [button, setButton] = useState("consctructor");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state && location.state.background;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIngredientsAction());
   }, []);
 
-  const { ingredients, error, loading } = useSelector(getIngredientsState);
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  }, []);
 
+  const handleModalClose = () => {
+    navigate(-1);
+  };
   return (
     <>
-      <AppHeader active={button} onChange={(current) => setButton(current)} />
-      <DndProvider backend={HTML5Backend}>
-        <main className={styles.main}>
-          {loading ? (
-            <p>Загрузка данных</p>
-          ) : error ? (
-            <p>Произошла ошибка загрузки данных</p>
-          ) : ingredients.length > 0 ? (
-            <section>
-              <h1 className="text text_type_main-large mt-10 mb-5">
-                Соберите бургер
-              </h1>
-              <BurgerIngredients />
-            </section>
-          ) : (
-            <p>Нет данных</p>
-          )}
-
-          {loading ? (
-            <p>Загрузка данных</p>
-          ) : error ? (
-            <p>Произошла ошибка загрузки данных</p>
-          ) : ingredients.length > 0 ? (
-            <section>
-              <BurgerConstructor />
-            </section>
-          ) : (
-            <p>Нет данных</p>
-          )}
-        </main>
-      </DndProvider>
+      <AppHeader />
+      <Routes location={background || location}>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/ingredients/:ingredientId"
+          element={<IngredientDetails />}
+        />
+        <Route path="/order-tape" element={<OrderTape />} />
+        <Route path="/login" element={<OnlyUnAuth component={<Login />} />} />
+        <Route
+          path="/register"
+          element={<OnlyUnAuth component={<Register />} />}
+        />
+        <Route
+          path="/forgot-password"
+          element={<OnlyUnAuth component={<ForgotPassword />} />}
+        />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/profile" element={<OnlyAuth component={<Profile />} />}>
+          <Route path="" element={<ProfileForm />} />
+          <Route path="orders" element={<OrderHistory />} />
+        </Route>
+      </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path="/ingredients/:ingredientId"
+            element={
+              <Modal title="Детали ингридиента" onClose={handleModalClose}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </>
   );
 }

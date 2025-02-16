@@ -1,23 +1,23 @@
 //@ts-nocheck
+import { NavLink } from "react-router-dom";
 import styles from "./button-menu.module.css";
 import PropTypes from "prop-types";
 
-export default function ButtonMenu({ children, isActive, ...props }) {
+export default function ButtonMenu({ children, ...props }) {
   return (
-    <button
+    <NavLink
       {...props}
-      type="button"
-      className={
+      //   type="button"
+      className={({ isActive }) =>
         isActive ? `${styles.button} ${styles.active}` : `${styles.button}`
       }
     >
       {children}
-    </button>
+    </NavLink>
   );
 }
 
 ButtonMenu.propTypes = {
-  isActive: PropTypes.bool.isRequired,
   props: PropTypes.shape({
     onClick: PropTypes.func,
   }),

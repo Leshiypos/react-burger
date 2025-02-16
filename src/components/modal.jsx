@@ -27,12 +27,12 @@ export default function Modal({ onClose = (f) => f, children, title = "" }) {
           <CloseIcon
             type="primary"
             className={styles.close}
-            onClick={() => onClose()}
+            onClick={onClose}
           />
         </div>
         {children}
       </div>
-      <ModalOverlay onClick={() => onClose()} />
+      <ModalOverlay onClick={onClose} />
     </>,
     document.getElementById("modal")
   );

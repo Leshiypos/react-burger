@@ -4,44 +4,48 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import ButtonMenu from "./button-menu";
 import styles from "./app-header.module.css";
-import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
 
-export default function AppHeader({ active, onChange }) {
+export default function AppHeader() {
   return (
     <header className={styles.header}>
       <div className={styles.conteiner}>
         <div className={styles.flex}>
-          <ButtonMenu
-            isActive={active === "consctructor"}
-            onClick={() => onChange("consctructor")}
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.button} ${styles.active}`
+                : `${styles.button}`
+            }
           >
             <BurgerIcon type="primary" />
             Конструктор
-          </ButtonMenu>
-          <ButtonMenu
-            isActive={active === "order"}
-            onClick={() => onChange("order")}
+          </NavLink>
+          <NavLink
+            to="/order-tape"
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.button} ${styles.active}`
+                : `${styles.button}`
+            }
           >
             <ListIcon type="primary" />
             Лента заказов
-          </ButtonMenu>
+          </NavLink>
         </div>
         <Logo className={styles.logo} />
-        <ButtonMenu
-          isActive={active === "account"}
-          onClick={() => onChange("account")}
+        <NavLink
+          to="/profile"
+          className={({ isActive }) =>
+            isActive ? `${styles.button} ${styles.active}` : `${styles.button}`
+          }
         >
           <ProfileIcon type="primary" />
           Личный кaбинет
-        </ButtonMenu>
+        </NavLink>
       </div>
     </header>
   );
 }
-
-AppHeader.propTypes = {
-  active: PropTypes.oneOf(["consctructor", "order", "account"]),
-  onChange: PropTypes.func.isRequired,
-};

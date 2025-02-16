@@ -1,21 +1,13 @@
 import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import IndredientsCategory from "./ingredients-category";
 import styles from "./burger-ingredients.module.css";
 import Tabs from "./tabs";
-import Modal from "./modal";
-import IngredientDetails from "./ingredient-details";
-import { getDetails } from "../services/details/selectors";
-import { HIDE_DETAILS } from "../services/details/actions";
 
 export default function BurgerIngredients() {
   const [tab, setTab] = useState("buns");
   const tabRef = useRef();
   const bunsRef = useRef();
   const saucesRef = useRef();
-  const { details } = useSelector(getDetails);
-  const dispatch = useDispatch();
-
   const handleScrollСhangeTab = () => {
     const bunsDef =
       bunsRef.current.getBoundingClientRect().bottom -
@@ -29,12 +21,6 @@ export default function BurgerIngredients() {
       : saucesDef > 0
       ? setTab("sauces")
       : setTab("mains");
-  };
-
-  const handleCloseModal = () => {
-    dispatch({
-      type: HIDE_DETAILS,
-    });
   };
 
   return (
@@ -51,11 +37,6 @@ export default function BurgerIngredients() {
           <IndredientsCategory title="Начинка" type="mains" />
         </li>
       </ul>
-      {details && (
-        <Modal title="Детали ингридиента" onClose={handleCloseModal}>
-          <IngredientDetails />
-        </Modal>
-      )}
     </div>
   );
 }
