@@ -8,19 +8,17 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { forgotPassword } from "../services/user/action";
 import { Navigate, useLocation } from "react-router-dom";
+import { useForm } from "../hooks/useForm";
 
 export default function ForgotPassword() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
+  const { values, handleChange } = useForm({ email: "" });
   const [respSuccess, setRespSuccess] = useState(false);
-  const onChange = (e) => {
-    if (e.target.name === "email") setEmail(e.target.value);
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(forgotPassword(email, setRespSuccess));
+    dispatch(forgotPassword(values.email, setRespSuccess));
   };
   return (
     <>
@@ -33,7 +31,11 @@ export default function ForgotPassword() {
       <div className={styles.main}>
         <h1 className={styles.title}>Восстановление пароля</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <EmailInput name={"email"} value={email} onChange={onChange} />
+          <EmailInput
+            name={"email"}
+            value={values.email}
+            onChange={handleChange}
+          />
           <Button
             extraClass={styles.button}
             htmlType="submit"

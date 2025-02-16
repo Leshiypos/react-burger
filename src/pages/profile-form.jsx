@@ -5,54 +5,61 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../services/user/selector";
 import { refreshUserData } from "../services/user/action";
+import { useForm } from "../hooks/useForm";
 
 export default function ProfileForm() {
   const dispatch = useDispatch();
   const { user } = useSelector(getUser);
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [password, setPassword] = useState("******");
+
+  const { values, setValues, handleChange } = useForm({
+    name: user.name,
+    email: user.email,
+    password: "******",
+  });
 
   const checkDesabledButton = useCallback(() => {
-    if (name === user.name && email === user.email && password === "******") {
+    if (
+      values.name === user.name &&
+      values.email === user.email &&
+      values.password === "******"
+    ) {
       return true;
     }
     return false;
-  }, [name, email, password, user]);
+  }, [values.name, values.email, values.password, user]);
 
-  const onChange = (e) => {
-    if (e.target.name === "name") setName(e.target.value);
-    if (e.target.name === "email") setEmail(e.target.value);
-    if (e.target.name === "password") setPassword(e.target.value);
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { email, name, password } = values;
+
     let refreshData = { email, name, password };
     if (password === "******" || password === "") refreshData = { email, name };
     dispatch(refreshUserData(refreshData));
   };
   const handleCancel = () => {
-    setName(user.name);
-    setEmail(user.email);
-    setPassword("******");
+    setValues({
+      name: user.name,
+      email: user.email,
+      password: "******",
+    });
   };
   const handleResetInput = () => {
-    setPassword("");
+    setValues({ ...values, password: "" });
   };
   const handleBlur = () => {
-    if (password === "") setPassword("******");
+    if (values.password === "") setValues({ ...values, password: "******" });
   };
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <Input
         type={"text"}
         placeholder={"Имя"}
-        onChange={onChange}
-        value={name}
+        onChange={handleChange}
+        value={values.name}
         name={"name"}
         error={false}
         errorText={"Ошибка"}
@@ -61,15 +68,15 @@ export default function ProfileForm() {
       />
       <EmailInput
         name={"email"}
-        value={email}
-        onChange={onChange}
+        value={values.email}
+        onChange={handleChange}
         placeholder="Логин"
         isIcon={true}
       />
       <PasswordInput
         name={"password"}
-        value={password}
-        onChange={onChange}
+        value={values.password}
+        onChange={handleChange}
         icon={"EditIcon"}
         onFocus={handleResetInput}
         onBlur={handleBlur}

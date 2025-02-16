@@ -8,18 +8,20 @@ import { Link } from "react-router";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../services/user/action";
+import { useForm } from "../hooks/useForm";
 
 export default function Login() {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, handleChange } = useForm({
+    email: "",
+    password: "",
+  });
+
   const [errorMessage, setErrorMessage] = useState(null);
-  const onChange = (e) => {
-    if (e.target.name === "email") setEmail(e.target.value);
-    if (e.target.name === "password") setPassword(e.target.value);
-  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { email, password } = values;
     dispatch(login(email, password, setErrorMessage));
   };
 
@@ -27,11 +29,15 @@ export default function Login() {
     <div className={styles.main}>
       <h1 className={styles.title}>Вход</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <EmailInput name={"email"} value={email} onChange={onChange} />
+        <EmailInput
+          name={"email"}
+          value={values.email}
+          onChange={handleChange}
+        />
         <PasswordInput
           name={"password"}
-          value={password}
-          onChange={onChange}
+          value={values.password}
+          onChange={handleChange}
           extraClass="mb-2"
         />
         <Button

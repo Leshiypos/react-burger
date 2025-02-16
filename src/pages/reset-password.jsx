@@ -9,19 +9,19 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { resetPassword } from "../services/user/action";
+import { useForm } from "../hooks/useForm";
 
 export default function ResetPassword() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const [code, setCode] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, handleChange } = useForm({
+    password: "",
+    code: "",
+  });
   const [respSuccess, setRespSuccess] = useState(false);
-  const onChange = (e) => {
-    if (e.target.name === "password") setPassword(e.target.value);
-    if (e.target.name === "code") setCode(e.target.value);
-  };
 
   const handleSubmit = (e) => {
+    const { password, code } = values;
     e.preventDefault();
     dispatch(resetPassword(password, code, setRespSuccess));
   };
@@ -41,15 +41,15 @@ export default function ResetPassword() {
         <form className={styles.form} onSubmit={handleSubmit}>
           <PasswordInput
             name={"password"}
-            value={password}
-            onChange={onChange}
+            value={values.password}
+            onChange={handleChange}
             placeholder="Введите новый пароль"
           />
           <Input
             type={"text"}
             placeholder={"Введите код из письма"}
-            onChange={onChange}
-            value={code}
+            onChange={handleChange}
+            value={values.code}
             name={"code"}
             error={false}
             errorText={"Ошибка"}

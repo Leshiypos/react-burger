@@ -9,24 +9,24 @@ import { Link } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { register } from "../services/user/action";
+import { useForm } from "../hooks/useForm";
 
 export default function Register() {
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const { values, handleChange } = useForm({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [errorMessage, setErrorMessage] = useState(null);
-  const [password, setPassword] = useState("");
   const inputRef = useRef(null);
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-  const onChange = (e) => {
-    if (e.target.name === "name") setName(e.target.value);
-    if (e.target.name === "email") setEmail(e.target.value);
-    if (e.target.name === "password") setPassword(e.target.value);
-  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { email, password, name } = values;
     dispatch(register({ email, password, name }, setErrorMessage));
   };
   return (
@@ -36,16 +36,24 @@ export default function Register() {
         <Input
           type={"text"}
           placeholder={"Имя"}
-          onChange={onChange}
-          value={name}
+          onChange={handleChange}
+          value={values.name}
           name={"name"}
           error={false}
           ref={inputRef}
           errorText={"Ошибка"}
           size={"default"}
         />
-        <EmailInput name={"email"} value={email} onChange={onChange} />
-        <PasswordInput name={"password"} value={password} onChange={onChange} />
+        <EmailInput
+          name={"email"}
+          value={values.email}
+          onChange={handleChange}
+        />
+        <PasswordInput
+          name={"password"}
+          value={values.password}
+          onChange={handleChange}
+        />
         <Button
           extraClass={styles.button}
           htmlType="submit"
