@@ -1,5 +1,4 @@
 import AppHeader from "./components/app-header";
-
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getIngredientsAction } from "./services/ingredients/actions";
@@ -24,10 +23,12 @@ function App() {
   const background = location.state && location.state.background;
   const dispatch = useDispatch();
   useEffect(() => {
+    //@ts-ignore
     dispatch(getIngredientsAction());
   }, []);
 
   useEffect(() => {
+    //@ts-ignore
     dispatch(checkUserAuth());
   }, []);
 

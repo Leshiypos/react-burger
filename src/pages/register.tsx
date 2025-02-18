@@ -6,27 +6,31 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./register.module.css";
 import { Link } from "react-router";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { register } from "../services/user/action";
 import { useForm } from "../hooks/useForm";
+import { IUseForm } from "../util/types";
 
-export default function Register() {
+export default function Register(): React.JSX.Element {
   const dispatch = useDispatch();
-  const { values, handleChange } = useForm({
+  const { values, handleChange } = useForm<IUseForm>({
     name: "",
     email: "",
     password: "",
   });
-  const [errorMessage, setErrorMessage] = useState(null);
-  const inputRef = useRef(null);
+  const [errorMessage, setErrorMessage] = useState<boolean | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   useEffect(() => {
-    inputRef.current.focus();
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { email, password, name } = values;
+    //@ts-ignore
     dispatch(register({ email, password, name }, setErrorMessage));
   };
   return (

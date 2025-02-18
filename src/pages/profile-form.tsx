@@ -5,17 +5,20 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../services/user/selector";
 import { refreshUserData } from "../services/user/action";
 import { useForm } from "../hooks/useForm";
+import { IUseForm } from "../util/types";
 
-export default function ProfileForm() {
+type TrefreshData = Omit<IUseForm, "password"> & { password?: string };
+
+export default function ProfileForm(): React.JSX.Element {
   const dispatch = useDispatch();
   const { user } = useSelector(getUser);
 
-  const { values, setValues, handleChange } = useForm({
+  const { values, setValues, handleChange } = useForm<IUseForm>({
     name: user.name,
     email: user.email,
     password: "******",
@@ -32,25 +35,27 @@ export default function ProfileForm() {
     return false;
   }, [values.name, values.email, values.password, user]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { email, name, password } = values;
 
-    let refreshData = { email, name, password };
+    let refreshData: TrefreshData = { email, name, password };
     if (password === "******" || password === "") refreshData = { email, name };
+
+    //@ts-ignore
     dispatch(refreshUserData(refreshData));
   };
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     setValues({
       name: user.name,
       email: user.email,
       password: "******",
     });
   };
-  const handleResetInput = () => {
+  const handleResetInput = (): void => {
     setValues({ ...values, password: "" });
   };
-  const handleBlur = () => {
+  const handleBlur = (): void => {
     if (values.password === "") setValues({ ...values, password: "******" });
   };
   return (

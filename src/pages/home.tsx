@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { getIngredientsState } from "../services/ingredients/selectors";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const { ingredients, error, loading } = useSelector(getIngredientsState);
   return (
     <DndProvider backend={HTML5Backend}>

@@ -7,7 +7,7 @@ import {
 import styles from "./app-header.module.css";
 import { NavLink } from "react-router-dom";
 
-export default function AppHeader() {
+export default function AppHeader(): JSX.Element {
   return (
     <header className={styles.header}>
       <div className={styles.conteiner}>

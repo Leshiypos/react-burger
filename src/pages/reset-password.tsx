@@ -6,23 +6,29 @@ import {
 import styles from "./login.module.css";
 import { Link } from "react-router";
 import { Navigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { resetPassword } from "../services/user/action";
 import { useForm } from "../hooks/useForm";
 
-export default function ResetPassword() {
+interface IUseForm {
+  password: string;
+  code: string;
+}
+
+export default function ResetPassword(): React.JSX.Element {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { values, handleChange } = useForm({
+  const { values, handleChange } = useForm<IUseForm>({
     password: "",
     code: "",
   });
-  const [respSuccess, setRespSuccess] = useState(false);
+  const [respSuccess, setRespSuccess] = useState<boolean>(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     const { password, code } = values;
     e.preventDefault();
+    //@ts-ignore
     dispatch(resetPassword(password, code, setRespSuccess));
   };
   if (

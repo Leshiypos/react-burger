@@ -4,20 +4,24 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./forgot-password.module.css";
 import { Link } from "react-router";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { forgotPassword } from "../services/user/action";
 import { Navigate, useLocation } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
+import { IUseForm } from "../util/types";
 
-export default function ForgotPassword() {
+export default function ForgotPassword(): React.JSX.Element {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { values, handleChange } = useForm({ email: "" });
-  const [respSuccess, setRespSuccess] = useState(false);
+  const [respSuccess, setRespSuccess] = useState<boolean>(false);
+  const { values, handleChange } = useForm<Omit<IUseForm, "name" | "password">>(
+    { email: "" }
+  );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //@ts-ignore
     dispatch(forgotPassword(values.email, setRespSuccess));
   };
   return (

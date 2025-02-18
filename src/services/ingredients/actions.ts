@@ -5,7 +5,7 @@ export const GET_INGREDIENTS_FAILED = 'ingredients/failed';
 export const GET_INGREDIENTS_SUCCESS = 'ingredients/success';
 
 
-
+//@ts-expect-error
 export const getIngredientsAction = () => (dispatch) => {
 	dispatch({type : GET_INGREDIENTS});
 	request('/ingredients')

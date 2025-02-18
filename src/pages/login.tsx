@@ -5,23 +5,25 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
 import { Link } from "react-router";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../services/user/action";
 import { useForm } from "../hooks/useForm";
+import { IUseForm } from "../util/types";
 
-export default function Login() {
+export default function Login(): React.JSX.Element {
   const dispatch = useDispatch();
-  const { values, handleChange } = useForm({
+  const { values, handleChange } = useForm<Omit<IUseForm, "name">>({
     email: "",
     password: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState<boolean | null>(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { email, password } = values;
+    //@ts-ignore
     dispatch(login(email, password, setErrorMessage));
   };
 
