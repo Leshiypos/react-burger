@@ -2,16 +2,33 @@ import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { sortIngredients } from "../services/burger-constructor/actions";
-import PropTypes from "prop-types";
+import { Identifier } from "dnd-core";
 
 const ItemTypes = {
   CARD: "card",
 };
 
-export default function DragItemElement({ children, index, id }) {
-  const ref = useRef(null);
+interface DragObject {
+  id: string;
+  index: string;
+}
+interface IDragItemElementProps {
+  children: React.ReactNode;
+  index: string;
+  id: string;
+}
+interface CollectedProps {
+  handlerId: Identifier | null;
+}
+
+export default function DragItemElement({
+  children,
+  index,
+  id,
+}: IDragItemElementProps): React.JSX.Element {
+  const ref = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch();
-  const [{ handlerId }, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop<DragObject, unknown, CollectedProps>({
     accept: ItemTypes.CARD,
     collect(monitor) {
       return {
@@ -31,6 +48,9 @@ export default function DragItemElement({ children, index, id }) {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
+      if (!clientOffset) {
+        return;
+      }
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -38,11 +58,12 @@ export default function DragItemElement({ children, index, id }) {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
+      //@ts-ignore
       dispatch(sortIngredients(dragIndex, hoverIndex));
       item.index = hoverIndex;
     },
   });
-  const [, drag] = useDrag({
+  const [, drag] = useDrag<DragObject, unknown, unknown>({
     type: ItemTypes.CARD,
     item: () => {
       return { id, index };
@@ -55,8 +76,3 @@ export default function DragItemElement({ children, index, id }) {
     </div>
   );
 }
-
-DragItemElement.propTypes = {
-  index: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
-};

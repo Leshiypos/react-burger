@@ -7,7 +7,6 @@ export default function ButtonMenu({ children, ...props }) {
   return (
     <NavLink
       {...props}
-      //   type="button"
       className={({ isActive }) =>
         isActive ? `${styles.button} ${styles.active}` : `${styles.button}`
       }

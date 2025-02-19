@@ -3,26 +3,33 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./card.module.css";
-import PropTypes from "prop-types";
-import dataPropTypes from "../util/type.js";
 import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
+import { IConstructorIngredient } from "../util/types";
 
-export default function Card({ ingredient }) {
+interface ICardProps {
+  ingredient: IConstructorIngredient;
+}
+interface ICounter {
+  [key: string]: number;
+}
+type DragObject = IConstructorIngredient;
+
+export default function Card({ ingredient }: ICardProps): React.JSX.Element {
   const location = useLocation();
+  //@ts-ignore
   const selectIngredients = useSelector((store) => store.selectIngredients);
-  const [, ingredientRef] = useDrag({
+  const [, ingredientRef] = useDrag<DragObject, unknown, unknown>({
     type: ingredient.type === "bun" ? "bun" : "ingredient",
     item: ingredient,
   });
-  const counter =
+  const counter: ICounter =
     ingredient.type === "bun"
       ? selectIngredients.counterBun
       : selectIngredients.counter;
 
-  const ingredientId = ingredient._id;
-
+  const ingredientId: string = ingredient._id;
   return (
     <>
       <li ref={ingredientRef} draggable>
@@ -43,13 +50,9 @@ export default function Card({ ingredient }) {
             <span>{ingredient.price}</span>
             <CurrencyIcon type="primary" />
           </div>
-          <p className={ingredient.title}>{ingredient.name}</p>
+          <p className={styles.title}>{ingredient.name}</p>
         </Link>
       </li>
     </>
   );
 }
-
-Card.propTypes = {
-  ingredient: dataPropTypes.isRequired,
-};

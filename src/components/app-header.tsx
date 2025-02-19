@@ -6,8 +6,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import { NavLink } from "react-router-dom";
+import React from "react";
 
-export default function AppHeader(): JSX.Element {
+export default function AppHeader(): React.JSX.Element {
   return (
     <header className={styles.header}>
       <div className={styles.conteiner}>

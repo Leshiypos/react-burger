@@ -21,9 +21,10 @@ import { useState } from "react";
 import { hideOrder } from "../services/order/actions";
 import { getUser } from "../services/user/selector";
 import { useNavigate } from "react-router-dom";
+import { IConstructorIngredient } from "../util/types";
 
-export default function BurgerConstructor() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function BurgerConstructor(): React.JSX.Element {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { user } = useSelector(getUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -33,22 +34,27 @@ export default function BurgerConstructor() {
   const [, bunsRef] = useDrop({
     accept: "bun",
     drop(item) {
+      //@ts-ignore
       dispatch(addBuns(item));
     },
   });
   const [, constIngrRef] = useDrop({
     accept: "ingredient",
     drop(item) {
+      //@ts-ignore
       dispatch(addIngredient(item));
     },
   });
-  const handleDeleteIngredient = (elem) => {
+  const handleDeleteIngredient = (elem: IConstructorIngredient): void => {
+    //@ts-ignore
     dispatch(deleteIngredient(elem));
   };
 
   const handleModalClose = () => {
     setIsOpen(false);
+    //@ts-ignore
     dispatch(resetIngredients());
+    //@ts-ignore
     dispatch(hideOrder());
   };
   const handleOrderStart = () => {
@@ -80,6 +86,7 @@ export default function BurgerConstructor() {
 
         <div className={styles.work_area} ref={constIngrRef}>
           {ingredients?.length > 0 ? (
+            //@ts-ignore
             ingredients.map((elem, index) => (
               <DragItemElement index={index} key={elem.key} id={elem.key}>
                 <DragIcon type="primary" />

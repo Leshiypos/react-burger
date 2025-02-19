@@ -1,14 +1,23 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import IndredientsCategory from "./ingredients-category";
 import styles from "./burger-ingredients.module.css";
 import Tabs from "./tabs";
 
-export default function BurgerIngredients() {
-  const [tab, setTab] = useState("buns");
-  const tabRef = useRef();
-  const bunsRef = useRef();
-  const saucesRef = useRef();
-  const handleScrollСhangeTab = () => {
+export default function BurgerIngredients(): React.JSX.Element {
+  const [tab, setTab] = useState<string>("buns");
+  const tabRef = useRef<HTMLUListElement | null>(null);
+  const bunsRef = useRef<HTMLLIElement | null>(null);
+  const saucesRef = useRef<HTMLLIElement | null>(null);
+  const handleScrollСhangeTab = (): void => {
+    if (!bunsRef.current) {
+      return;
+    }
+    if (!tabRef.current) {
+      return;
+    }
+    if (!saucesRef.current) {
+      return;
+    }
     const bunsDef =
       bunsRef.current.getBoundingClientRect().bottom -
       tabRef.current.getBoundingClientRect().bottom;
