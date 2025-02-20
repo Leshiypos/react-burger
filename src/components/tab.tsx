@@ -1,20 +1,23 @@
+import { ReactNode } from "react";
 import styles from "./tab.module.css";
-import PropTypes from "prop-types";
 
-export default function Tab({ children, isActive, ...props }) {
+interface ITabProps {
+  children: ReactNode;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+export default function Tab({
+  children,
+  isActive,
+  onClick,
+}: ITabProps): React.JSX.Element {
   return (
     <li
-      {...props}
+      onClick={onClick}
       className={isActive ? styles.tab : `${styles.tab} ${styles.inActive}`}
     >
       {children}
     </li>
   );
 }
-
-Tab.propTypes = {
-  isActive: PropTypes.bool.isRequired,
-  props: PropTypes.shape({
-    onClick: PropTypes.func,
-  }),
-};

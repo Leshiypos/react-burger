@@ -23,14 +23,23 @@ import { getUser } from "../services/user/selector";
 import { useNavigate } from "react-router-dom";
 import { IConstructorIngredient } from "../util/types";
 
+interface IUser {
+  user: { email: string; name: string };
+}
+type TSelectIngredients = IConstructorIngredient & { key: string };
+interface IGetBurgerConsctructorIngredients {
+  ingredients: TSelectIngredients[];
+  bun: IConstructorIngredient;
+  total: number;
+}
+
 export default function BurgerConstructor(): React.JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { user } = useSelector(getUser);
+  const { user }: IUser = useSelector(getUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { ingredients, bun, total } = useSelector(
-    getBurgerConsctructorIngredients
-  );
+  const { ingredients, bun, total }: IGetBurgerConsctructorIngredients =
+    useSelector(getBurgerConsctructorIngredients);
   const [, bunsRef] = useDrop({
     accept: "bun",
     drop(item) {

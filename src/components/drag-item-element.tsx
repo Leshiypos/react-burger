@@ -10,11 +10,11 @@ const ItemTypes = {
 
 interface DragObject {
   id: string;
-  index: string;
+  index: number;
 }
 interface IDragItemElementProps {
   children: React.ReactNode;
-  index: string;
+  index: number;
   id: string;
 }
 interface CollectedProps {

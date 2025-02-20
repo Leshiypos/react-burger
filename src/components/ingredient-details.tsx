@@ -2,11 +2,16 @@ import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
 import { getIngredientsState } from "../services/ingredients/selectors";
 import { useParams } from "react-router-dom";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
+import { IConstructorIngredient } from "../util/types";
 
-export default function IngredientDetails() {
+interface IIngredients {
+  ingredients: IConstructorIngredient[];
+}
+
+export default function IngredientDetails(): React.JSX.Element {
   const { ingredientId } = useParams();
-  const { ingredients } = useSelector(getIngredientsState);
+  const { ingredients }: IIngredients = useSelector(getIngredientsState);
   const details = useMemo(
     () => ingredients.find((elem) => elem._id === ingredientId),
     [ingredients]

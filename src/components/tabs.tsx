@@ -1,5 +1,4 @@
 import styles from "./tabs.module.css";
-import PropTypes from "prop-types";
 import Tab from "./tab";
 import React from "react";
 
@@ -26,8 +25,3 @@ const Tabs = React.forwardRef<HTMLUListElement, TInputProps>(
   }
 );
 export default Tabs;
-
-Tabs.propTypes = {
-  active: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};

@@ -17,9 +17,7 @@ export default function Home(): JSX.Element {
           <p>Произошла ошибка загрузки данных</p>
         ) : ingredients.length > 0 ? (
           <section>
-            <h1 className="text text_type_main-large mt-10 mb-5">
-              Соберите бургер
-            </h1>
+            <h1 className={styles.h1}>Соберите бургер</h1>
             <BurgerIngredients />
           </section>
         ) : (

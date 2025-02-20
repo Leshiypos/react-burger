@@ -1,37 +1,30 @@
 import { BASE_URL } from "./constants";
 
-const checkResponse = (response) => {
+interface IRefreshToken{
+	refreshToken: string,
+	accessToken: string,
+	success: boolean
+}
+interface IOptionsFetch{
+	method?: string,
+	headers?:{[key:string]:string} | undefined,
+	body?: string
+}
+const checkResponse = <T>(response: Response):Promise<T> => {
 	return response.ok ? response.json() : response.json().then( e => Promise.reject(e) );
 }
 
-// export const getIngredients = async () => {
-// 	return fetch(`${BASE_URL}/ingredients`)
-// 		.then(checkResponse);
-//   };
 
-
-
-// export const sendOrder = async (request) => {
-// 	return fetch(`${BASE_URL}/orders`,{
-// 		method: "POST",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 		},
-// 		body: JSON.stringify(request)
-// 	})
-// 		.then(checkResponse);
-//   };
-
-  export const request = async (endpoint , options={}) => {
+  export const request = async <T>(endpoint: string , options:IOptionsFetch={}): Promise<T> => {
     // принимает два аргумента: урл и объект опций, как и `fetch`
-    return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse)
+    return fetch(`${BASE_URL}${endpoint}`, options).then(checkResponse<T>)
   }
 
 
   // Обновление токена
 
-  const refreshToken = async() => {
-	return request(`/auth/token`, {
+  const refreshToken = async(): Promise<IRefreshToken> => {
+	return request<IRefreshToken>(`/auth/token`, {
 	  method: "POST",
 	  headers: {
 		"Content-Type": "application/json;charset=utf-8",
@@ -52,13 +45,16 @@ const checkResponse = (response) => {
 	});
   };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url:string, options:IOptionsFetch={}) => {
 	try {
 	  return await request(url, options);
 	} catch (err) {
-	  if (err.message === "jwt expired") {
+	  if ((err as {message: string}).message === "jwt expired") {
 		const refreshData = await refreshToken(); //обновляем токен
-		options.headers.authorization = refreshData.accessToken;
+		if(options.headers){
+			options.headers.authorization = refreshData.accessToken;
+		}
+		
 		return await request(url, options); //повторяем запрос
 	  } else {
 		return Promise.reject(err);
