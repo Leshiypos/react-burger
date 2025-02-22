@@ -26,9 +26,25 @@ const getUser = async (url, options)=>{
 	}
 }
 
+interface IRegisterValue{
+		email: string, 
+		password: string, 
+		name: string 
+}
 
-export const register = (value, cb = f=>f) => (dispatch) => {
-	request('/auth/register',{
+interface IUser{
+	email: string,
+	name: string
+}
+
+interface IRegister{
+    success: true,
+    user:IUser ,
+    accessToken: string,
+    refreshToken: string
+}
+export const register = (value:IRegisterValue, cb:(f:string)=>void) => (dispatch) => {
+	request<IRegister>('/auth/register',{
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
