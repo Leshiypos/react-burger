@@ -1,5 +1,5 @@
 import styles from "./orders-board.module.css";
-export function OrdersBoard() {
+export function OrdersBoard(): React.JSX.Element {
   return (
     <>
       <div className={styles.state}>

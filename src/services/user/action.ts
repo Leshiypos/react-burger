@@ -1,10 +1,15 @@
-import { fetchWithRefresh, request } from "../../util/api";
+import { IOptionsFetch, fetchWithRefresh, request } from "../../util/api";
 
 export const SET_AUTH_CHECKED = 'user/setAuthChecked';
 export const SET_USER = 'user/setUser';
 
+export interface ISetAuthCheckedAction{
+	type: typeof SET_AUTH_CHECKED;
+	payload: boolean
+}
 
-export const setAuthChecked = (value) => ({
+
+export const setAuthChecked = (value:boolean): ISetAuthCheckedAction => ({
 	type: SET_AUTH_CHECKED,
 	payload: value,
 });
@@ -14,7 +19,7 @@ export const setUser = (user) => ({
 	payload: user,
 })
 
-const getUser = async (url, options)=>{
+const getUser = async (url: string, options: IOptionsFetch)=>{
 	const result = await fetchWithRefresh(url, options);
 
 	try {

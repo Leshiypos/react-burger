@@ -5,7 +5,7 @@ interface IRefreshToken{
 	accessToken: string,
 	success: boolean
 }
-interface IOptionsFetch{
+export interface IOptionsFetch{
 	method?: string,
 	headers?:{[key:string]:string} | undefined,
 	body?: string
