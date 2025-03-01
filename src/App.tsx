@@ -1,6 +1,5 @@
 import AppHeader from "./components/app-header";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { getIngredientsAction } from "./services/ingredients/actions";
 import Home from "./pages/home";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
@@ -16,6 +15,7 @@ import ProfileForm from "./pages/profile-form";
 import IngredientDetails from "./components/ingredient-details";
 import Modal from "./components/modal";
 import Feed from "./pages/feed";
+import { useDispatch } from "./hooks/hooks";
 
 function App() {
   const location = useLocation();
@@ -23,12 +23,10 @@ function App() {
   const background = location.state && location.state.background;
   const dispatch = useDispatch();
   useEffect(() => {
-    //@ts-ignore
     dispatch(getIngredientsAction());
   }, []);
 
   useEffect(() => {
-    //@ts-ignore
     dispatch(checkUserAuth());
   }, []);
 
