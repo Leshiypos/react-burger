@@ -1,21 +1,38 @@
 import { request } from "../../util/api";
+import { AppDispatch, IConstructorIngredient } from "../../util/types";
 
-export const GET_INGREDIENTS = 'ingredients/getIngredients';
-export const GET_INGREDIENTS_FAILED = 'ingredients/failed';
-export const GET_INGREDIENTS_SUCCESS = 'ingredients/success';
+export const GET_INGREDIENTS : 'GET_INGREDIENTS' = 'GET_INGREDIENTS';
+export const GET_INGREDIENTS_FAILED: 'GET_INGREDIENTS_FAILED' = 'GET_INGREDIENTS_FAILED';
+export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
+
+export interface IGetIngredientsAction{
+	readonly type : typeof GET_INGREDIENTS;
+}
+export interface IGetIngredientsFailedAction{
+	readonly type : typeof GET_INGREDIENTS_FAILED;
+}
+export interface IGetIngredientsSuccessAction{
+	readonly type : typeof GET_INGREDIENTS_SUCCESS;
+	readonly ingredients: IConstructorIngredient[];
+}
+
+export type TIngredientsActions = 
+	IGetIngredientsAction
+	|IGetIngredientsFailedAction
+	|IGetIngredientsSuccessAction;
 
 
-//@ts-expect-error
-export const getIngredientsAction = () => (dispatch) => {
+
+export const getIngredientsAction = () => (dispatch: AppDispatch) => {
 	dispatch({type : GET_INGREDIENTS});
-	request('/ingredients')
+	request<{data: IConstructorIngredient[]}>('/ingredients')
 		.then(response => {
 			dispatch({
 				type : GET_INGREDIENTS_SUCCESS,
 				ingredients: response.data,
 			  });
 		})
-		.catch((error)=>{
+		.catch(()=>{
 			dispatch({type: GET_INGREDIENTS_FAILED});
 		});	
 }

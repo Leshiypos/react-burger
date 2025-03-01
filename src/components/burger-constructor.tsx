@@ -54,7 +54,7 @@ export default function BurgerConstructor(): React.JSX.Element {
       dispatch(addIngredient(item));
     },
   });
-  const handleDeleteIngredient = (elem: IConstructorIngredient): void => {
+  const handleDeleteIngredient = (elem: TSelectIngredients): void => {
     //@ts-ignore
     dispatch(deleteIngredient(elem));
   };

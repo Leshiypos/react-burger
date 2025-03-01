@@ -1,11 +1,16 @@
-import { SET_AUTH_CHECKED, SET_USER } from "./action";
+import { IUserCurrent, SET_AUTH_CHECKED, SET_USER, TUserActions } from "./action";
 
-const initialState = {
+interface IInitialState{
+	user: IUserCurrent|null,
+	isAuthChecked: boolean,
+}
+
+const initialState:IInitialState = {
 	user: null,
 	isAuthChecked: false,
 }
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action:TUserActions):IInitialState => {
 	switch (action.type){
 		case SET_AUTH_CHECKED :
 			return {

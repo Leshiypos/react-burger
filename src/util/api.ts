@@ -1,3 +1,4 @@
+import { IRegister } from "../services/user/action";
 import { BASE_URL } from "./constants";
 
 interface IRefreshToken{
@@ -45,7 +46,7 @@ const checkResponse = <T>(response: Response):Promise<T> => {
 	});
   };
 
-export const fetchWithRefresh = async (url:string, options:IOptionsFetch={}) => {
+export const fetchWithRefresh = async (url:string, options:IOptionsFetch={}) : Promise<Omit<IRegister,"accessToken" |"refreshToken" >> => {
 	try {
 	  return await request(url, options);
 	} catch (err) {

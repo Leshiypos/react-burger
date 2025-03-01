@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { IConstructorIngredient } from "../../util/types";
 
 //Memoизированный селектор
 export const getIngredientsState = createSelector([
@@ -16,9 +17,9 @@ export const getIngredientsByBategories = createSelector([
 ],
 (state) => ({
 	ingredientsSortByCategory: {
-		buns : state.ingredients.filter((ingr) => ingr.type == "bun"),
-		mains : state.ingredients.filter((ingr) => ingr.type == "main"),
-		sauces : state.ingredients.filter((ingr) => ingr.type == "sauce"),
+		buns : state.ingredients.filter((ingr:IConstructorIngredient) => ingr.type == "bun"),
+		mains : state.ingredients.filter((ingr:IConstructorIngredient) => ingr.type == "main"),
+		sauces : state.ingredients.filter((ingr:IConstructorIngredient) => ingr.type == "sauce"),
 	},
 })
 )

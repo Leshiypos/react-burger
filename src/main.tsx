@@ -14,7 +14,7 @@ if (!root) {
   throw new Error("Переменная root не определена");
 }
 
-const store = configureStore();
+export const store = configureStore();
 createRoot(root).render(
   <StrictMode>
     <Provider store={store}>

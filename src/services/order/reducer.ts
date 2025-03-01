@@ -1,12 +1,18 @@
-import { HIDE_ORDER, SEND_ORDER, SEND_ORDER_FAILED, SEND_ORDER_SACCESS } from "./actions";
+import { HIDE_ORDER, IResponseOrder, SEND_ORDER, SEND_ORDER_FAILED, SEND_ORDER_SACCESS, TOrderActions } from "./actions";
 
-const initialState = {
+interface IInitialState{
+	loading: boolean;
+	error: boolean;
+	response : IResponseOrder | null;
+}
+
+const initialState: IInitialState = {
 	loading: false,
 	error: false,
 	response: null
 }
 
-export const reducer = (state=initialState, action)=>{
+export const reducer = (state=initialState, action:TOrderActions):IInitialState=>{
 	switch (action.type){
 		case SEND_ORDER:
 			return {
