@@ -1,7 +1,12 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order.module.css";
+import { IOrder } from "../../services/feed-orders/actions";
 
-export function Order(): React.JSX.Element {
+interface IOrderProps {
+  order: IOrder;
+}
+
+export function Order({ order }: IOrderProps): React.JSX.Element {
   return (
     <li className={styles.order}>
       <div className={styles.header}>

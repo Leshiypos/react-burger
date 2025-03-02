@@ -1,20 +1,12 @@
 import React from "react";
 import styles from "./order-list.module.css";
+import { IMessage } from "../../services/feed-orders/actions";
 
 interface IOrderListProps {
   children?: React.ReactNode;
-  renderProps: React.JSX.Element;
+  orders: IMessage;
 }
 
-export function OrderList({ renderProps }: IOrderListProps): React.JSX.Element {
-  return (
-    <ul className={styles.wrap_area}>
-      {renderProps}
-      {renderProps}
-      {renderProps}
-      {renderProps}
-      {renderProps}
-      {renderProps}
-    </ul>
-  );
+export function OrderList({ orders }: IOrderListProps): React.JSX.Element {
+  return <ul className={styles.wrap_area}></ul>;
 }

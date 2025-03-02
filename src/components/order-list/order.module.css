@@ -90,3 +90,11 @@
 	.price{
 		composes: mr-2 ml-2 text text_type_digits-default from global;
 	}
+
+
+.wrap_area{
+	overflow: auto;
+	height: 63vh;
+	list-style: none;
+	padding-left: 0;
+}

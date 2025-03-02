@@ -6,6 +6,7 @@ import { reducer as detailsReducer } from "./details/reducer";
 import { reducer as userReducer } from "./user/reducer";
 import { thunk } from "redux-thunk";
 import { reducer as orderReducer } from "./order/reducer";
+import { reducer as feedOrdersReducer } from "./feed-orders/reducer";
 import {socketMiddleware} from './middlewares/socket-middleware'
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
 	details: detailsReducer,
 	order: orderReducer,
 	user: userReducer,
+	feedOrders : feedOrdersReducer,
 });
 
 
@@ -21,7 +23,7 @@ export function configureStore(initialState={}){
 	const store = createStore(
 		rootReducer,
 		initialState,
-		composeWithDevToolsDevelopmentOnly(applyMiddleware(thunk)),
+		composeWithDevToolsDevelopmentOnly(applyMiddleware(thunk,socketMiddleware('wss://norma.nomoreparties.space/orders/all'))),
 	);
 	return store;
 }

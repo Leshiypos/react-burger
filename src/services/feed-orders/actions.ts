@@ -4,7 +4,7 @@ export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
 export const WS_GET_MESSAGE: 'WS_GET_MESSAGE' = 'WS_GET_MESSAGE';
 export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSED';
 
-interface IOrders		  {
+export interface IOrder		  {
 	ingredients: string[],
 	_id: string,
 	status: string,
@@ -14,7 +14,7 @@ interface IOrders		  {
   }
 export interface IMessage{
 	success: boolean;
-	orders: IOrders[],
+	orders: IOrder[],
 	total: number,
 	totalToday: number;
 	} 
