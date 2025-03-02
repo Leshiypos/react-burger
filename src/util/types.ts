@@ -6,7 +6,14 @@ import { TIngredientsActions } from '../services/ingredients/actions';
 import { TDetailsActions } from '../services/details/actions';
 import { TOrderActions } from '../services/order/actions';
 import { TUserActions } from '../services/user/action';
+import { TFeedOrdersActions } from '../services/feed-orders/actions';
 
+
+export enum WebsocketStatus {
+	CONNECTING = 'CONNECTING...',
+	ONLINE = 'ONLINE',
+	OFFLINE = 'OFFLINE'
+  }
 export interface IUseForm {
 	name: string ,
     email: string,
@@ -38,7 +45,8 @@ export type TApplicationActions =
 	|TIngredientsActions
 	|TDetailsActions
 	|TOrderActions
-	|TUserActions;
+	|TUserActions
+	|TFeedOrdersActions;
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppThunk<TReturn = void> = ActionCreator<

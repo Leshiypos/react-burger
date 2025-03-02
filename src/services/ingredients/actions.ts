@@ -1,5 +1,5 @@
 import { request } from "../../util/api";
-import { AppDispatch, IConstructorIngredient } from "../../util/types";
+import { AppDispatch, AppThunk, IConstructorIngredient } from "../../util/types";
 
 export const GET_INGREDIENTS : 'GET_INGREDIENTS' = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_FAILED: 'GET_INGREDIENTS_FAILED' = 'GET_INGREDIENTS_FAILED';
@@ -23,7 +23,7 @@ export type TIngredientsActions =
 
 
 
-export const getIngredientsAction = () => (dispatch: AppDispatch) => {
+export const getIngredientsAction:AppThunk = () => (dispatch: AppDispatch) => {
 	dispatch({type : GET_INGREDIENTS});
 	request<{data: IConstructorIngredient[]}>('/ingredients')
 		.then(response => {

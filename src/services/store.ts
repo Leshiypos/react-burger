@@ -6,6 +6,7 @@ import { reducer as detailsReducer } from "./details/reducer";
 import { reducer as userReducer } from "./user/reducer";
 import { thunk } from "redux-thunk";
 import { reducer as orderReducer } from "./order/reducer";
+import {socketMiddleware} from './middlewares/socket-middleware'
 
 const rootReducer = combineReducers({
 	ingredients : ingredientsReducer,
