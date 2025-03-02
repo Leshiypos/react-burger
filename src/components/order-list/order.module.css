@@ -2,6 +2,7 @@
 	composes: mb-4 mr-2  p-6 from global;
 	background-color: rgba(28, 28, 33, 1);
 	border-radius: 40px;
+	list-style: none;
 }
 .header{
 	display: flex;

@@ -6,7 +6,7 @@ interface IOrderProps {
   order: IOrder;
 }
 
-export function Order({ order }: IOrderProps): React.JSX.Element {
+export default function Order({ order }: IOrderProps): React.JSX.Element {
   return (
     <li className={styles.order}>
       <div className={styles.header}>

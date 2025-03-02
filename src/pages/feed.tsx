@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "./feed.module.css";
-import { Order } from "../components/order-list/order";
+import Order from "../components/order-list/order";
 import { OrdersBoard } from "../components/orders-board/orders-board";
 import { useDispatch } from "react-redux";
 import { getFeedOrdersState } from "../services/feed-orders/selectors";
@@ -21,21 +21,19 @@ export default function Feed(): React.JSX.Element {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
   }, []);
-  //   feedOrders.map((elem) => console.log(elem));
-  //   console.log(feedOrders);
   return (
     <main className={styles.main}>
       <section>
         <h1 className={styles.h1}>Лента Заказов</h1>
-        {wsConnected == WebsocketStatus.ONLINE && feedOrders ? (
-          <ul className={styles.wrap_area}>
-            {feedOrders.map((elem: IOrder) => {
-              <Order order={elem} />;
-            })}
-          </ul>
-        ) : (
-          "Нет данных"
-        )}
+        <ul className={styles.wrap_area}>
+          {wsConnected === WebsocketStatus.ONLINE && feedOrders ? (
+            feedOrders.map((elem: IOrder, index: string) => (
+              <Order order={elem} key={index} />
+            ))
+          ) : (
+            <p>Данные загружаются</p>
+          )}
+        </ul>
       </section>
 
       <section>
