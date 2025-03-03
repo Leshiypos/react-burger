@@ -10,7 +10,8 @@ export interface IOrder		  {
 	status: string,
 	number: number,
 	createdAt: string,
-	updatedAt: string
+	updatedAt: string,
+	name: string
   }
 export interface IMessage{
 	success: boolean;

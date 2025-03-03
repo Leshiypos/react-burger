@@ -1,73 +1,45 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order.module.css";
 import { IOrder } from "../../services/feed-orders/actions";
+import { dateFormated } from "../../util/functions";
+import { useSelector } from "../../hooks/hooks";
+import { getIngredientsByBategories } from "../../services/ingredients/selectors";
+import IconIngredient from "./icon-ingredient";
 
 interface IOrderProps {
   order: IOrder;
 }
 
 export default function Order({ order }: IOrderProps): React.JSX.Element {
+  const { ingredientsWithIdKey } = useSelector(getIngredientsByBategories);
+  const { number, name, createdAt, ingredients } = order;
+  const countOfIngredients = ingredients.length - 5;
+  const date = dateFormated(createdAt);
+  let totalPrice = 0;
   return (
     <li className={styles.order}>
       <div className={styles.header}>
-        <div className={styles.order_ID}>#034535</div>
-        <div className={styles.order_date}>Сегодня, 16:20</div>
+        <div className={styles.order_ID}>{`#${number}`}</div>
+        <div className={styles.order_date}>{date}</div>
       </div>
-      <h4 className={styles.order_title}>Death Star Starship Main бургер</h4>
+      <h4 className={styles.order_title}>{name}</h4>
       <div className={styles.order_compound}>
         <div className={styles.order_ingredients}>
-          <div className={styles.ingredient_icon}>
-            <div>
-              <img
-                src="https://code.s3.yandex.net/react/code/sauce-04-mobile.png"
-                alt=""
-              />
-            </div>
-          </div>
-          <div className={styles.ingredient_icon}>
-            <div>
-              <img
-                src="https://code.s3.yandex.net/react/code/sauce-02-mobile.png"
-                alt=""
-              />
-            </div>
-          </div>
-          <div className={styles.ingredient_icon}>
-            <div>
-              <img
-                src="https://code.s3.yandex.net/react/code/sauce-01-mobile.png"
-                alt=""
-              />
-            </div>
-          </div>
-          <div className={styles.ingredient_icon}>
-            <div>
-              <img
-                src="https://code.s3.yandex.net/react/code/meat-03-mobile.png"
-                alt=""
-              />
-            </div>
-          </div>
-          <div className={styles.ingredient_icon}>
-            <div>
-              <img
-                src="https://code.s3.yandex.net/react/code/salad-mobile.png"
-                alt=""
-              />
-            </div>
-          </div>
-          <div className={styles.ingredient_icon}>
-            <div>
-              <img
-                src="https://code.s3.yandex.net/react/code/core-mobile.png"
-                alt=""
-              />
-            </div>
-            <span className={styles.count}>+3</span>
-          </div>
+          {ingredients &&
+            ingredients.map((id, index) => {
+              totalPrice += ingredientsWithIdKey[id].price;
+              if (index > 5) return;
+              return (
+                <IconIngredient
+                  src={ingredientsWithIdKey[id].image_mobile}
+                  isLast={index === 5}
+                  count={countOfIngredients}
+                />
+              );
+            })}
         </div>
         <div className={styles.order_price}>
-          <p className={styles.price}>480</p>
+          <p className={styles.price}>{totalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
       </div>

@@ -15,6 +15,7 @@ import { WebsocketStatus } from "../util/types";
 export default function Feed(): React.JSX.Element {
   const dispatch = useDispatch();
   const { wsConnected, feedOrders } = useSelector(getFeedOrdersState);
+  const ready = wsConnected === WebsocketStatus.ONLINE && feedOrders;
   useEffect(() => {
     dispatch({ type: WS_CONNECTION_START });
     return () => {
@@ -26,7 +27,7 @@ export default function Feed(): React.JSX.Element {
       <section>
         <h1 className={styles.h1}>Лента Заказов</h1>
         <ul className={styles.wrap_area}>
-          {wsConnected === WebsocketStatus.ONLINE && feedOrders ? (
+          {ready ? (
             feedOrders.map((elem: IOrder, index: string) => (
               <Order order={elem} key={index} />
             ))
