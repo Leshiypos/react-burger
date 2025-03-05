@@ -4,6 +4,7 @@ export const dateFormated = (dateString: string): string => {
 	  "Понедельник",
 	  "Вторник",
 	  "Среда",
+	  "Четверг",
 	  "Пятница",
 	  "Суббота",
 	];

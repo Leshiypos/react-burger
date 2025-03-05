@@ -2,15 +2,16 @@ import type { Middleware, MiddlewareAPI } from 'redux';
 import {AppDispatch,RootState, TApplicationActions} from '../../util/types'
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, onClose, onError, onMessage, onOpen, wsConnect } from '../feed-orders/actions';
 import {refreshToken} from '../../util/api'
+import { WS_CONNECTION_CLOSED_PROFILE, WS_CONNECTION_START_PROFILE, onCloseProfile, onErrorProfile, onMessageProfile, onOpenProfile, wsConnectProfile } from '../profile-orders/actions';
 
 interface IWsAction{
-		connect: typeof WS_CONNECTION_START,
-		disconect: typeof WS_CONNECTION_CLOSED,
-		onConnecting : typeof wsConnect,
-		onClose: typeof onClose,
-		onError: typeof onError,
-		onMessage: typeof onMessage,
-		onOpen: typeof onOpen
+		connect: typeof WS_CONNECTION_START | typeof WS_CONNECTION_START_PROFILE,
+		disconect: typeof WS_CONNECTION_CLOSED | typeof WS_CONNECTION_CLOSED_PROFILE,
+		onConnecting : typeof wsConnect | typeof wsConnectProfile,
+		onClose: typeof onClose | typeof onCloseProfile,
+		onError: typeof onError | typeof onErrorProfile,
+		onMessage: typeof onMessage | typeof onMessageProfile,
+		onOpen: typeof onOpen | typeof onOpenProfile
 }
 const RECONNECT_PERIOD = 3000;
 

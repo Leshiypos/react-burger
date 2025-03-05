@@ -10,12 +10,12 @@ import Profile from "./pages/profile";
 import ResetPassword from "./pages/reset-password";
 import { OnlyAuth, OnlyUnAuth } from "./components/protected-route";
 import { checkUserAuth } from "./services/user/action";
-import OrderHistory from "./pages/feed";
 import ProfileForm from "./pages/profile-form";
 import IngredientDetails from "./components/ingredient-details";
 import Modal from "./components/modal";
 import Feed from "./pages/feed";
 import { useDispatch } from "./hooks/hooks";
+import OrdersProfile from "./pages/orders-profile";
 
 function App() {
   const location = useLocation();
@@ -57,7 +57,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/profile" element={<OnlyAuth component={<Profile />} />}>
           <Route path="" element={<ProfileForm />} />
-          <Route path="orders" element={<OrderHistory />} />
+          <Route path="orders" element={<OrdersProfile />} />
         </Route>
       </Routes>
       {background && (

@@ -7,6 +7,7 @@ import { TDetailsActions } from '../services/details/actions';
 import { TOrderActions } from '../services/order/actions';
 import { TUserActions } from '../services/user/action';
 import { TFeedOrdersActions } from '../services/feed-orders/actions';
+import { TOrdersProfileActions } from '../services/profile-orders/actions';
 
 
 export enum WebsocketStatus {
@@ -46,7 +47,8 @@ export type TApplicationActions =
 	|TDetailsActions
 	|TOrderActions
 	|TUserActions
-	|TFeedOrdersActions;
+	|TFeedOrdersActions
+	|TOrdersProfileActions;
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppThunk<TReturn = void> = ActionCreator<

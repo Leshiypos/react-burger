@@ -1,0 +1,11 @@
+.orders_wrap{
+	max-width: 1000px;
+	margin-top: -150px;
+}
+
+.wrap_area{
+	overflow: auto;
+	height: 80vh;
+	list-style: none;
+	padding-left: 0;
+}

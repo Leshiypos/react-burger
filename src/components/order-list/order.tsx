@@ -34,6 +34,7 @@ export default function Order({ order }: IOrderProps): React.JSX.Element {
                   src={ingredientsWithIdKey[id].image_mobile}
                   isLast={index === 5}
                   count={countOfIngredients}
+                  key={index}
                 />
               );
             })}
