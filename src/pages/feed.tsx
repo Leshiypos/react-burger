@@ -4,22 +4,22 @@ import Order from "../components/order-list/order";
 import { OrdersBoard } from "../components/orders-board/orders-board";
 import { useDispatch } from "react-redux";
 import { getFeedOrdersState } from "../services/feed-orders/selectors";
-import {
-  IOrder,
-  WS_CONNECTION_CLOSED,
-  WS_CONNECTION_START,
-} from "../services/feed-orders/actions";
+import { IOrder, onClose, wsConnect } from "../services/feed-orders/actions";
 import { useSelector } from "../hooks/hooks";
 import { WebsocketStatus } from "../util/types";
+
+const wsUrlFeed = "wss://norma.nomoreparties.space/orders/all";
 
 export default function Feed(): React.JSX.Element {
   const dispatch = useDispatch();
   const { wsConnected, feedOrders } = useSelector(getFeedOrdersState);
   const ready = wsConnected === WebsocketStatus.ONLINE && feedOrders;
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
+    //@ts-ignore
+    dispatch(wsConnect(wsUrlFeed));
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      //@ts-ignore
+      dispatch(onClose());
     };
   }, []);
   return (

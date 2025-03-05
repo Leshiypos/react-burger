@@ -8,6 +8,17 @@ import { thunk } from "redux-thunk";
 import { reducer as orderReducer } from "./order/reducer";
 import { reducer as feedOrdersReducer } from "./feed-orders/reducer";
 import {socketMiddleware} from './middlewares/socket-middleware'
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, onClose, onError, onMessage, onOpen, wsConnect } from './feed-orders/actions';
+
+const socketMiddlewareFeed = socketMiddleware({
+	connect : WS_CONNECTION_START,
+	disconect: WS_CONNECTION_CLOSED,
+	onConnecting: wsConnect,
+	onClose: onClose,
+	onError : onError,
+	onMessage: onMessage,
+	onOpen: onOpen
+});
 
 const rootReducer = combineReducers({
 	ingredients : ingredientsReducer,
@@ -23,7 +34,7 @@ export function configureStore(initialState={}){
 	const store = createStore(
 		rootReducer,
 		initialState,
-		composeWithDevToolsDevelopmentOnly(applyMiddleware(thunk,socketMiddleware('wss://norma.nomoreparties.space/orders/all'))),
+		composeWithDevToolsDevelopmentOnly(applyMiddleware(thunk,socketMiddlewareFeed)),
 	);
 	return store;
 }

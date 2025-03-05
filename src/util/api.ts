@@ -24,7 +24,7 @@ const checkResponse = <T>(response: Response):Promise<T> => {
 
   // Обновление токена
 
-  const refreshToken = async(): Promise<IRefreshToken> => {
+  export const refreshToken = async(): Promise<IRefreshToken> => {
 	return request<IRefreshToken>(`/auth/token`, {
 	  method: "POST",
 	  headers: {

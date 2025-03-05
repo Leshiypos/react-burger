@@ -1,3 +1,4 @@
+
 export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS';
 export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
@@ -50,3 +51,24 @@ export type TFeedOrdersActions =
 	| IWsGetMessageAction
 	| IWsConnectionCloseAction;
 
+
+export const wsConnect = (url:string):IWsConnectionStartAction =>({
+	type: WS_CONNECTION_START,
+	payload: url,
+})
+
+export const onOpen = ():IWsConnctionSuccesAction=>({
+	type : WS_CONNECTION_SUCCESS
+})
+
+export const onError = (event: Event):IWsConnectionErrorAction =>({
+	type: WS_CONNECTION_ERROR, payload: event
+})
+
+export const onMessage = (parseData : IMessage[]):IWsGetMessageAction => ({
+	type: WS_GET_MESSAGE, payload: parseData
+}) 
+
+export const onClose = (): IWsConnectionCloseAction=>({
+	type: WS_CONNECTION_CLOSED
+})
