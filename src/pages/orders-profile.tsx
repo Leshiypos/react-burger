@@ -40,7 +40,7 @@ export default function OrdersProfile(): React.JSX.Element {
             ordersProfile
               .reverse()
               .map((elem: IOrder, index: string) => (
-                <Order order={elem} key={index} />
+                <Order order={elem} key={index} hasStatus={true} />
               ))
           ) : (
             <p>Данные загружаются</p>

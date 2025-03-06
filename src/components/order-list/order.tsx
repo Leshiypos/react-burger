@@ -8,9 +8,23 @@ import IconIngredient from "./icon-ingredient";
 
 interface IOrderProps {
   order: IOrder;
+  hasStatus?: boolean;
 }
 
-export default function Order({ order }: IOrderProps): React.JSX.Element {
+interface IStatus {
+  readonly [created: string]: string;
+}
+
+const status: IStatus = {
+  created: "Создан",
+  done: "Выполнен",
+  pending: "Готовится",
+};
+
+export default function Order({
+  order,
+  hasStatus = false,
+}: IOrderProps): React.JSX.Element {
   const { ingredientsWithIdKey } = useSelector(getIngredientsByBategories);
   const { number, name, createdAt, ingredients } = order;
   const countOfIngredients = ingredients.length - 5;
@@ -23,6 +37,15 @@ export default function Order({ order }: IOrderProps): React.JSX.Element {
         <div className={styles.order_date}>{date}</div>
       </div>
       <h4 className={styles.order_title}>{name}</h4>
+      {hasStatus && (
+        <p
+          className={
+            order.status === "done" ? styles.status_done : styles.status
+          }
+        >
+          {status[order.status]}
+        </p>
+      )}
       <div className={styles.order_compound}>
         <div className={styles.order_ingredients}>
           {ingredients &&

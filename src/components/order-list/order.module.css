@@ -18,7 +18,13 @@
 .order_title{
 	composes:mb-6 text text_type_main-medium from global;
 }
-
+.status{
+	composes:mb-6 text text_type_main-default from global;
+}
+.status_done{
+	composes:mb-6 text text_type_main-default from global;
+	color: #00CCCC;
+}
 .order_compound{
 	display: flex;
 	justify-content: space-between;

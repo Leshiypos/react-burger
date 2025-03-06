@@ -1,4 +1,4 @@
-import { ThunkAction } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { TConstructorActions } from "../services/burger-constructor/actions";
 import { store } from '../main';
 import { TIngredientsActions } from '../services/ingredients/actions';
@@ -7,6 +7,7 @@ import { TOrderActions } from '../services/order/actions';
 import { TUserActions } from '../services/user/action';
 import { TFeedOrdersActions } from '../services/feed-orders/actions';
 import { TOrdersProfileActions } from '../services/profile-orders/actions';
+//import {ThunkDispatch} from 'redux-too'
 
 
 export enum WebsocketStatus {
@@ -54,4 +55,5 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<TReturn = void> = ThunkAction<TReturn, RootState, unknown, TApplicationActions>;
 
 // export type AppDispatch = Dispatch<TApplicationActions>;
-export type AppDispatch<TReturn = void> = (action: TApplicationActions | AppThunk<TReturn>) => TReturn;
+//export type AppDispatch<TReturn = void> = (action: TApplicationActions | AppThunk<TReturn>) => TReturn;
+export type AppDispatch = ThunkDispatch<RootState, unknown, TApplicationActions>;
