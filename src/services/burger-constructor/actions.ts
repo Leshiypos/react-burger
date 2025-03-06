@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { AppDispatch, AppThunk, IConstructorIngredient, IConstructorIngredientWithKey } from "../../util/types";
+import {AppThunk, IConstructorIngredient, IConstructorIngredientWithKey } from "../../util/types";
 export const ADD_INGREDIENT: 'ADD_INGREDIENT' = 'ADD_INGREDIENT';
 export const DELETE_INGREDIENT: 'DELETE_INGREDIENT' = 'DELETE_INGREDIENT';
 export const ADD_BUNS: 'ADD_BUNS' = 'ADD_BUNS';
@@ -37,7 +37,7 @@ export type TConstructorActions=
 	|ISortIngredientsAction;
 
 
-export const addIngredient:AppThunk = (ingredient: IConstructorIngredient)=>(dispatch:AppDispatch)=>{
+export const addIngredient = (ingredient: IConstructorIngredient):AppThunk=>(dispatch)=>{
 	const key = uuidv4();
 	dispatch({
 	  type: ADD_INGREDIENT,
@@ -45,7 +45,7 @@ export const addIngredient:AppThunk = (ingredient: IConstructorIngredient)=>(dis
 	});
 }
 
-export const deleteIngredient:AppThunk = (elem:IConstructorIngredientWithKey) => (dispatch:AppDispatch) => {
+export const deleteIngredient = (elem:IConstructorIngredientWithKey):AppThunk => (dispatch) => {
 	dispatch({
 		type: DELETE_INGREDIENT,
 		element: elem,
@@ -53,21 +53,21 @@ export const deleteIngredient:AppThunk = (elem:IConstructorIngredientWithKey) =>
 }
 
 
-export const addBuns:AppThunk = (ingredient: IConstructorIngredient)=>(dispatch:AppDispatch)=>{
+export const addBuns = (ingredient: IConstructorIngredient):AppThunk=>(dispatch)=>{
 	dispatch({
 	  type: ADD_BUNS,
 	  bun: ingredient,
 	});
 }
 
-export const sortIngredients:AppThunk = (dragIndex: number,hoverIndex:number)=>(dispatch:AppDispatch)=>{
+export const sortIngredients = (dragIndex: number,hoverIndex:number):AppThunk=>(dispatch)=>{
 	dispatch({
 		type: SORT_INGREDIENTS,
         dragIndex: dragIndex,
         hoverIndex: hoverIndex,
 	})
 }
-export const resetIngredients:AppThunk  = () => (dispatch:AppDispatch)=>{
+export const resetIngredients  = ():AppThunk => (dispatch)=>{
 	dispatch({
 		type: RESET_INGREDIENTS,
 	});

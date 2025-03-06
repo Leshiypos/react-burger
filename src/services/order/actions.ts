@@ -45,12 +45,12 @@ export type TOrderActions =
 	| IHideOrderAction;
 
 
-export const hideOrder: AppThunk = ()=> (dispatch:AppDispatch) =>{
+export const hideOrder = (): AppThunk=> (dispatch) =>{
 	dispatch({
 		type: HIDE_ORDER,
 	})
 }
-export const sendOrderAction: AppThunk = (req) => (dispatch:AppDispatch) => {
+export const sendOrderAction = (req:{ingredients: string[]}): AppThunk => (dispatch) => {
 	dispatch({type : SEND_ORDER});
 	request<IResponseOrder>('/orders', {
 		method: "POST",

@@ -1,5 +1,4 @@
 import { ThunkAction } from 'redux-thunk';
-import { Action, ActionCreator, Dispatch } from "redux";
 import { TConstructorActions } from "../services/burger-constructor/actions";
 import { store } from '../main';
 import { TIngredientsActions } from '../services/ingredients/actions';
@@ -51,8 +50,8 @@ export type TApplicationActions =
 	|TOrdersProfileActions;
 export type RootState = ReturnType<typeof store.getState>;
 
-export type AppThunk<TReturn = void> = ActionCreator<
-  ThunkAction<TReturn, Action, RootState, TApplicationActions>
->;
+// export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, RootState, TApplicationActions>>;
+export type AppThunk<TReturn = void> = ThunkAction<TReturn, RootState, unknown, TApplicationActions>;
 
-export type AppDispatch = Dispatch<TApplicationActions>;
+// export type AppDispatch = Dispatch<TApplicationActions>;
+export type AppDispatch<TReturn = void> = (action: TApplicationActions | AppThunk<TReturn>) => TReturn;

@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import styles from "./orders-profile.module.css";
 import Order from "../components/order-list/order";
-import { useDispatch } from "react-redux";
 import { getOrdersProfileState } from "../services/profile-orders/selectors";
 import { IOrder } from "../services/feed-orders/actions";
-import { useSelector } from "../hooks/hooks";
+import { useDispatch, useSelector } from "../hooks/hooks";
 import { WebsocketStatus } from "../util/types";
 import {
   onCloseProfile,
@@ -28,10 +27,8 @@ export default function OrdersProfile(): React.JSX.Element {
   const ready = wsConnectedProfile === WebsocketStatus.ONLINE && ordersProfile;
 
   useEffect(() => {
-    //@ts-ignore
     dispatch(wsConnectProfile(wssUrlProfile));
     return () => {
-      //@ts-ignore
       dispatch(onCloseProfile());
     };
   }, []);
@@ -40,9 +37,11 @@ export default function OrdersProfile(): React.JSX.Element {
       <section>
         <ul className={styles.wrap_area}>
           {ready ? (
-            ordersProfile.map((elem: IOrder, index: string) => (
-              <Order order={elem} key={index} />
-            ))
+            ordersProfile
+              .reverse()
+              .map((elem: IOrder, index: string) => (
+                <Order order={elem} key={index} />
+              ))
           ) : (
             <p>Данные загружаются</p>
           )}

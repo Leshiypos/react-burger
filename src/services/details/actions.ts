@@ -1,4 +1,4 @@
-import { AppDispatch, AppThunk, IConstructorIngredient } from "../../util/types";
+import { AppThunk, IConstructorIngredient } from "../../util/types";
 
 export const SHOW_DETAILS: 'SHOW_DETAILS' = 'SHOW_DETAILS';
 export const HIDE_DETAILS: 'HIDE_DETAILS' = 'HIDE_DETAILS';
@@ -17,13 +17,13 @@ export type TDetailsActions =
 	| IHideDetailsAction;
 
 
-export const showDetails:AppThunk = (ingredient:IConstructorIngredient) => (dispatch:AppDispatch) => {
+export const showDetails = (ingredient:IConstructorIngredient):AppThunk => (dispatch) => {
 	dispatch({
 		type:SHOW_DETAILS,
 		details: ingredient,
 	})
 }
-export const hideDetails:AppThunk = () => (dispatch:AppDispatch) => {
+export const hideDetails = ():AppThunk => (dispatch) => {
 	dispatch({
 		type:HIDE_DETAILS,
 	})

@@ -7,10 +7,10 @@ import {
 import styles from "./register.module.css";
 import { Link } from "react-router";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { register } from "../services/user/action";
 import { useForm } from "../hooks/useForm";
 import { IUseForm } from "../util/types";
+import { useDispatch } from "../hooks/hooks";
 
 export default function Register(): React.JSX.Element {
   const dispatch = useDispatch();
@@ -30,7 +30,6 @@ export default function Register(): React.JSX.Element {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { email, password, name } = values;
-    //@ts-ignore
     dispatch(register({ email, password, name }, setErrorMessage));
   };
   return (

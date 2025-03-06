@@ -1,14 +1,13 @@
 import { NavLink, Outlet } from "react-router-dom";
 import styles from "./profile.module.css";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
 import { logout } from "../services/user/action";
 import React from "react";
+import { useDispatch } from "../hooks/hooks";
 
 export default function Profile(): React.JSX.Element {
   const dispatch = useDispatch();
   const handleLogout = (): void => {
-    //@ts-ignore
     dispatch(logout());
   };
   return (

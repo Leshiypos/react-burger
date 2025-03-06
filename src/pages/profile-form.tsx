@@ -6,13 +6,14 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getUser } from "../services/user/selector";
 import { refreshUserData } from "../services/user/action";
 import { useForm } from "../hooks/useForm";
 import { IUseForm } from "../util/types";
+import { useDispatch } from "../hooks/hooks";
 
-type TrefreshData = Omit<IUseForm, "password"> & { password?: string };
+export type TrefreshData = Omit<IUseForm, "password"> & { password?: string };
 
 export default function ProfileForm(): React.JSX.Element {
   const dispatch = useDispatch();
@@ -42,7 +43,6 @@ export default function ProfileForm(): React.JSX.Element {
     let refreshData: TrefreshData = { email, name, password };
     if (password === "******" || password === "") refreshData = { email, name };
 
-    //@ts-ignore
     dispatch(refreshUserData(refreshData));
   };
   const handleCancel = (): void => {
