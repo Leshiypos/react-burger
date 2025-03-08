@@ -10,14 +10,11 @@ import {
   wsConnectProfile,
 } from "../services/profile-orders/actions";
 
-let wssUrlProfile = "";
-if (localStorage.getItem("accessToken")) {
-  //@ts-ignore
-  const token: string = localStorage
-    .getItem("accessToken")
-    .replace("Bearer ", "");
-  wssUrlProfile = `wss://norma.nomoreparties.space/orders?token=${token}`;
-}
+const token: string | undefined = localStorage
+  ?.getItem("accessToken")
+  ?.replace("Bearer ", "");
+const wssUrlProfile = `wss://norma.nomoreparties.space/orders?token=${token}`;
+
 console.log(wssUrlProfile);
 export default function OrdersProfile(): React.JSX.Element {
   const dispatch = useDispatch();

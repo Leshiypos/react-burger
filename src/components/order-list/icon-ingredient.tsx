@@ -5,14 +5,14 @@ interface IIconIngredientProps {
   isLast: boolean;
   src: string;
   title?: string;
-  count: number;
+  count?: number;
 }
 
 export default function IconIngredient({
   isLast,
   src,
   title = "",
-  count,
+  count = 1,
 }: IIconIngredientProps): React.JSX.Element {
   return (
     <div className={styles.ingredient_icon}>

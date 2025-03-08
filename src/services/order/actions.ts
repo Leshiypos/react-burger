@@ -1,5 +1,6 @@
 import { request } from "../../util/api";
 import { AppDispatch, AppThunk, IConstructorIngredient } from "../../util/types";
+import { IMessage } from "../feed-orders/actions";
 
 export const SEND_ORDER: 'SEND_ORDER' = 'SEND_ORDER';
 export const SEND_ORDER_FAILED: 'SEND_ORDER_FAILED' = 'SEND_ORDER_FAILED';
@@ -19,7 +20,7 @@ interface IResponseOrderField{
 export interface IResponseOrder{
 	success: boolean;
 	name?: string;
-	order?:IResponseOrderField;
+	order?:IResponseOrderField | IMessage;
 }
 interface ISendOrderAction{
 	readonly type: typeof SEND_ORDER;
@@ -59,6 +60,26 @@ export const sendOrderAction = (req:{ingredients: string[]}): AppThunk => (dispa
 			authorization: (localStorage as {getItem: (el: string)=>string}).getItem('accessToken')
 		},
 		body: JSON.stringify(req)
+	})
+		.then(response=>{
+			dispatch({
+				type:SEND_ORDER_SACCESS,
+				response: response,
+			});
+		})
+		.catch(()=>{
+			dispatch({
+				type : SEND_ORDER_FAILED
+			});
+		})
+}
+export const getOrderAction = (number:number): AppThunk => (dispatch) => {
+	dispatch({type : SEND_ORDER});
+	request<IResponseOrder>(`/orders/${number}`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+		}
 	})
 		.then(response=>{
 			dispatch({

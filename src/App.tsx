@@ -16,6 +16,7 @@ import Modal from "./components/modal";
 import Feed from "./pages/feed";
 import { useDispatch } from "./hooks/hooks";
 import OrdersProfile from "./pages/orders-profile";
+import OrderInfo from "./components/order-list/order-info";
 
 function App() {
   const location = useLocation();
@@ -43,6 +44,7 @@ function App() {
           element={<IngredientDetails />}
         />
         <Route path="/feed" element={<Feed />} />
+        <Route path="/feed/:number" element={<OrderInfo />} />
         <Route path="/login" element={<OnlyUnAuth component={<Login />} />} />
         <Route
           path="/register"
@@ -65,6 +67,14 @@ function App() {
             element={
               <Modal title="Детали ингридиента" onClose={handleModalClose}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="/feed/:number"
+            element={
+              <Modal onClose={handleModalClose}>
+                <OrderInfo />
               </Modal>
             }
           />
