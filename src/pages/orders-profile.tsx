@@ -34,11 +34,9 @@ export default function OrdersProfile(): React.JSX.Element {
       <section>
         <ul className={styles.wrap_area}>
           {ready ? (
-            ordersProfile
-              .reverse()
-              .map((elem: IOrder, index: string) => (
-                <Order order={elem} key={index} hasStatus={true} />
-              ))
+            ordersProfile.map((elem: IOrder, index: string) => (
+              <Order order={elem} key={index} hasStatus={true} />
+            ))
           ) : (
             <p>Данные загружаются</p>
           )}

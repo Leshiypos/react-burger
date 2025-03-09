@@ -58,6 +58,7 @@ function App() {
         <Route path="/profile" element={<OnlyAuth component={<Profile />} />}>
           <Route path="" element={<ProfileForm />} />
           <Route path="orders" element={<OrdersProfile />} />
+          <Route path="orders/:number" element={<OrderInfo />} />
         </Route>
       </Routes>
       {background && (
@@ -73,7 +74,15 @@ function App() {
           <Route
             path="/feed/:number"
             element={
-              <Modal onClose={handleModalClose}>
+              <Modal title="Детали ингридиента" onClose={handleModalClose}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:number"
+            element={
+              <Modal title="Детали ингридиента" onClose={handleModalClose}>
                 <OrderInfo />
               </Modal>
             }

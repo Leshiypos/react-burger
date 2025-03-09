@@ -1,4 +1,7 @@
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  CurrencyIcon,
+  FormattedDate,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order.module.css";
 import { IOrder } from "../../services/feed-orders/actions";
 import { dateFormated } from "../../util/functions";
@@ -6,21 +9,12 @@ import { useSelector } from "../../hooks/hooks";
 import { getIngredientsByBategories } from "../../services/ingredients/selectors";
 import IconIngredient from "./icon-ingredient";
 import { Link, useLocation } from "react-router-dom";
+import { status } from "../../util/constants";
 
 interface IOrderProps {
   order: IOrder;
   hasStatus?: boolean;
 }
-
-interface IStatus {
-  readonly [created: string]: string;
-}
-
-const status: IStatus = {
-  created: "Создан",
-  done: "Выполнен",
-  pending: "Готовится",
-};
 
 export default function Order({
   order,
@@ -30,18 +24,20 @@ export default function Order({
   const location = useLocation();
   const { number, name, createdAt, ingredients } = order;
   const countOfIngredients = ingredients.length - 5;
-  const date = dateFormated(createdAt);
+  const date = new Date(Date.parse(createdAt));
   let totalPrice = 0;
   return (
     <li className={styles.order}>
       <Link
-        to={`/feed/${number}`}
+        to={`${number}`}
         className={styles.link}
         state={{ background: location }}
       >
         <div className={styles.header}>
           <div className={styles.order_ID}>{`#${number}`}</div>
-          <div className={styles.order_date}>{date}</div>
+          <div className={styles.order_date}>
+            <FormattedDate date={date} />
+          </div>
         </div>
         <h4 className={styles.order_title}>{name}</h4>
         {hasStatus && (
