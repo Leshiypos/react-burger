@@ -2,6 +2,12 @@
 	composes: mt-5 from global;
 	max-width: 750px;
 }
+.content_center{
+	composes: mt-30 from global;
+	max-width: 750px;
+	margin-left: auto;
+	margin-right: auto;
+}
 .order_number{
 	composes: mb-10 text text_type_digits-default from global;
 	text-align: center;

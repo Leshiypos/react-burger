@@ -1,11 +1,13 @@
 import { request } from "../../util/api";
-import { AppDispatch, AppThunk, IConstructorIngredient } from "../../util/types";
-import { IMessage } from "../feed-orders/actions";
+import { AppThunk, IConstructorIngredient } from "../../util/types";
+import { IMessage, IOrder } from "../feed-orders/actions";
 
 export const SEND_ORDER: 'SEND_ORDER' = 'SEND_ORDER';
 export const SEND_ORDER_FAILED: 'SEND_ORDER_FAILED' = 'SEND_ORDER_FAILED';
 export const SEND_ORDER_SACCESS: 'SEND_ORDER_SACCESS' = 'SEND_ORDER_SACCESS';
 export const HIDE_ORDER: 'HIDE_ORDER' = 'HIDE_ORDER';
+export const GET_ORDER_SACCESS: 'GET_ORDER_SACCESS' = 'GET_ORDER_SACCESS';
+
 
 
 interface IResponseOrderField{
@@ -16,6 +18,10 @@ interface IResponseOrderField{
 	updatedAt: string;
 	number: number;
 	price: number;
+}
+export interface IResponseOrderByNumber{
+	success: boolean;
+	orders: IOrder[];
 }
 export interface IResponseOrder{
 	success: boolean;
@@ -39,11 +45,16 @@ interface IHideOrderAction{
 	readonly type: typeof HIDE_ORDER;
 
 }
+interface IGetOrderAction{
+	readonly type: typeof GET_ORDER_SACCESS;
+	readonly response: IResponseOrderByNumber;
+}
 export type TOrderActions = 
 	ISendOrderAction
 	| ISendOrderFailedAction
 	| ISendOrderSuccessAction
-	| IHideOrderAction;
+	| IHideOrderAction
+	| IGetOrderAction;
 
 
 export const hideOrder = (): AppThunk=> (dispatch) =>{
@@ -75,7 +86,7 @@ export const sendOrderAction = (req:{ingredients: string[]}): AppThunk => (dispa
 }
 export const getOrderAction = (number:number): AppThunk => (dispatch) => {
 	dispatch({type : SEND_ORDER});
-	request<IResponseOrder>(`/orders/${number}`, {
+	request<IResponseOrderByNumber>(`/orders/${number}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
@@ -83,7 +94,7 @@ export const getOrderAction = (number:number): AppThunk => (dispatch) => {
 	})
 		.then(response=>{
 			dispatch({
-				type:SEND_ORDER_SACCESS,
+				type:GET_ORDER_SACCESS,
 				response: response,
 			});
 		})

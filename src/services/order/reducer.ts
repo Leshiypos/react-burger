@@ -1,15 +1,17 @@
-import { HIDE_ORDER, IResponseOrder, SEND_ORDER, SEND_ORDER_FAILED, SEND_ORDER_SACCESS, TOrderActions } from "./actions";
+import { GET_ORDER_SACCESS, HIDE_ORDER, IResponseOrder, IResponseOrderByNumber, SEND_ORDER, SEND_ORDER_FAILED, SEND_ORDER_SACCESS, TOrderActions } from "./actions";
 
 interface IInitialState{
 	loading: boolean;
 	error: boolean;
 	response : IResponseOrder | null;
+	responseProfile : IResponseOrderByNumber | null;
 }
 
 const initialState: IInitialState = {
 	loading: false,
 	error: false,
-	response: null
+	response: null,
+	responseProfile: null
 }
 
 export const reducer = (state=initialState, action:TOrderActions):IInitialState=>{
@@ -24,6 +26,12 @@ export const reducer = (state=initialState, action:TOrderActions):IInitialState=
 			return {
 				...state,
 				response: action.response,
+				loading: false,
+			}
+		case GET_ORDER_SACCESS:
+			return {
+				...state,
+				responseProfile: action.response,
 				loading: false,
 			}
 		case SEND_ORDER_FAILED: 

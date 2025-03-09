@@ -4,7 +4,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order.module.css";
 import { IOrder } from "../../services/feed-orders/actions";
-import { dateFormated } from "../../util/functions";
 import { useSelector } from "../../hooks/hooks";
 import { getIngredientsByBategories } from "../../services/ingredients/selectors";
 import IconIngredient from "./icon-ingredient";

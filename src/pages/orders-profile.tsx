@@ -10,12 +10,6 @@ import {
   wsConnectProfile,
 } from "../services/profile-orders/actions";
 
-const token: string | undefined = localStorage
-  ?.getItem("accessToken")
-  ?.replace("Bearer ", "");
-const wssUrlProfile = `wss://norma.nomoreparties.space/orders?token=${token}`;
-
-console.log(wssUrlProfile);
 export default function OrdersProfile(): React.JSX.Element {
   const dispatch = useDispatch();
   const { wsConnectedProfile, ordersProfile } = useSelector(
@@ -24,7 +18,12 @@ export default function OrdersProfile(): React.JSX.Element {
   const ready = wsConnectedProfile === WebsocketStatus.ONLINE && ordersProfile;
 
   useEffect(() => {
+    const token: string | undefined = localStorage
+      ?.getItem("accessToken")
+      ?.replace("Bearer ", "");
+    const wssUrlProfile = `wss://norma.nomoreparties.space/orders?token=${token}`;
     dispatch(wsConnectProfile(wssUrlProfile));
+    console.log(wssUrlProfile);
     return () => {
       dispatch(onCloseProfile());
     };
@@ -34,7 +33,7 @@ export default function OrdersProfile(): React.JSX.Element {
       <section>
         <ul className={styles.wrap_area}>
           {ready ? (
-            ordersProfile.map((elem: IOrder, index: string) => (
+            ordersProfile.map((elem: IOrder, index: number) => (
               <Order order={elem} key={index} hasStatus={true} />
             ))
           ) : (
