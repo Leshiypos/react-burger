@@ -8,7 +8,7 @@ export const getResponseOrder = createSelector([
 		loading : order.loading,
 		error: order.error,
 		responseOrder: order.response,
-		orderState: order.response?.orders[0],
+		orderState: order.response?.orders ? order.response?.orders[0]:null,
 		
 	})
 	)
