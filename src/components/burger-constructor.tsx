@@ -8,7 +8,6 @@ import {
 import Modal from "./modal";
 import OrderDetails from "./order-details";
 import { useDrop } from "react-dnd";
-import { useSelector } from "react-redux";
 import {
   addIngredient,
   addBuns,
@@ -22,7 +21,7 @@ import { hideOrder } from "../services/order/actions";
 import { getUser } from "../services/user/selector";
 import { useNavigate } from "react-router-dom";
 import { IConstructorIngredient } from "../util/types";
-import { useDispatch } from "../hooks/hooks";
+import { useDispatch, useSelector } from "../hooks/hooks";
 
 interface IUser {
   user: { email: string; name: string };

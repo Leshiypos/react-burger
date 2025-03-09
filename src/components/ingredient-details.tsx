@@ -1,9 +1,10 @@
 import styles from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
+
 import { getIngredientsState } from "../services/ingredients/selectors";
 import { useParams } from "react-router-dom";
 import React, { useMemo } from "react";
 import { IConstructorIngredient } from "../util/types";
+import { useSelector } from "../hooks/hooks";
 
 interface IIngredients {
   ingredients: IConstructorIngredient[];

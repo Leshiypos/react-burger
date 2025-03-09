@@ -1,9 +1,10 @@
 import styles from "./ingredients-category.module.css";
 import Card from "./card";
 import { getIngredientsByBategories } from "../services/ingredients/selectors";
-import { useSelector } from "react-redux";
+
 import React from "react";
 import { IConstructorIngredient } from "../util/types";
+import { useSelector } from "../hooks/hooks";
 
 interface IIndredientsCategoryProps {
   title: string;

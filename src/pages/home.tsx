@@ -2,9 +2,9 @@ import styles from "./home.module.css";
 import { DndProvider } from "react-dnd";
 import BurgerIngredients from "../components/burger-ingredients";
 import BurgerConstructor from "../components/burger-constructor";
-import { useSelector } from "react-redux";
 import { getIngredientsState } from "../services/ingredients/selectors";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useSelector } from "../hooks/hooks";
 
 export default function Home(): JSX.Element {
   const { ingredients, error, loading } = useSelector(getIngredientsState);

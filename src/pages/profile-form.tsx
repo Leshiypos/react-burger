@@ -6,12 +6,11 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useCallback } from "react";
-import { useSelector } from "react-redux";
 import { getUser } from "../services/user/selector";
 import { refreshUserData } from "../services/user/action";
 import { useForm } from "../hooks/useForm";
 import { IUseForm } from "../util/types";
-import { useDispatch } from "../hooks/hooks";
+import { useDispatch, useSelector } from "../hooks/hooks";
 
 export type TrefreshData = Omit<IUseForm, "password"> & { password?: string };
 
