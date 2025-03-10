@@ -3,7 +3,7 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order-info.module.css";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "../../hooks/hooks";
 import { getFeedOrdersState } from "../../services/feed-orders/selectors";
 import { getOrdersProfileState } from "../../services/profile-orders/selectors";
@@ -28,7 +28,6 @@ export default function OrderInfo(): JSX.Element {
   const { ordersProfile } = useSelector(getOrdersProfileState);
   const { ingredientsWithIdKey } = useSelector(getIngredientsByBategories);
   const location = useLocation();
-  const navigate = useNavigate();
   const num = Number(number);
 
   useEffect(() => {
@@ -60,9 +59,6 @@ export default function OrderInfo(): JSX.Element {
     };
   }, [orderState]);
 
-  if (!location.state) {
-    navigate(`/feed/${number}`);
-  }
   let countIngredients: ICountIngredients | null = null;
   let totalPrice = 0;
 
@@ -82,9 +78,14 @@ export default function OrderInfo(): JSX.Element {
 
   return (
     <>
+      {!location.state && (
+        <Navigate to={`/feed/${number}`} state={{ center: true }} />
+      )}
       {order && (
         <div
-          className={location.state ? styles.content : styles.content_center}
+          className={
+            location.state?.center ? styles.content_center : styles.content
+          }
         >
           <p className={styles.order_number}>#{order.number}</p>
           <h4 className={styles.order_title}>{order.name}</h4>

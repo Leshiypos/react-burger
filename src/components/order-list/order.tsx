@@ -18,13 +18,23 @@ interface IOrderProps {
 export default function Order({
   order,
   hasStatus = false,
-}: IOrderProps): React.JSX.Element {
+}: IOrderProps): React.JSX.Element | null {
   const { ingredientsWithIdKey } = useSelector(getIngredientsByBategories);
   const location = useLocation();
   const { number, name, createdAt, ingredients } = order;
   const countOfIngredients = ingredients.length - 5;
   const date = new Date(Date.parse(createdAt));
   let totalPrice = 0;
+  let showComponent = true;
+  ingredients.forEach((element) => {
+    if (ingredientsWithIdKey[element] === undefined) {
+      showComponent = false;
+    }
+  });
+
+  if (!showComponent || !number || !name || !createdAt) {
+    return null;
+  }
   return (
     <li className={styles.order}>
       <Link
