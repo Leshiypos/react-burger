@@ -3,10 +3,10 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./card.module.css";
-import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 import { IConstructorIngredient } from "../util/types";
+import { useSelector } from "../hooks/hooks";
 
 interface ICardProps {
   ingredient: IConstructorIngredient;
@@ -18,7 +18,6 @@ type DragObject = IConstructorIngredient;
 
 export default function Card({ ingredient }: ICardProps): React.JSX.Element {
   const location = useLocation();
-  //@ts-ignore
   const selectIngredients = useSelector((store) => store.selectIngredients);
   const [, ingredientRef] = useDrag<DragObject, unknown, unknown>({
     type: ingredient.type === "bun" ? "bun" : "ingredient",

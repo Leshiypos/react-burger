@@ -1,20 +1,51 @@
-import { fetchWithRefresh, request } from "../../util/api";
+import { TrefreshData } from "../../pages/profile-form";
+import { IOptionsFetch, fetchWithRefresh, request } from "../../util/api";
+import { AppThunk } from "../../util/types";
 
-export const SET_AUTH_CHECKED = 'user/setAuthChecked';
-export const SET_USER = 'user/setUser';
+export const SET_AUTH_CHECKED: 'SET_AUTH_CHECKED' = 'SET_AUTH_CHECKED';
+export const SET_USER: 'SET_USER' = 'SET_USER';
 
+export interface IUserCurrent{
+	readonly email : string;
+	readonly name: string;
+}
 
-export const setAuthChecked = (value) => ({
+interface ISetAuthCheckedAction{
+	readonly type: typeof SET_AUTH_CHECKED;
+	readonly payload: boolean
+}
+
+interface ISetUserAction{
+	readonly type:  typeof SET_USER;
+	readonly payload: IUserCurrent | null;
+}
+
+export type TUserActions = 
+	ISetAuthCheckedAction
+	| ISetUserAction;
+
+	interface IRegisterValue extends IUserCurrent{
+		password: string, 
+}
+
+export interface IRegister{
+    success: true,
+    user:IUserCurrent ,
+    accessToken: string,
+    refreshToken: string
+}
+
+export const setAuthChecked = (value:boolean): ISetAuthCheckedAction => ({
 	type: SET_AUTH_CHECKED,
 	payload: value,
 });
 
-export const setUser = (user) => ({
+export const setUser = (user:IUserCurrent | null ) : ISetUserAction => ({
 	type: SET_USER,
 	payload: user,
 })
 
-const getUser = async (url, options)=>{
+const getUser = async (url: string, options: IOptionsFetch)=>{
 	const result = await fetchWithRefresh(url, options);
 
 	try {
@@ -26,24 +57,8 @@ const getUser = async (url, options)=>{
 	}
 }
 
-interface IRegisterValue{
-		email: string, 
-		password: string, 
-		name: string 
-}
 
-interface IUser{
-	email: string,
-	name: string
-}
-
-interface IRegister{
-    success: true,
-    user:IUser ,
-    accessToken: string,
-    refreshToken: string
-}
-export const register = (value:IRegisterValue, cb:(f:string)=>void) => (dispatch) => {
+export const register = (value:IRegisterValue, cb:(f:boolean | null)=>void): AppThunk => (dispatch) => {
 	request<IRegister>('/auth/register',{
 		method: "POST",
 		headers: {
@@ -61,8 +76,17 @@ export const register = (value:IRegisterValue, cb:(f:string)=>void) => (dispatch
 	})
 }
 
-export const login = (mail, pass, cb = f=>f) => (dispatch) => {
-	  	request('/auth/login',{
+
+
+interface ILoginResponse{
+	success: boolean,
+	accessToken: string,
+	refreshToken: string,
+	user: IUserCurrent;
+  }
+
+export const login = (mail :string, pass:string, cb: (a:boolean)=>void): AppThunk => (dispatch) => {
+	  	request<ILoginResponse>('/auth/login',{
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -72,8 +96,8 @@ export const login = (mail, pass, cb = f=>f) => (dispatch) => {
 				"password" : pass
 			})
 		}).then(response => {
-		localStorage.setItem('accessToken',response.accessToken );
-		localStorage.setItem('refreshToken',response.refreshToken );
+			localStorage.setItem('accessToken',response.accessToken );
+			localStorage.setItem('refreshToken',response.refreshToken );
 		dispatch(setUser(response.user));
 		dispatch(setAuthChecked(true));
 		}).catch(error=>{
@@ -81,7 +105,7 @@ export const login = (mail, pass, cb = f=>f) => (dispatch) => {
 		})
 	};
 
-	export const logout = () => (dispatch) => {
+	export const logout = (): AppThunk => (dispatch) => {
 		  request('/auth/logout',{
 			method: "POST",
 			headers: {
@@ -97,13 +121,13 @@ export const login = (mail, pass, cb = f=>f) => (dispatch) => {
 		  });
 		};
 
-export const checkUserAuth = () => (dispatch) => {
+export const checkUserAuth = (): AppThunk => (dispatch) => {
         if (localStorage.getItem("accessToken")) {
             getUser('/auth/user', {
 				method: "GET",
 				headers: {
 					'Content-Type': 'application/json;charset=utf-8',
-					authorization: localStorage.getItem('accessToken')
+					authorization: (localStorage as {getItem: (el:string)=> string}).getItem('accessToken')
 				  },
 			})
               .then(response =>{ 
@@ -115,13 +139,13 @@ export const checkUserAuth = () => (dispatch) => {
 };
 
 
-export const refreshUserData = (refreshData) => (dispatch) => {
+export const refreshUserData = (refreshData: TrefreshData): AppThunk => (dispatch) => {
         if (localStorage.getItem("accessToken")) {
             getUser('/auth/user', {
 				method: "PATCH",
 				headers: {
 					'Content-Type': 'application/json;charset=utf-8',
-					authorization: localStorage.getItem('accessToken')
+					authorization: (localStorage as {getItem: (a:string) => string}).getItem('accessToken')
 				  },
 				  body: JSON.stringify(refreshData),
 			})
@@ -133,8 +157,13 @@ export const refreshUserData = (refreshData) => (dispatch) => {
         }
 };
 
-export const forgotPassword = (mail, cb= f=>f) => (dispatch) =>{
-	request('/password-reset',{
+interface IForgotPasswordResponse{
+	success: boolean;
+	message: string;
+}
+
+export const forgotPassword = (mail : string, cb: (a:boolean)=>void): AppThunk => (dispatch) =>{
+	request<IForgotPasswordResponse>('/password-reset',{
 		method : "POST",
 		headers : {
 			"Content-Type": "application/json",
@@ -149,8 +178,8 @@ export const forgotPassword = (mail, cb= f=>f) => (dispatch) =>{
 	.catch(error => console.log(error))
 }
 
-export const resetPassword = (pass, token, cb) => (dispatch) => {
-	request('/password-reset/reset', {
+export const resetPassword = (pass:string, token:string, cb: (a:boolean)=>void): AppThunk => (dispatch) => {
+	request<IForgotPasswordResponse>('/password-reset/reset', {
 		method : "POST",
 		headers : {
 			"Content-Type": "application/json",

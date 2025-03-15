@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
 import { sortIngredients } from "../services/burger-constructor/actions";
 import { Identifier } from "dnd-core";
+import { useDispatch } from "../hooks/hooks";
 
 const ItemTypes = {
   CARD: "card",
@@ -58,7 +58,6 @@ export default function DragItemElement({
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      //@ts-ignore
       dispatch(sortIngredients(dragIndex, hoverIndex));
       item.index = hoverIndex;
     },

@@ -1,13 +1,26 @@
-import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUNS, RESET_INGREDIENTS, SORT_INGREDIENTS } from "./actions";
+import { IConstructorIngredient, IConstructorIngredientWithKey } from "../../util/types";
+import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUNS, RESET_INGREDIENTS, SORT_INGREDIENTS, TConstructorActions } from "./actions";
 
-const initialState = {
+interface ICounterItem{
+	[key:string] : number;
+}
+interface IInitialState{
+	bun: IConstructorIngredient | null;
+	counter: ICounterItem;
+	counterBun: ICounterItem;
+	ingredients: IConstructorIngredientWithKey[];
+}
+const initialState:IInitialState = {
 		bun: null,
 		counter: {},
 		counterBun: {},	
 		ingredients: []
 }
+interface ISortIngredients{
+	(mass: IConstructorIngredientWithKey[], toIndex: number,fromIndex: number ):IConstructorIngredientWithKey[];
+}
 
-const sortIngredients = (mass, toIndex, fromIndex ) =>{
+const sortIngredients:ISortIngredients = (mass, toIndex, fromIndex ) =>{
 	const ingredients = [...mass];
 	ingredients.splice(toIndex, 0, ingredients.splice(fromIndex, 1)[0]);
 	return ingredients;
@@ -15,7 +28,7 @@ const sortIngredients = (mass, toIndex, fromIndex ) =>{
 
 
 
-export const reducer = (state = initialState, action) =>{
+export const reducer = (state = initialState, action:TConstructorActions):IInitialState =>{
 	switch (action.type){
 		case ADD_INGREDIENT : 
 			return {
@@ -28,7 +41,7 @@ export const reducer = (state = initialState, action) =>{
 			return {
 				...state,
 				ingredients: state.ingredients.filter(ingredient => ingredient.key !== action.element.key),
-				counter: {...state.counter, [action.element._id]:--state.counter[action.element._id]}
+				counter: {...state.counter, [action.element._id]:--state.counter[action.element._id]},
 			
 		}
 		case ADD_BUNS:

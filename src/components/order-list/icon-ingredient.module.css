@@ -1,0 +1,56 @@
+
+.ingredient_icon{
+	width: 76px;
+	height: 76px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	border-radius: 50%;
+	background: rgb(128,26,178);
+	background: linear-gradient(45deg, rgba(128,26,178,1) 0%, rgba(76,76,255,1) 100%);
+	margin-left: -20px;
+
+}
+.ingredient_icon:first-child{
+	margin-left: 0;
+}
+.ingredient_icon:nth-child(1){
+	z-index: 6;
+}
+.ingredient_icon:nth-child(2){
+	z-index: 5;
+}
+.ingredient_icon:nth-child(3){
+	z-index: 4;
+}
+.ingredient_icon:nth-child(4){
+	z-index: 3;
+}
+.ingredient_icon:nth-child(5){
+	z-index: 2;
+}
+.ingredient_icon:nth-child(6){
+	z-index: 1;
+	position: relative;
+}
+	.ingredient_icon:nth-child(6) img{
+		opacity: .6;
+	}
+.ingredient_icon>div{
+	width: 72px;
+	height: 72px;
+	border-radius: 50%;
+	background-color: #131316 ;
+
+}
+
+.ingredient_icon img{
+	width: 72px;
+	height: 72px;
+	object-fit:cover;
+}
+.count{
+	composes: text text_type_main-default from global;
+	position: absolute;
+}

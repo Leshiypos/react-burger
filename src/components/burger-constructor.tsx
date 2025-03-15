@@ -8,7 +8,6 @@ import {
 import Modal from "./modal";
 import OrderDetails from "./order-details";
 import { useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
 import {
   addIngredient,
   addBuns,
@@ -22,6 +21,7 @@ import { hideOrder } from "../services/order/actions";
 import { getUser } from "../services/user/selector";
 import { useNavigate } from "react-router-dom";
 import { IConstructorIngredient } from "../util/types";
+import { useDispatch, useSelector } from "../hooks/hooks";
 
 interface IUser {
   user: { email: string; name: string };
@@ -42,28 +42,23 @@ export default function BurgerConstructor(): React.JSX.Element {
     useSelector(getBurgerConsctructorIngredients);
   const [, bunsRef] = useDrop({
     accept: "bun",
-    drop(item) {
-      //@ts-ignore
+    drop(item: IConstructorIngredient) {
       dispatch(addBuns(item));
     },
   });
   const [, constIngrRef] = useDrop({
     accept: "ingredient",
-    drop(item) {
-      //@ts-ignore
+    drop(item: IConstructorIngredient) {
       dispatch(addIngredient(item));
     },
   });
-  const handleDeleteIngredient = (elem: IConstructorIngredient): void => {
-    //@ts-ignore
+  const handleDeleteIngredient = (elem: TSelectIngredients): void => {
     dispatch(deleteIngredient(elem));
   };
 
   const handleModalClose = () => {
     setIsOpen(false);
-    //@ts-ignore
     dispatch(resetIngredients());
-    //@ts-ignore
     dispatch(hideOrder());
   };
   const handleOrderStart = () => {
@@ -95,7 +90,6 @@ export default function BurgerConstructor(): React.JSX.Element {
 
         <div className={styles.work_area} ref={constIngrRef}>
           {ingredients?.length > 0 ? (
-            //@ts-ignore
             ingredients.map((elem, index) => (
               <DragItemElement index={index} key={elem.key} id={elem.key}>
                 <DragIcon type="primary" />

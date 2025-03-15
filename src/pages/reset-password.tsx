@@ -7,9 +7,9 @@ import styles from "./login.module.css";
 import { Link } from "react-router";
 import { Navigate, useLocation } from "react-router-dom";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { resetPassword } from "../services/user/action";
 import { useForm } from "../hooks/useForm";
+import { useDispatch } from "../hooks/hooks";
 
 interface IUseForm {
   password: string;
@@ -28,7 +28,6 @@ export default function ResetPassword(): React.JSX.Element {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     const { password, code } = values;
     e.preventDefault();
-    //@ts-ignore
     dispatch(resetPassword(password, code, setRespSuccess));
   };
   if (

@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { getUser } from "../services/user/selector";
 import Preloader from "./preload";
 import React from "react";
+import { useSelector } from "../hooks/hooks";
 
 interface IProtectedProps {
   onlyUnAuth?: boolean;

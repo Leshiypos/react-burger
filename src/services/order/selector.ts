@@ -8,6 +8,7 @@ export const getResponseOrder = createSelector([
 		loading : order.loading,
 		error: order.error,
 		responseOrder: order.response,
+		orderState: order.responseProfile?.orders[0],
 		
 	})
 	)

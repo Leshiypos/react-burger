@@ -1,0 +1,21 @@
+.ingredient{
+	composes: mb-4 mr-6  from global;
+	display: flex;
+	align-items:center;
+	justify-content: space-between;
+}
+	.discription{
+		display: flex;
+		align-items:center;
+	}
+		.ingredient_name{
+			composes: ml-3 text text_type_main-default from global;
+		}
+	.price{
+		composes: text text_type_digits-default from global;
+		display: flex;
+		align-items:center;
+	}
+		.price span{
+			margin-right: 6px;
+		}

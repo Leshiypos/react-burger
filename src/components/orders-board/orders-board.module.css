@@ -1,0 +1,47 @@
+.state{
+	margin-bottom: 60px;
+	display: flex;
+	margin-top: 80px;
+}
+.state>div{
+	width: 50%;
+}
+.orders_list{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	height: 200px;
+}
+.orders_list::after{
+	content: "";
+	height: 100%;
+	width: 100%;
+	flex-shrink: 1;
+}
+	.orders_list li{
+		width: fit-content;
+		padding-right: 20px;
+	}
+	.title{
+		composes: mb-6 text text_type_main-medium from global;
+	}
+	.title_stat{
+		composes: mb-1 text text_type_main-medium from global;
+	}
+	.order_id_ready{
+		composes: mb-2 text text_type_digits-default from global;
+		color: rgba(0, 204, 204, 1);
+	}
+	.order_id_at_work{
+		composes: mb-2 text text_type_digits-default from global;
+		color: rgba(242, 242, 243, 1);
+	}
+.statistics{
+	margin-bottom: 60px;
+}
+.score{
+	composes: text text_type_digits-large from global;
+}

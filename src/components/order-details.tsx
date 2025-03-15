@@ -1,17 +1,16 @@
 import styles from "./order-details.module.css";
 import img from "../images/done.svg";
-import { useDispatch, useSelector } from "react-redux";
 import { getResponseOrder } from "../services/order/selector";
 import Preloader from "./preload";
 import React, { useEffect } from "react";
 import { sendOrderAction } from "../services/order/actions";
 import { getBurgerConsctructorIngredients } from "../services/burger-constructor/selectors";
+import { useDispatch, useSelector } from "../hooks/hooks";
 
 export default function OrderDetails(): React.JSX.Element {
   const dispatch = useDispatch();
   const { request } = useSelector(getBurgerConsctructorIngredients);
   useEffect(() => {
-    //@ts-ignore
     dispatch(sendOrderAction(request));
   }, []);
   const { error, loading, responseOrder } = useSelector(getResponseOrder);

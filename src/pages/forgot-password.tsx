@@ -5,11 +5,11 @@ import {
 import styles from "./forgot-password.module.css";
 import { Link } from "react-router";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { forgotPassword } from "../services/user/action";
 import { Navigate, useLocation } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { IUseForm } from "../util/types";
+import { useDispatch } from "../hooks/hooks";
 
 export default function ForgotPassword(): React.JSX.Element {
   const location = useLocation();
@@ -21,7 +21,6 @@ export default function ForgotPassword(): React.JSX.Element {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //@ts-ignore
     dispatch(forgotPassword(values.email, setRespSuccess));
   };
   return (

@@ -1,10 +1,16 @@
-import { HIDE_DETAILS, SHOW_DETAILS } from "./actions"
+import { IConstructorIngredient } from "../../util/types";
+import { HIDE_DETAILS, SHOW_DETAILS, TDetailsActions } from "./actions"
 
-const initialState = {
+
+interface IInitialState{
+	readonly details: IConstructorIngredient | null;
+}
+
+const initialState:IInitialState = {
 	details : null
 }
 
-export const reducer = (state=initialState, action) => {
+export const reducer = (state=initialState, action: TDetailsActions): IInitialState => {
 	switch (action.type){
 		case SHOW_DETAILS:
 			return {

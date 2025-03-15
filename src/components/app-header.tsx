@@ -25,7 +25,7 @@ export default function AppHeader(): React.JSX.Element {
             Конструктор
           </NavLink>
           <NavLink
-            to="/order-tape"
+            to="/feed"
             className={({ isActive }) =>
               isActive
                 ? `${styles.button} ${styles.active}`

@@ -1,3 +1,4 @@
+import { IRegister } from "../services/user/action";
 import { BASE_URL } from "./constants";
 
 interface IRefreshToken{
@@ -5,7 +6,7 @@ interface IRefreshToken{
 	accessToken: string,
 	success: boolean
 }
-interface IOptionsFetch{
+export interface IOptionsFetch{
 	method?: string,
 	headers?:{[key:string]:string} | undefined,
 	body?: string
@@ -23,7 +24,7 @@ const checkResponse = <T>(response: Response):Promise<T> => {
 
   // Обновление токена
 
-  const refreshToken = async(): Promise<IRefreshToken> => {
+  export const refreshToken = async(): Promise<IRefreshToken> => {
 	return request<IRefreshToken>(`/auth/token`, {
 	  method: "POST",
 	  headers: {
@@ -45,7 +46,7 @@ const checkResponse = <T>(response: Response):Promise<T> => {
 	});
   };
 
-export const fetchWithRefresh = async (url:string, options:IOptionsFetch={}) => {
+export const fetchWithRefresh = async (url:string, options:IOptionsFetch={}) : Promise<Omit<IRegister,"accessToken" |"refreshToken" >> => {
 	try {
 	  return await request(url, options);
 	} catch (err) {

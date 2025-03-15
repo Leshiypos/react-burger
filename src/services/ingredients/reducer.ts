@@ -1,4 +1,11 @@
-import { GET_INGREDIENTS, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILED} from "./actions";
+import { IConstructorIngredient } from "../../util/types";
+import { GET_INGREDIENTS, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILED, TIngredientsActions} from "./actions";
+
+interface IinitialState{
+	ingredients: IConstructorIngredient[];
+	loading: boolean;
+	error: boolean;
+}
 
 const initialState ={
 	ingredients: [],
@@ -6,7 +13,7 @@ const initialState ={
     error: false,
 }
 
-export const reducer = (state = initialState, action)=>{
+export const reducer = (state = initialState, action:TIngredientsActions):IinitialState=>{
 	switch (action.type){
 		case GET_INGREDIENTS: 
 			return {

@@ -6,10 +6,10 @@ import {
 import styles from "./login.module.css";
 import { Link } from "react-router";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { login } from "../services/user/action";
 import { useForm } from "../hooks/useForm";
 import { IUseForm } from "../util/types";
+import { useDispatch } from "../hooks/hooks";
 
 export default function Login(): React.JSX.Element {
   const dispatch = useDispatch();
@@ -23,7 +23,6 @@ export default function Login(): React.JSX.Element {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { email, password } = values;
-    //@ts-ignore
     dispatch(login(email, password, setErrorMessage));
   };
 
