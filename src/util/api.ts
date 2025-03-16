@@ -11,8 +11,8 @@ export interface IOptionsFetch{
 	headers?:{[key:string]:string} | undefined,
 	body?: string
 }
-const checkResponse = <T>(response: Response):Promise<T> => {
-	return response.ok ? response.json() : response.json().then( e => Promise.reject(e) );
+export const checkResponse = <T>(response: Response):Promise<T> => {
+	return response.ok ? response.json() : Promise.reject(`Ошибка: ${response.status}`);
 }
 
 
