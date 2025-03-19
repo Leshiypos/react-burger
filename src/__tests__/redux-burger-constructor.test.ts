@@ -2,6 +2,7 @@ import {
   ADD_BUNS,
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
+  RESET_INGREDIENTS,
   SORT_INGREDIENTS,
 } from "../services/burger-constructor/actions";
 import { initialState, reducer } from "../services/burger-constructor/reducer";
@@ -145,5 +146,35 @@ describe("Redux burger-constructor", () => {
       counter: { [secondIngredient._id]: 1, [firstIngredient._id]: 1 },
       ingredients: [secondIngredient, firstIngredient],
     });
+  });
+
+  it("should return initialState after reset ingredient action", () => {
+    const state = {
+      bun: null,
+      counter: {
+        "643d69a5c3f7b9001cfa0943": 1,
+      },
+      counterBun: {},
+      ingredients: [
+        {
+          _id: "643d69a5c3f7b9001cfa0943",
+          name: "Соус фирменный Space Sauce",
+          type: "sauce",
+          proteins: 50,
+          fat: 22,
+          carbohydrates: 11,
+          calories: 14,
+          price: 80,
+          image: "https://code.s3.yandex.net/react/code/sauce-04.png",
+          image_mobile:
+            "https://code.s3.yandex.net/react/code/sauce-04-mobile.png",
+          image_large:
+            "https://code.s3.yandex.net/react/code/sauce-04-large.png",
+          __v: 0,
+          key: "e6033dac-113e-4eee-a2d1-f69e07853399",
+        },
+      ],
+    };
+    expect(reducer(state, { type: RESET_INGREDIENTS })).toEqual(initialState);
   });
 });
