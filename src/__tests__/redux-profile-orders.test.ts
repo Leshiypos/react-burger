@@ -1,14 +1,14 @@
 import {
-  WS_CONNECTION_CLOSED,
-  WS_CONNECTION_ERROR,
-  WS_CONNECTION_START,
-  WS_CONNECTION_SUCCESS,
-  WS_GET_MESSAGE,
-} from "../services/feed-orders/actions";
-import { initialState, reducer } from "../services/feed-orders/reducer";
+  WS_CONNECTION_CLOSED_PROFILE,
+  WS_CONNECTION_ERROR_PROFILE,
+  WS_CONNECTION_START_PROFILE,
+  WS_CONNECTION_SUCCESS_PROFILE,
+  WS_GET_MESSAGE_PROFILE,
+} from "../services/profile-orders/actions";
+import { initialState, reducer } from "../services/profile-orders/reducer";
 import { WebsocketStatus } from "../util/types";
 
-describe("Redux feed orders", () => {
+describe("Redux profile orders", () => {
   it("should returt the initial state", () => {
     expect(reducer(undefined, { type: "" } as unknown as any)).toEqual(
       initialState
@@ -18,7 +18,7 @@ describe("Redux feed orders", () => {
   it("should return state with wsConnected field value CONNECTING... after WS_CONNECTION_START action", () => {
     expect(
       reducer(undefined, {
-        type: WS_CONNECTION_START,
+        type: WS_CONNECTION_START_PROFILE,
         payload: "wss://exemple.com",
       })
     ).toEqual({
@@ -30,7 +30,7 @@ describe("Redux feed orders", () => {
   it("should return state with wsConnected field value ONLINE after WS_CONNECTION_SUCCESS action", () => {
     expect(
       reducer(undefined, {
-        type: WS_CONNECTION_SUCCESS,
+        type: WS_CONNECTION_SUCCESS_PROFILE,
       })
     ).toEqual({
       ...initialState,
@@ -41,7 +41,7 @@ describe("Redux feed orders", () => {
   it("should return state with error field value ERROR after WS_CONNECTION_ERROR action", () => {
     expect(
       reducer(undefined, {
-        type: WS_CONNECTION_ERROR,
+        type: WS_CONNECTION_ERROR_PROFILE,
         payload: "Error",
       } as unknown as any)
     ).toEqual({
@@ -75,7 +75,7 @@ describe("Redux feed orders", () => {
     ];
     expect(
       reducer(undefined, {
-        type: WS_GET_MESSAGE,
+        type: WS_GET_MESSAGE_PROFILE,
         payload: socketMessage,
       })
     ).toEqual({
@@ -87,7 +87,7 @@ describe("Redux feed orders", () => {
   it("should return state with wsConnected field value OFFLINE after WS_CONNECTION_CLOSED action", () => {
     expect(
       reducer(undefined, {
-        type: WS_CONNECTION_CLOSED,
+        type: WS_CONNECTION_CLOSED_PROFILE,
       })
     ).toEqual({
       ...initialState,
