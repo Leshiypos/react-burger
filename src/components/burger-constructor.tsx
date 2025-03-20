@@ -83,12 +83,20 @@ export default function BurgerConstructor(): React.JSX.Element {
             />
           </div>
         ) : (
-          <div className={styles.no_bun_top} ref={bunsRef}>
+          <div
+            className={styles.no_bun_top}
+            ref={bunsRef}
+            data-testid="drop_wrap_buns"
+          >
             Выберите булку
           </div>
         )}
 
-        <div className={styles.work_area} ref={constIngrRef}>
+        <div
+          className={styles.work_area}
+          ref={constIngrRef}
+          data-testid="drop_wrap_souces"
+        >
           {ingredients?.length > 0 ? (
             ingredients.map((elem, index) => (
               <DragItemElement index={index} key={elem.key} id={elem.key}>
@@ -130,6 +138,7 @@ export default function BurgerConstructor(): React.JSX.Element {
           size="large"
           onClick={handleOrderStart}
           disabled={!bun}
+          data-testid="order_button"
         >
           Оформить заказ
         </Button>

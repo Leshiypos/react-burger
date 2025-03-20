@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTExNzE2MTMzYWNkMDAxYmU0ZTM2YyIsImlhdCI6MTc0MjQ2NDM1MSwiZXhwIjoxNzQyNDY1NTUxfQ.biDdmIv6Abo1twS72joa3eJvKRoI5WXPENLDhG-Tzks",
+  "refreshToken": "cb99cfcf7c65bd66b8b0ec65198b69da7ee25684462f41b1e0d13f6103ecafae4a8535f06f85d705",
+  "user": {
+    "email": "leshiy_pos@mail.ru",
+    "name": "Валентин"
+  }
+}
