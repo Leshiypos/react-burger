@@ -5,7 +5,7 @@ import "./normalize.css";
 import "./index.css";
 import { Provider } from "react-redux";
 import { configureStore } from "./services/store.js";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 
 const root = document.getElementById("root");
 
