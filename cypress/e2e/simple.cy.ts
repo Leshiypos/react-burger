@@ -1,63 +1,65 @@
 import type {} from "cypress";
 
+const dragElementSelector = "[data-testid=drag_wrap_sauces] ul li:first";
+const dragBunsElementSelector = "[data-testid=drag_wrap_buns] ul li:first";
+const dragSoucesLinkSelector = "[data-testid=drag_wrap_sauces] a";
+const dropSouseSelector = "[data-testid=drop_wrap_souces]";
+const dropBunsSelector = "[data-testid=drop_wrap_buns]";
+const modalSelector = "#modal";
+const modalButtonCloseSelector = `${modalSelector} svg`;
+const modalButtonOrderSelector = "[data-testid=order_button]";
+
+const inputEmailSelector = "[data-testid=email_input]";
+const inputPasswordSelector = "[data-testid=password_input]";
+
 describe("template spec", () => {
   beforeEach(() => {
     cy.intercept("GET", "ingredients", { fixture: "ingredients" });
     cy.intercept("POST", "login", { fixture: "login" });
     cy.intercept("POST", "orders", { fixture: "orders" });
 
-    // cy.visit("http://localhost:5173/login");
-    // cy.get("[data-testid=email_input]").type(`${email}`);
-    // cy.get("[data-testid=password_input]").type(`${password}{enter}`);
-    // cy.wait(3000);
-    cy.visit("http://localhost:5173/");
+    cy.visit("");
   });
 
   it("should be drag element and drop in conteiner", () => {
-    cy.get("[data-testid=drag_wrap_sauces] ul li:first")
-      .first()
-      .trigger("dragstart");
-    cy.get("[data-testid=drop_wrap_souces]").trigger("drop");
-    cy.get("[data-testid=drop_wrap_souces] .constructor-element");
+    cy.get(dragElementSelector).first().trigger("dragstart");
+    cy.get(dropSouseSelector).trigger("drop");
+    cy.get(`${dropSouseSelector} .constructor-element`);
   });
 
   it("should be open modal after user click with ingredient description", () => {
-    cy.get("[data-testid=drag_wrap_sauces] a").first().click();
-    cy.get("#modal")
+    cy.get(dragSoucesLinkSelector).first().click();
+    cy.get(modalSelector)
       .should("include.text", "Детали ингридиента")
       .and("include.text", "Тестовый соус");
   });
 
   it("should be opened and close modal after user click", () => {
-    cy.get("[data-testid=drag_wrap_sauces] a").first().click();
-    cy.get("#modal svg").click();
-    cy.get("#modal").should("be.empty");
+    cy.get(dragSoucesLinkSelector).first().click();
+    cy.get(modalButtonCloseSelector).click();
+    cy.get(modalSelector).should("be.empty");
   });
 
   it("should be open modal after click order button", () => {
     const email = "leshiy_POS@mail.ru";
     const password = "136661987";
 
-    cy.get("[data-testid=drag_wrap_sauces] ul li:first")
-      .first()
-      .trigger("dragstart");
-    cy.get("[data-testid=drop_wrap_souces]").trigger("drop");
-    cy.get("[data-testid=drag_wrap_buns] ul li:first")
-      .first()
-      .trigger("dragstart");
-    cy.get("[data-testid=drop_wrap_buns]").trigger("drop");
-    cy.get("[data-testid=order_button]").click();
+    cy.get(dragElementSelector).first().trigger("dragstart");
+    cy.get(dropSouseSelector).trigger("drop");
+    cy.get(dragBunsElementSelector).first().trigger("dragstart");
+    cy.get(dropBunsSelector).trigger("drop");
+    cy.get(modalButtonOrderSelector).click();
 
-    cy.get("[data-testid=email_input]").type(`${email}`);
-    cy.get("[data-testid=password_input]").type(`${password}{enter}`);
+    cy.get(inputEmailSelector).type(`${email}`);
+    cy.get(inputPasswordSelector).type(`${password}{enter}`);
     cy.wait(1000);
 
-    cy.get("[data-testid=order_button]").click();
-    cy.get("#modal").should(
+    cy.get(modalButtonOrderSelector).click();
+    cy.get(modalSelector).should(
       "include.text",
       "Тестовый заказ для тестовых тестов"
     );
-    cy.get("#modal svg").click();
-    cy.get("#modal").should("be.empty");
+    cy.get(modalButtonCloseSelector).click();
+    cy.get(modalSelector).should("be.empty");
   });
 });
