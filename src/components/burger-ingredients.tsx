@@ -36,10 +36,10 @@ export default function BurgerIngredients(): React.JSX.Element {
     <div className={styles.burger_ingredients}>
       <Tabs active={tab} onChange={(current) => setTab(current)} ref={tabRef} />
       <ul className={styles.work_area} onScroll={handleScrollСhangeTab}>
-        <li ref={bunsRef}>
+        <li ref={bunsRef} data-testid="drag_wrap_buns">
           <IndredientsCategory title="Булки" type="buns" />
         </li>
-        <li ref={saucesRef}>
+        <li ref={saucesRef} data-testid="drag_wrap_sauces">
           <IndredientsCategory title="Соусы" type="sauces" />
         </li>
         <li>

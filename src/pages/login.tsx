@@ -34,12 +34,14 @@ export default function Login(): React.JSX.Element {
           name={"email"}
           value={values.email}
           onChange={handleChange}
+          data-testid="email_input"
         />
         <PasswordInput
           name={"password"}
           value={values.password}
           onChange={handleChange}
           extraClass="mb-2"
+          data-testid="password_input"
         />
         <Button
           extraClass={styles.button}
