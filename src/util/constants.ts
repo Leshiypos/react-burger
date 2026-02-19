@@ -1,11 +1,11 @@
-export const BASE_URL = "https://norma.nomoreparties.space/api";
+export const BASE_URL = "https://norma.education-services.ru/api";
 
 interface IStatus {
-	readonly [created: string]: string;
-  }
+  readonly [created: string]: string;
+}
 
 export const status: IStatus = {
-	created: "Создан",
-	done: "Выполнен",
-	pending: "Готовится",
-  };
+  created: "Создан",
+  done: "Выполнен",
+  pending: "Готовится",
+};
